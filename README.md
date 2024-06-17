@@ -1,1 +1,1 @@
-# -shiraya-ma-mai-ui
+# @shiraya-ma/mai-ui
