@@ -1,0 +1,6 @@
+dist/dev/**/*
+node_modules/**/*
+src/dev/**/*
+index.html
+tailwind.config.js
+vite.config.mts
