@@ -80,5 +80,3 @@ export const maiColors = {
         900: '#a90026',
     },
 };
-
-export default maiColors;

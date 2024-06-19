@@ -113,5 +113,3 @@ export function maiui (config?: NextUIPluginConfig | undefined) {
 
     return nextui(_config)
 };
-
-export default maiui;
