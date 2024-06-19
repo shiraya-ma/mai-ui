@@ -1,3 +1,3 @@
 'use strict';
 
-export * from './mai-ui';
+export * from './marge-class-names';

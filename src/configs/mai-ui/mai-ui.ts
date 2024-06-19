@@ -1,7 +1,8 @@
 'use strict';
-import { ColorScale, NextUIPluginConfig, nextui } from "@nextui-org/react";
+import { nextui } from '@nextui-org/react';
+import type { ColorScale, NextUIPluginConfig } from "@nextui-org/react";
 
-import { maiColors } from "../../configs";
+import { maiColors } from "../";
 
 /**
  * NextUIのテーマを拡張するプラグイン
