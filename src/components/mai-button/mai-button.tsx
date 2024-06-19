@@ -1,5 +1,5 @@
 // MaiButton
-'use strict';
+'use client';
 import React from 'react';
 import { Button, ButtonProps } from '@nextui-org/react';
 
