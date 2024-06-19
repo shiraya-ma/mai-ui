@@ -1,4 +1,4 @@
-namespace MaiUI {
+export namespace MaiUI {
     /**
      * @default "solid"
      */

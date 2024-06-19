@@ -3,6 +3,7 @@
 import React from 'react';
 import 'tailwindcss/tailwind.css';
 
+import { MaiUI } from '../types/mai-ui';
 import { MaiButton } from '../components';
 
 import './global.scss';

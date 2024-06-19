@@ -3,7 +3,9 @@
 import React from 'react';
 import { Button, ButtonProps } from '@nextui-org/react';
 
-const MaiButton: React.FC<MaiButton.Props> = (props) => {
+import { MaiUI } from '../../types/mai-ui';
+
+export const MaiButton: React.FC<MyButtonProps> = (props) => {
     const { ...btnProps } = props;
     
     return (
@@ -13,16 +15,10 @@ const MaiButton: React.FC<MaiButton.Props> = (props) => {
     );
 };
 
-namespace MaiButton {
-    export type Props = /** ButtonProps & */ {
-        children?: React.ReactNode;
+export type MyButtonProps = /** ButtonProps & */ {
+    children?: React.ReactNode;
 
-        color?: MaiUI.Color;
+    color?: MaiUI.Color;
 
-        variant?: MaiUI.ButtonVariant;
-    };
-};
-
-export {
-    MaiButton
+    variant?: MaiUI.ButtonVariant;
 };
