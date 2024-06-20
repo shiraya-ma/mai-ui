@@ -1,5 +1,5 @@
 .container {
-    @apply m-4
+    @apply mx-[auto] w-full max-w-[100ch] px-4 py-12
 }
 
 .h1 {
@@ -12,6 +12,12 @@
 
 .h3 {
     @apply text-2xl
+}
+
+.h1,
+.h2,
+.h3 {
+    @apply dark:text-white
 }
 
 .h1 + section,
