@@ -9,5 +9,11 @@ export namespace MaiUI {
      */
     export type ButtonVariant = 'bordered' | 'faded' | 'ghost' | 'flat' | 'light' | 'shadow' | 'solid'; 
 
+    /**
+     * @default "foreground"
+     */
     export type LinkColor = 'foreground' | 'danger' | 'primary' | 'secondary' | 'success' | 'warning';
+
+    
+    export type Theme = 'dark' | 'light';
 };
