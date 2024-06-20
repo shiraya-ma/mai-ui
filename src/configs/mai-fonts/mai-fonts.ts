@@ -5,7 +5,7 @@
  * 
  * @example
  * 'use strict'
- * const { maiFonts, maiui } = require('@shiraya-ma/mai-ui/configs');
+ * const { maiFonts, maiui } = require('@shiraya-ma/mai-ui');
  * 
  * module.exports = {
  *  content: [],
