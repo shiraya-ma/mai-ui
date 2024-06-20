@@ -3,7 +3,7 @@
 import React, { ReactNode } from 'react';
 import { NextUIProvider } from '@nextui-org/react';
 
-import { ThemeContext } from '@mai-ui/libs/theme';
+import { ThemeContext } from '../../libs/theme';
 
 import { useThemeContext } from './hooks';
 import { PrefereThemeOvserver } from './prefere-theme-ovserver';

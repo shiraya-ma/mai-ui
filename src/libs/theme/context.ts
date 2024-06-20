@@ -1,7 +1,7 @@
 'use client';
 import { createContext } from "react";
 
-import type { MaiUI } from "@mai-ui/types/mai-ui";
+import type { MaiUI } from "../../types/mai-ui";
 
 import { getPreferTheme } from "./get-prefer-theme";
 

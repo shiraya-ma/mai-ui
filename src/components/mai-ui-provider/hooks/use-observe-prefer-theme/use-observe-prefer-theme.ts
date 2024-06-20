@@ -2,8 +2,8 @@
 'use client';
 import { useEffect, useRef } from "react";
 
-import { useTheme } from "@mai-ui/hooks";
-import { getPreferTheme, storedTheme } from "@mai-ui/libs/theme";
+import { useTheme } from "../../../../hooks";
+import { getPreferTheme, storedTheme } from "../../../../libs/theme";
 
 export function useObservePreferTheme () {
     const { updateTheme } = useTheme();

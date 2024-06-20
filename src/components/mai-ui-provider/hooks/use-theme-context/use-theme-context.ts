@@ -2,8 +2,8 @@
 'use client';
 import { useCallback, useState } from "react";
 
-import type { MaiUI } from "@mai-ui/types/mai-ui";
-import { ThemeContextProps, getPreferTheme, storedTheme } from "@mai-ui/libs/theme";
+import type { MaiUI } from "../../../../types/mai-ui";
+import { ThemeContextProps, getPreferTheme, storedTheme } from "../../../../libs/theme";
 
 export function useThemeContext () {
     const [ theme, setTheme ] = useState<MaiUI.Theme>(storedTheme.get() ?? getPreferTheme());
