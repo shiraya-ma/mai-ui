@@ -1,5 +1,5 @@
 // MaiUiProvider
-'use strict';
+'use client';
 import React, { ReactNode } from 'react';
 import { NextUIProvider } from '@nextui-org/react';
 

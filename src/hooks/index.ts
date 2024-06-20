@@ -1,3 +1,3 @@
-'use strict';
+'use client';
 
 export * from './use-theme';

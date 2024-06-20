@@ -1,5 +1,5 @@
 // PrefereThemeOvserver
-'use strict';
+'use client';
 import React from 'react';
 
 import { useObservePreferTheme } from './hooks';

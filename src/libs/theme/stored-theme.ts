@@ -1,13 +1,21 @@
-'use strict';
+'use client';
 import { MaiUI } from "../../types/mai-ui";
 
 const KEY = 'theme';
 
 export const storedTheme = {
     clear: () => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
         localStorage.removeItem(KEY);
     },
     get: (): MaiUI.Theme | null => {
+        if (typeof window === 'undefined') {
+            return null;
+        }
+
         const storedTheme = localStorage.getItem(KEY);
 
         if (!storedTheme) {
@@ -19,6 +27,10 @@ export const storedTheme = {
         return theme;
     },
     set: (theme: MaiUI.Theme | null) => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
         if (!theme) {
             localStorage.removeItem(KEY);
 

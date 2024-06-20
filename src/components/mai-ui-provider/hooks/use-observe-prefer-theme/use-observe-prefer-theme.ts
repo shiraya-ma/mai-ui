@@ -11,6 +11,10 @@ export function useObservePreferTheme () {
     const refObserver = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
         const div = refObserver.current;
 
         if (!div) {
