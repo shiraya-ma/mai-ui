@@ -1,6 +1,11 @@
 'use strict';
 
 export function isExternal (href?: string) {
+    if (typeof window === 'undefined') {
+        return false;
+    }
+
+
     if (!href) {
         return false;
     }

@@ -26,6 +26,10 @@ export function useExternalLink (href?: string, onClick?: MouseEventHandler<HTML
     }, [ isExternal, onOpen ]);
 
     const onPressOpenBtn = useCallback(() => {
+        if (typeof window === 'undefined') {
+            return false;
+        }
+        
         onClose();
 
         window.open(href);
