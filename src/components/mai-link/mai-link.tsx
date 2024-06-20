@@ -11,8 +11,6 @@ export const MaiLink: React.FC<MaiLinkProps> = (props) => {
 
     const { isExternalLink, modal, onClickLink } = useExternalLink(props.href, onClick);
     const { NextLink } = useNextLink();
-
-    console.debug('NextLink:', NextLink);
     
     return (
         <MaiLinkPresenter
