@@ -4,7 +4,7 @@ import React from 'react';
 import 'tailwindcss/tailwind.css';
 
 import { MaiUI } from '../types/mai-ui';
-import { MaiButton } from '../components';
+import { MaiButton, MaiLink } from '../components';
 
 import './global.scss';
 import S from './style.module.scss';
@@ -29,6 +29,16 @@ const App: React.FC<App.Props> = (props) => {
         'flat',
         'ghost',
         'shadow'
+    ];
+
+    const maiLinkColors: any[] = [
+        'default',
+        'foreground',
+        'primary',
+        'secondary',
+        'success',
+        'warning',
+        'danger'
     ];
     
     return (
@@ -56,6 +66,32 @@ const App: React.FC<App.Props> = (props) => {
                     </section>
                 </section>
             </section>
+
+<section>
+    <h2 className={ S.h2 }>MaiLink</h2>
+
+    <section>
+        <h3 className={ S.h3 }>Usage</h3>
+
+        <section className='!flex-row'>
+            <MaiLink href='/'>MaiLink</MaiLink>
+
+            <MaiLink href='http://localhost:3000'>localhost</MaiLink>
+
+            <MaiLink href='https://www.google.com/'>Google</MaiLink>
+
+            <MaiLink href='mailto://contact@localhost:3000'>Contact us</MaiLink>
+        </section>
+        
+        <h3 className={ S.h3 }>Colors</h3>
+
+        <section className='!flex-row'>
+            { maiLinkColors.map(c => (
+                <MaiLink color={ c } key={`mai-link-colors-${ c }`} href='/'>{ c }</MaiLink>
+            ))}
+        </section>
+    </section>
+</section>
         </main>
     );
 };
