@@ -14,4 +14,4 @@ export const MaiButton: React.FC<MyButtonProps> = (props) => {
     );
 };
 
-export type MyButtonProps = MaiButtonPresenterProps;
+export type MyButtonProps = MaiButtonPresenterProps & {};

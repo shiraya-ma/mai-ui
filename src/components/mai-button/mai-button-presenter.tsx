@@ -19,7 +19,7 @@ export const MaiButtonPresenter: React.FC<MaiButtonPresenterProps> = (props) => 
 export type MaiButtonPresenterProps = ButtonProps & {
     children?: ReactNode;
 
-    color?: MaiUI.Color;
+    color?: MaiUI.ButtonColor;
 
     variant?: MaiUI.ButtonVariant;
 };

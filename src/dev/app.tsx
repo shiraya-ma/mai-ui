@@ -12,7 +12,7 @@ import S from './style.module.scss';
 const App: React.FC<App.Props> = (props) => {
     const {} = props;
 
-    const maiButtonColors: MaiUI.Color[] = [
+    const maiButtonColors: MaiUI.ButtonColor[] = [
         'default',
         'primary',
         'secondary',
@@ -31,8 +31,7 @@ const App: React.FC<App.Props> = (props) => {
         'shadow'
     ];
 
-    const maiLinkColors: any[] = [
-        'default',
+    const maiLinkColors: MaiUI.LinkColor[] = [
         'foreground',
         'primary',
         'secondary',

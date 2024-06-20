@@ -1,9 +1,8 @@
 // MaiLink
 'use client';
 import React from 'react';
-import { LinkProps } from '@nextui-org/react';
 
-import { MaiLinkPresenter } from './mai-link-presenter';
+import { MaiLinkPresenter, MaiLinkPresenterProps } from './mai-link-presenter';
 import { useExternalLink, useNextLink } from './hooks';
 
 export const MaiLink: React.FC<MaiLinkProps> = (props) => {
@@ -23,4 +22,4 @@ export const MaiLink: React.FC<MaiLinkProps> = (props) => {
     );
 };
 
-export type MaiLinkProps = LinkProps & {};
+export type MaiLinkProps = MaiLinkPresenterProps& {};
