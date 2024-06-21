@@ -11,6 +11,7 @@ export default defineConfig({
         lib: {
             entry: './src/index.ts',
             fileName: 'index',
+            formats: ['es', 'cjs'],
             name: 'MaiUI',            
         },
         outDir: './dist',
@@ -22,7 +23,6 @@ export default defineConfig({
                 '@nextui-org/react',
                 'framer-motion',
                 'highlight.js',
-                'react-highlight'
             ],
             output: {
                 exports: 'named'
@@ -33,7 +33,9 @@ export default defineConfig({
     plugins: [
         react(),
         reactRefresh(),
-        dts(),
+        dts({
+            tsconfigPath: 'tsconfig.prod.json'
+        }),
         vanillaExtractPlugin()
     ],
     resolve: {
