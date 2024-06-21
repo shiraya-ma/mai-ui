@@ -1,5 +1,5 @@
 'use strict';
-const { maiColors, maiFonts, maiui } = require('./dist/configs')
+const { maiColors, maiFonts, maiui } = require('./dist/configs');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
