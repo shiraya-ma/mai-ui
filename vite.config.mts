@@ -22,6 +22,7 @@ export default defineConfig({
                 'react-dom',
                 '@nextui-org/react',
                 'framer-motion',
+                'react-highlight',
                 'highlight.js',
             ],
             output: {
