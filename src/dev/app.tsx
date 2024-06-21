@@ -1,15 +1,18 @@
 // App
 'use strict';
 import React from 'react';
+import { Navbar, Tab, Tabs } from '@nextui-org/react';
 import 'tailwindcss/tailwind.css';
 import '@mai-ui/../fonts.css';
 
 import type { MaiUI } from '@mai-ui/types/mai-ui';
-import { MaiButton, MaiLink } from '@mai-ui/components';
+import { MaiButton, MaiCodeBlock, MaiLink } from '@mai-ui/components';
 
 import './global.scss';
 import S from './style.module.scss';
-import { Navbar } from '@nextui-org/react';
+
+import { codeBlockText1 } from './_code-block-text-1';
+import { codeBlockText2 } from './_code-blocl-text-2';
 
 const App: React.FC<App.Props> = (props) => {
     const {} = props;
@@ -57,30 +60,68 @@ const App: React.FC<App.Props> = (props) => {
                     <section>
                         <h3 className={ S.h3 }>Colors</h3>
 
-                        <section className='!flex-row gap-4'>
-                            {maiButtonColors.map((c) => (
-                                <MaiButton color={ c } key={`mai-button-colors-${ c }`}>{ c }</MaiButton>
-                            ))}                 
-                        </section>
+                        <Tabs variant='underlined' aria-label='MaiButton Colors'>
+                            <Tab key='preview' title='preview' className='flex gap-4'>
+                                {maiButtonColors.map((c) => (
+                                    <MaiButton color={ c } key={`mai-button-colors-${ c }`}>{ c }</MaiButton>
+                                ))}  
+                            </Tab>
 
-                        <h3 className={ S.h3 }>Variants</h3>
+                            <Tab key='code' title='code'>
+                                
+                            </Tab>
+                        </Tabs>
 
-                        <section className='!flex-row gap-4'>
-                            {maiButtonVariants.map((v) => (
-                                <MaiButton color='primary' variant={ v } key={`mai-button-variants-${ v }`}>{ v }</MaiButton>
-                            ))}
-                        </section>
+                        <h3 className={ S.h3 }>Variants</h3>                         
+
+                        <Tabs variant='underlined' aria-label='MaiButton Variants'>
+                            <Tab key='preview' title='preview'  className='flex gap-4'>
+                                {maiButtonVariants.map((v) => (
+                                    <MaiButton color='primary' variant={ v } key={`mai-button-variants-${ v }`}>{ v }</MaiButton>
+                                ))}
+                            </Tab>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
 
                         <h3 className={ S.h3 }>Link Button</h3>
 
-                        <section className='!flex-row gap-4'>
-                            <MaiButton
-                            as={ MaiLink }
-                            color='primary'
-                            href='https://www.google.com/'
-                            variant='shadow'
-                            >Google</MaiButton>
-                        </section>
+                        <Tabs variant='underlined' aria-label='MaiButton LinkButton'>
+                            <Tab key='preview' title='preview'  className='flex gap-4'>
+                                <MaiButton
+                                as={ MaiLink }
+                                color='primary'
+                                href='https://www.google.com/'
+                                variant='shadow'
+                                >Google</MaiButton>
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
+                    </section>
+
+                    
+                    <h2 className={ S.h2 }>MaiCodeBlock</h2>
+
+                    <section>
+                        <h3 className={ S.h3 }>Usage</h3>
+
+                        <Tabs variant='underlined' aria-label='MaiCodeBlock Usage'>
+                            <Tab key='preview' title='preview'>
+                                <MaiCodeBlock>{ codeBlockText1 }</MaiCodeBlock>
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
+
+                        <h3 className={ S.h3 }>with file name</h3>
+
+                        <Tabs variant='underlined' aria-label='MaiCodeBlock with file name'>
+                            <Tab key='preview' title='preview'>
+                                <MaiCodeBlock filename='App.js' language='java'>{ codeBlockText2 }</MaiCodeBlock>
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                     </section>
 
                     
@@ -89,42 +130,32 @@ const App: React.FC<App.Props> = (props) => {
                     <section>
                         <h3 className={ S.h3 }>Usage</h3>
 
-                        <section className='!flex-row'>
-                            <MaiLink href='/'>MaiLink</MaiLink>
+                        <Tabs variant='underlined' aria-label='MaiLink Usage'>
+                            <Tab key='preview' title='preview'  className='flex gap-4'>
+                                <MaiLink href='/'>MaiLink</MaiLink>
 
-                            <MaiLink href='http://localhost:3000'>localhost</MaiLink>
+                                <MaiLink href='http://localhost:3000'>localhost</MaiLink>
 
-                            <MaiLink href='https://www.google.com/'>Google</MaiLink>
+                                <MaiLink href='https://www.google.com/'>Google</MaiLink>
 
-                            <MaiLink href='mailto://contact@localhost:3000'>Contact us</MaiLink>
-                        </section>
+                                <MaiLink href='mailto://contact@localhost:3000'>Contact us</MaiLink>
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                         
                         <h3 className={ S.h3 }>Colors</h3>
 
-                        <section className='!flex-row'>
-                            { maiLinkColors.map(c => (
-                                <MaiLink color={ c } key={`mai-link-colors-${ c }`} href='/'>{ c }</MaiLink>
-                            ))}
-                        </section>
+                        <Tabs variant='underlined' aria-label='MaiLink Colors'>
+                            <Tab key='preview' title='preview'  className='flex gap-4'>
+                                { maiLinkColors.map(c => (
+                                    <MaiLink color={ c } key={`mai-link-colors-${ c }`} href='/'>{ c }</MaiLink>
+                                ))}
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                     </section>
-
-                    <code className='font-code'>
-                        <pre>
-{`<!DOCTYPE html>
-<html lang="ja">
-    <head>
-        <meta charset="utf-8">
-        <title>sample</title>
-    </head>
-    <body>
-        <h1>sample</h1>
-
-        <p>hello world!</p>
-    </body>
-</html>
-`}                            
-                        </pre>
-                    </code>
                 </section>
             </main>
         </>
