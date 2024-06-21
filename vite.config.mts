@@ -9,8 +9,8 @@ import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 export default defineConfig({
     build: {
         lib: {
-            entry: './src/index.ts',
-            fileName: 'index',
+            entry: resolve(import.meta.dirname, 'src', 'index.ts'),
+            fileName: (format) => `index.${format}.js`,
             formats: ['es', 'cjs'],
             name: 'MaiUI',            
         },
@@ -26,10 +26,20 @@ export default defineConfig({
                 'highlight.js',
             ],
             output: {
-                exports: 'named'
+                exports: 'named',
+                globals: {
+                    react: 'React',
+                    'react-dom': 'ReactDOM'
+                }
             }
         },
         sourcemap: true
+    },
+    optimizeDeps: {
+        include: [
+            'react',
+            'react-dom'
+        ]
     },
     plugins: [
         react(),
