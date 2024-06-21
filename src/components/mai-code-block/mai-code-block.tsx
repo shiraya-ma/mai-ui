@@ -51,6 +51,7 @@ export const MaiCodeBlock: React.FC<MaiCodeBlockProps> = (props) => {
 
 export type MaiCodeBlockProps = {
     children: string;
+    className?: string;
     filename?: string;
     language?: string;
     style?: {
