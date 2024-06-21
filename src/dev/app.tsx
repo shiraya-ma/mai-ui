@@ -4,6 +4,7 @@ import React from 'react';
 import { Navbar, Tab, Tabs } from '@nextui-org/react';
 import 'tailwindcss/tailwind.css';
 import '@mai-ui/../fonts.css';
+import 'highlight.js/scss/night-owl.scss';
 
 import type { MaiUI } from '@mai-ui/types/mai-ui';
 import { MaiButton, MaiCodeBlock, MaiLink } from '@mai-ui/components';
