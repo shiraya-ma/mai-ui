@@ -4,9 +4,10 @@ import React from 'react';
 import { Navbar, Tab, Tabs } from '@nextui-org/react';
 import 'tailwindcss/tailwind.css';
 import '@mai-ui/../fonts.css';
-import 'highlight.js/scss/night-owl.scss';
+// import 'highlight.js/scss/night-owl.scss';
 
-import { MaiButton, MaiCodeBlock, MaiLink, MaiUI } from '../../dist/index';
+import type { MaiUI } from '@mai-ui/types/mai-ui';
+import { MaiButton, MaiCodeBlock, MaiLink } from '@mai-ui/components';
 
 import './global.scss';
 import S from './style.module.scss';
@@ -107,7 +108,7 @@ const App: React.FC<App.Props> = (props) => {
 
                         <Tabs variant='underlined' aria-label='MaiCodeBlock Usage'>
                             <Tab key='preview' title='preview'>
-                                <MaiCodeBlock>{ codeBlockText1 }</MaiCodeBlock>
+                                <MaiCodeBlock language='html'>{ codeBlockText1 }</MaiCodeBlock>
                             </Tab>
 
                             <Tab key='code' title='code'></Tab>
@@ -117,7 +118,7 @@ const App: React.FC<App.Props> = (props) => {
 
                         <Tabs variant='underlined' aria-label='MaiCodeBlock with file name'>
                             <Tab key='preview' title='preview'>
-                                <MaiCodeBlock filename='App.js' language='java'>{ codeBlockText2 }</MaiCodeBlock>
+                                <MaiCodeBlock filename='App.js' language='javascript'>{ codeBlockText2 }</MaiCodeBlock>
                             </Tab>
 
                             <Tab key='code' title='code'></Tab>

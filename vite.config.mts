@@ -23,7 +23,7 @@ export default defineConfig({
                 '@nextui-org/react',
                 'framer-motion',
                 'react-highlight',
-                'highlight.js',
+                'react-syntax-highlighter'
             ],
             output: {
                 exports: 'named',

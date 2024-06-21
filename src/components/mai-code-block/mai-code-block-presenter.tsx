@@ -1,14 +1,13 @@
 // MaiCodeBlockPresenter
 'use client';
-import React from 'react';
-import Highlight from 'react-highlight';
-
-import { margeClassNames } from '../../libs';
+import React, { CSSProperties } from 'react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import solarizedDark from 'react-syntax-highlighter/dist/esm/styles/hljs/solarized-dark';
 
 import S from './style.module.scss';
 
 export const MaiCodeBlockPresenter: React.FC<MaiCodeBlockPresenterProps> = (props) => {
-    const { children, filename, language } = props;
+    const { children, filename, language, style } = props;
 
     return (
         <div className={ S.maiCodeBlockContainer } data-with-filename={ filename !== undefined }>
@@ -19,16 +18,19 @@ export const MaiCodeBlockPresenter: React.FC<MaiCodeBlockPresenterProps> = (prop
                     { filename }
                 </div>
             )}
-
-            <Highlight className={ margeClassNames([language, S.maiCodeBlockCode]) }>
+            
+            <SyntaxHighlighter language={ language } style={ style ?? solarizedDark } className={ S.maiCodeBlockCode }>
                 { children }
-            </Highlight>
+            </SyntaxHighlighter>
         </div>
     );
 };
 
 export type MaiCodeBlockPresenterProps = {
-    children?: string;
+    children: string;
     filename?: string;
     language?: string;
+    style?: {
+        [key: string]: CSSProperties;
+    };
 };
