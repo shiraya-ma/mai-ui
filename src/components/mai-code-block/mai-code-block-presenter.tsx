@@ -2,7 +2,6 @@
 'use strict';
 import React from 'react';
 import Highlight from 'react-highlight';
-import 'highlight.js/scss/night-owl.scss';
 
 import { margeClassNames } from '../../libs';
 
