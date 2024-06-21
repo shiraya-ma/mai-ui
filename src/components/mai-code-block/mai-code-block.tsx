@@ -1,5 +1,5 @@
 // MaiCodeBlock
-'use strict';
+'use client';
 import React from 'react';
 
 import { MaiCodeBlockPresenter } from './mai-code-block-presenter';

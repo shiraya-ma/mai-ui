@@ -1,5 +1,5 @@
 // MaiCodeBlockPresenter
-'use strict';
+'use client';
 import React from 'react';
 import Highlight from 'react-highlight';
 
