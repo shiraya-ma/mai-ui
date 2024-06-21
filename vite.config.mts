@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { defineConfig }from 'vite';
 import react from '@vitejs/plugin-react';
 import reactRefresh from "@vitejs/plugin-react-refresh";
+import dts from 'vite-plugin-dts';
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
 export default defineConfig({
@@ -10,7 +11,7 @@ export default defineConfig({
         lib: {
             entry: './src/index.ts',
             fileName: 'index',
-            name: 'MaiUI',
+            name: 'MaiUI',            
         },
         outDir: './dist',
         rollupOptions: {
@@ -22,14 +23,17 @@ export default defineConfig({
                 'framer-motion',
                 'highlight.js',
                 'react-highlight'
-            ]
+            ],
+            output: {
+                exports: 'named'
+            }
         },
         sourcemap: true
     },
     plugins: [
         react(),
         reactRefresh(),
-        // sassPlugin(),
+        dts(),
         vanillaExtractPlugin()
     ],
     resolve: {

@@ -6,8 +6,7 @@ import 'tailwindcss/tailwind.css';
 import '@mai-ui/../fonts.css';
 import 'highlight.js/scss/night-owl.scss';
 
-import type { MaiUI } from '@mai-ui/types/mai-ui';
-import { MaiButton, MaiCodeBlock, MaiLink } from '@mai-ui/components';
+import { MaiButton, MaiCodeBlock, MaiLink, MaiUI } from '../../dist/index';
 
 import './global.scss';
 import S from './style.module.scss';
