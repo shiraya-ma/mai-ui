@@ -6,7 +6,7 @@ import { Button, ButtonProps } from '@nextui-org/react';
 import { MaiUI } from '../../types/mai-ui';
 
 
-export const MaiButtonPresenter: React.FC<MaiButtonPresenterProps> = (props) => {
+const MaiButtonPresenter: React.FC<MaiButtonPresenter.Props> = (props) => {
     const {} = props;
     
     return (
@@ -16,10 +16,16 @@ export const MaiButtonPresenter: React.FC<MaiButtonPresenterProps> = (props) => 
     );
 };
 
-export type MaiButtonPresenterProps = ButtonProps & {
-    children?: ReactNode;
-
-    color?: MaiUI.ButtonColor;
-
-    variant?: MaiUI.ButtonVariant;
+namespace MaiButtonPresenter {
+    export type Props = ButtonProps & {
+        children?: ReactNode;
+    
+        color?: MaiUI.ButtonColor;
+    
+        variant?: MaiUI.ButtonVariant;
+    };    
 };
+
+export {
+    MaiButtonPresenter
+}

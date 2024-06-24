@@ -2,9 +2,9 @@
 'use client';
 import React from 'react';
 
-import { MaiButtonPresenter, MaiButtonPresenterProps } from './mai-button-presenter';
+import { MaiButtonPresenter } from './mai-button-presenter';
 
-export const MaiButton: React.FC<MyButtonProps> = (props) => {
+const MaiButton: React.FC<MaiButton.Props> = (props) => {
     const { ...btnProps } = props;
     
     return (
@@ -14,4 +14,10 @@ export const MaiButton: React.FC<MyButtonProps> = (props) => {
     );
 };
 
-export type MyButtonProps = MaiButtonPresenterProps & {};
+namespace MaiButton {
+    export type Props = MaiButtonPresenter.Props & {};
+};
+
+export {
+    MaiButton
+};
