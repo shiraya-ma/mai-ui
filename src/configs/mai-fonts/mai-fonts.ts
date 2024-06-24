@@ -16,5 +16,7 @@
  * };
 */
 export const maiFonts = {
-    code: [ "JetBrains Mono", 'monospace' ]
+    code: [ 'JetBrains Mono', 'monospace' ],
+    heading: [ 'Sawarabi Gothic', 'sans-serif' ],
+    main: [ 'Sawarabi Mincho', 'serif' ],
 };
