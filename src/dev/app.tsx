@@ -6,7 +6,7 @@ import 'tailwindcss/tailwind.css';
 import '@mai-ui/../fonts.css';
 
 import type { MaiUI } from '@mai-ui/types/mai-ui';
-import { MaiButton, MaiCodeBlock, MaiLink } from '@mai-ui/components';
+import { MaiButton, MaiCodeBlock, MaiH1, MaiH2, MaiLink } from '@mai-ui/components';
 
 import './global.scss';
 import S from './style.module.scss';
@@ -53,9 +53,11 @@ const App: React.FC<App.Props> = (props) => {
 
             <main className={ S.container }>
                 <h1 className={ S.h1 }>Mai UI</h1>
+                <MaiH1>Mai UI</MaiH1>
 
                 <section>
                     <h2 className={ S.h2 }>MaiButton</h2>
+                    <MaiH2>MaiButton</MaiH2>
 
                     <section>
                         <h3 className={ S.h3 }>Colors</h3>
