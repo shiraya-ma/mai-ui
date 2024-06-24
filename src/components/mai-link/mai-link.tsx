@@ -2,7 +2,7 @@
 'use client';
 import React from 'react';
 
-import { MaiLinkPresenter, MaiLinkPresenterProps } from './mai-link-presenter';
+import { MaiLinkPresenter } from './mai-link-presenter';
 import { useExternalLink } from './hooks';
 
 export const MaiLink: React.FC<MaiLinkProps> = (props) => {
@@ -20,4 +20,4 @@ export const MaiLink: React.FC<MaiLinkProps> = (props) => {
     );
 };
 
-export type MaiLinkProps = MaiLinkPresenterProps& {};
+export type MaiLinkProps = MaiLinkPresenter.Props& {};

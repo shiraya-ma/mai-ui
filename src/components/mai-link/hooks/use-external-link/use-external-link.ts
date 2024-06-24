@@ -4,7 +4,7 @@
 import { MouseEvent, MouseEventHandler, useCallback, useMemo } from "react";
 import { isExternal } from "./is-external";
 import { useDisclosure } from "@nextui-org/react";
-import { ExternalLinkModalProps } from "../../mai-link-presenter";
+import type { MaiLinkPresenter } from "../../mai-link-presenter";
 
 export function useExternalLink (href?: string, onClick?: MouseEventHandler<HTMLAnchorElement>) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -50,3 +50,5 @@ export function useExternalLink (href?: string, onClick?: MouseEventHandler<HTML
         onClickLink
     };
 };
+
+type ExternalLinkModalProps = MaiLinkPresenter.ExternalLinkModalProps;

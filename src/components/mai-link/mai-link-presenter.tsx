@@ -7,7 +7,7 @@ import { MaiUI } from '../../types/mai-ui';
 
 import { MaiButton } from '../mai-button';
 
-export const MaiLinkPresenter: React.FC<MaiLinkPresenterProps> = (props) => {
+const MaiLinkPresenter: React.FC<MaiLinkPresenter.Props> = (props) => {
     const {
         isExternalLink,
         modal,
@@ -41,15 +41,21 @@ export const MaiLinkPresenter: React.FC<MaiLinkPresenterProps> = (props) => {
     );
 };
 
-export type MaiLinkPresenterProps = LinkProps & {
-    color?: MaiUI.LinkColor;
-    isExternalLink?: boolean;
-    modal?: ExternalLinkModalProps;
+namespace MaiLinkPresenter {
+    export type Props  = LinkProps & {
+        color?: MaiUI.LinkColor;
+        isExternalLink?: boolean;
+        modal?: ExternalLinkModalProps;
+    };    
+
+    export type ExternalLinkModalProps = {
+        isOpen: boolean;
+        onOpenChange: (isOpen: boolean) => void;
+        onPressCloseBtn: () => void;
+        onPressOpenBtn: () => void;
+    };
 };
 
-export type ExternalLinkModalProps = {
-    isOpen: boolean;
-    onOpenChange: (isOpen: boolean) => void;
-    onPressCloseBtn: () => void;
-    onPressOpenBtn: () => void;
+export {
+    MaiLinkPresenter
 };
