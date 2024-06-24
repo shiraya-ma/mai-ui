@@ -22,7 +22,7 @@ export function maiui (config?: NextUIPluginConfig | undefined) {
         700: maiColors.mint[700],
         800: maiColors.mint[800],
         900: maiColors.mint[900],
-        DEFAULT: maiColors.mint[200],
+        DEFAULT: maiColors.mint[300],
         foreground: '#fff'
     };
 
@@ -52,7 +52,7 @@ export function maiui (config?: NextUIPluginConfig | undefined) {
         700: maiColors.cider[700],
         800: maiColors.cider[800],
         900: maiColors.cider[900],
-        DEFAULT: maiColors.cider[200],
+        DEFAULT: maiColors.cider[300],
         foreground: '#fff'
     };
 
@@ -82,7 +82,7 @@ export function maiui (config?: NextUIPluginConfig | undefined) {
         700: maiColors.citrus[700],
         800: maiColors.citrus[800],
         900: maiColors.citrus[900],
-        DEFAULT: maiColors.citrus[300],
+        DEFAULT: maiColors.citrus[400],
         foreground: '#000'
     };
     
