@@ -3,13 +3,13 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { App } from './app';
 
-import { MaiUiProvider } from '@mai-ui/components';
-// import { MaiUiProvider } from '../../dist/components';
+import { MaiUIProvider } from '@mai-ui/components';
+// import { MaiUIProvider } from '../../dist/components';
 
 createRoot(document.querySelector('div#root') as HTMLDivElement).render((
     <StrictMode>
-        <MaiUiProvider>
+        <MaiUIProvider>
             <App />
-        </MaiUiProvider>
+        </MaiUIProvider>
     </StrictMode>
 ));

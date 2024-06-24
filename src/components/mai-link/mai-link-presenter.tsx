@@ -11,7 +11,6 @@ export const MaiLinkPresenter: React.FC<MaiLinkPresenterProps> = (props) => {
     const {
         isExternalLink,
         modal,
-        NextLink,
         ...linkProps
     } = props;
 
@@ -19,7 +18,6 @@ export const MaiLinkPresenter: React.FC<MaiLinkPresenterProps> = (props) => {
         <>
             <NextUILink
             { ...linkProps }
-            as={ NextLink }
             />
 
             { isExternalLink && (<>
@@ -47,7 +45,6 @@ export type MaiLinkPresenterProps = LinkProps & {
     color?: MaiUI.LinkColor;
     isExternalLink?: boolean;
     modal?: ExternalLinkModalProps;
-    NextLink?: any;
 };
 
 export type ExternalLinkModalProps = {
