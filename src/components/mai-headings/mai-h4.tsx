@@ -1,6 +1,6 @@
 // MaiH4
 'use strict';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 
 import { MaiHeadings } from './mai-headings';
 
@@ -17,7 +17,10 @@ const MaiH4 = (props: MaiH4.Props) => {
 };
 
 namespace MaiH4 {
-    export type Props = HTMLAttributes<HTMLHeadingElement> & {};
+    export type Props = HTMLAttributes<HTMLHeadingElement> & {
+        endContent?: ReactNode;
+        startContent?: ReactNode;
+    };
 };
 
 export {

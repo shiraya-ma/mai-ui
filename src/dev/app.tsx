@@ -2,11 +2,23 @@
 'use strict';
 import React from 'react';
 import { Navbar, Tab, Tabs } from '@nextui-org/react';
+import { Twitter } from 'react-bootstrap-icons';
 import 'tailwindcss/tailwind.css';
 import '@mai-ui/../fonts.css';
 
 import type { MaiUI } from '@mai-ui/types/mai-ui';
-import { MaiButton, MaiCodeBlock, MaiH1, MaiH2, MaiLink } from '@mai-ui/components';
+import {
+    MaiButton,
+    MaiCodeBlock,
+    MaiH1,
+    MaiH2,
+    MaiH3,
+    MaiH4,
+    MaiH5,
+    MaiH6,
+    MaiHeadings,
+    MaiLink
+} from '@mai-ui/components';
 
 import './global.scss';
 import S from './style.module.scss';
@@ -52,111 +64,171 @@ const App: React.FC<App.Props> = (props) => {
             </Navbar>
 
             <main className={ S.container }>
-                <h1 className={ S.h1 }>Mai UI</h1>
                 <MaiH1>Mai UI</MaiH1>
 
                 <section>
-                    <h2 className={ S.h2 }>MaiButton</h2>
                     <MaiH2>MaiButton</MaiH2>
 
                     <section>
-                        <h3 className={ S.h3 }>Colors</h3>
+                        <MaiH3>MaiButton Colors</MaiH3>
 
-                        <Tabs variant='underlined' aria-label='MaiButton Colors'>
-                            <Tab key='preview' title='preview' className='flex gap-4'>
-                                {maiButtonColors.map((c) => (
-                                    <MaiButton color={ c } key={`mai-button-colors-${ c }`}>{ c }</MaiButton>
-                                ))}  
-                            </Tab>
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiButton Colors'>
+                                <Tab key='preview' title='preview' className='flex gap-4'>
+                                    {maiButtonColors.map((c) => (
+                                        <MaiButton color={ c } key={`mai-button-colors-${ c }`}>{ c }</MaiButton>
+                                    ))}  
+                                </Tab>
 
-                            <Tab key='code' title='code'>
-                                
-                            </Tab>
-                        </Tabs>
+                                <Tab key='code' title='code'>
+                                    
+                                </Tab>
+                            </Tabs>
+                        </div>
 
-                        <h3 className={ S.h3 }>Variants</h3>                         
+                        <MaiH3>MaiButton Variants</MaiH3>                       
 
-                        <Tabs variant='underlined' aria-label='MaiButton Variants'>
-                            <Tab key='preview' title='preview'  className='flex gap-4'>
-                                {maiButtonVariants.map((v) => (
-                                    <MaiButton color='primary' variant={ v } key={`mai-button-variants-${ v }`}>{ v }</MaiButton>
-                                ))}
-                            </Tab>
-                            <Tab key='code' title='code'></Tab>
-                        </Tabs>
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiButton Variants'>
+                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                                    {maiButtonVariants.map((v) => (
+                                        <MaiButton color='primary' variant={ v } key={`mai-button-variants-${ v }`}>{ v }</MaiButton>
+                                    ))}
+                                </Tab>
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
 
-                        <h3 className={ S.h3 }>Link Button</h3>
+                        <MaiH3>MaiButton as Link</MaiH3>  
 
-                        <Tabs variant='underlined' aria-label='MaiButton LinkButton'>
-                            <Tab key='preview' title='preview'  className='flex gap-4'>
-                                <MaiButton
-                                as={ MaiLink }
-                                color='primary'
-                                href='https://www.google.com/'
-                                variant='shadow'
-                                >Google</MaiButton>
-                            </Tab>
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiButton LinkButton'>
+                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                                    <MaiButton
+                                    as={ MaiLink }
+                                    color='primary'
+                                    href='https://www.google.com/'
+                                    variant='shadow'
+                                    >Google</MaiButton>
+                                </Tab>
 
-                            <Tab key='code' title='code'></Tab>
-                        </Tabs>
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
                     </section>
-
                     
-                    <h2 className={ S.h2 }>MaiCodeBlock</h2>
+                    <MaiH2>MaiCodeBlock</MaiH2>
 
                     <section>
-                        <h3 className={ S.h3 }>Usage</h3>
+                        <MaiH3>MaiCodeBlock Usage</MaiH3>
 
-                        <Tabs variant='underlined' aria-label='MaiCodeBlock Usage'>
-                            <Tab key='preview' title='preview'>
-                                <MaiCodeBlock language='html'>{ codeBlockText1 }</MaiCodeBlock>
-                            </Tab>
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiCodeBlock Usage'>
+                                <Tab key='preview' title='preview'>
+                                    <MaiCodeBlock language='html'>{ codeBlockText1 }</MaiCodeBlock>
+                                </Tab>
 
-                            <Tab key='code' title='code'></Tab>
-                        </Tabs>
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
 
-                        <h3 className={ S.h3 }>with file name</h3>
+                        <MaiH3>MaiCodeBlock with file name</MaiH3>
 
-                        <Tabs variant='underlined' aria-label='MaiCodeBlock with file name'>
-                            <Tab key='preview' title='preview'>
-                                <MaiCodeBlock filename='App.js' language='javascript'>{ codeBlockText2 }</MaiCodeBlock>
-                            </Tab>
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiCodeBlock with file name'>
+                                <Tab key='preview' title='preview'>
+                                    <MaiCodeBlock filename='App.js' language='javascript'>{ codeBlockText2 }</MaiCodeBlock>
+                                </Tab>
 
-                            <Tab key='code' title='code'></Tab>
-                        </Tabs>
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
                     </section>
 
-                    
-                    <h2 className={ S.h2 }>MaiLink</h2>
+                    <MaiH2>MaiHeadings</MaiH2>
 
                     <section>
-                        <h3 className={ S.h3 }>Usage</h3>
+                        <MaiH3>MaiHeadings Usage</MaiH3>
 
-                        <Tabs variant='underlined' aria-label='MaiLink Usage'>
-                            <Tab key='preview' title='preview'  className='flex gap-4'>
-                                <MaiLink href='/'>MaiLink</MaiLink>
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiHeadings Usage'>
+                                <Tab key='preview' title='preview'>
+                                    <MaiHeadings id='_' level={ 1 }>Header 1</MaiHeadings><br/>
+                                    <MaiHeadings id='_' level={ 2 }>Header 2</MaiHeadings><br/>
+                                    <MaiHeadings id='_' level={ 3 }>Header 3</MaiHeadings><br/>
+                                    <MaiHeadings id='_' level={ 4 }>Header 4</MaiHeadings><br/>
+                                    <MaiHeadings id='_' level={ 5 }>Header 5</MaiHeadings><br/>
+                                    <MaiHeadings id='_' level={ 6 }>Header 6</MaiHeadings>
+                                </Tab>
 
-                                <MaiLink href='http://localhost:3000'>localhost</MaiLink>
-
-                                <MaiLink href='https://www.google.com/'>Google</MaiLink>
-
-                                <MaiLink href='mailto://contact@localhost:3000'>Contact us</MaiLink>
-                            </Tab>
-
-                            <Tab key='code' title='code'></Tab>
-                        </Tabs>
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
                         
-                        <h3 className={ S.h3 }>Colors</h3>
+                        <MaiH3>MaiHeadings for individual import</MaiH3>
 
-                        <Tabs variant='underlined' aria-label='MaiLink Colors'>
-                            <Tab key='preview' title='preview'  className='flex gap-4'>
-                                { maiLinkColors.map(c => (
-                                    <MaiLink color={ c } key={`mai-link-colors-${ c }`} href='/'>{ c }</MaiLink>
-                                ))}
-                            </Tab>
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiHeadings for individual import'>
+                                <Tab key='preview' title='preview'>
+                                    <MaiH1 id='_'>Header 1</MaiH1><br/>
+                                    <MaiH2 id='_'>Header 2</MaiH2><br/>
+                                    <MaiH3 id='_'>Header 3</MaiH3><br/>
+                                    <MaiH4 id='_'>Header 4</MaiH4><br/>
+                                    <MaiH5 id='_'>Header 5</MaiH5><br/>
+                                    <MaiH6 id='_'>Header 6</MaiH6>
+                                </Tab>
 
-                            <Tab key='code' title='code'></Tab>
-                        </Tabs>
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
+                        
+                        <MaiH3>MaiHeadings with icon</MaiH3>
+
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiHeadings with icon'>
+                                <Tab key='preview' title='preview'>
+                                    <MaiH3 startContent={ <Twitter/> }>Twitter</MaiH3><br/>
+                                </Tab>
+
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
+                    </section>
+                    
+                    <MaiH2>MaiLink</MaiH2>
+
+                    <section>
+                        <MaiH3>MaiLink Usage</MaiH3>
+
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiLink Usage'>
+                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                                    <MaiLink href='/'>MaiLink</MaiLink>
+
+                                    <MaiLink href='http://localhost:3000'>localhost</MaiLink>
+
+                                    <MaiLink href='https://www.google.com/'>Google</MaiLink>
+
+                                    <MaiLink href='mailto://contact@localhost:3000'>Contact us</MaiLink>
+                                </Tab>
+
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
+                        
+                        <MaiH3>MaiLink Colors</MaiH3>
+                            
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiLink Colors'>
+                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                                    { maiLinkColors.map(c => (
+                                        <MaiLink color={ c } key={`mai-link-colors-${ c }`} href='/'>{ c }</MaiLink>
+                                    ))}
+                                </Tab>
+
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
                     </section>
                 </section>
             </main>
