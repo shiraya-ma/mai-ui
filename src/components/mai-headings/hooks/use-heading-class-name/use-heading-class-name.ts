@@ -8,7 +8,7 @@ export function useHeadingClassName (className?: string) {
     const importantClassName = useMemo(() => className, [ className ]);
 
     const headingClassName = useCallback((className?: string) => {
-        const commonClassName = 'font-heading dark:text-white [&+*]:flex [&+*]:flex-col [&+*]:gap-4 [&+*]:p-4';
+        const commonClassName = 'flex align-center gap-2 font-bold font-heading dark:text-white [&+*]:flex [&+*]:flex-col [&+*]:gap-4 [&+*]:p-4';
 
 
         return margeClassNames([
