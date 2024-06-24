@@ -1,11 +1,11 @@
 // MaiLink
 'use client';
-import React from 'react';
+import { forwardRef } from 'react';
 
 import { MaiLinkPresenter } from './mai-link-presenter';
 import { useExternalLink } from './hooks';
 
-export const MaiLink: React.FC<MaiLinkProps> = (props) => {
+const MaiLink = forwardRef<HTMLAnchorElement, MaiLink.Props>((props, ref) => {
     const { onClick } = props;
 
     const { isExternalLink, modal, onClickLink } = useExternalLink(props.href, onClick);
@@ -16,8 +16,15 @@ export const MaiLink: React.FC<MaiLinkProps> = (props) => {
         isExternalLink={ isExternalLink }
         modal={ modal }
         onClick={ onClickLink }
+        ref={ ref }
         />
     );
+});
+
+namespace MaiLink {
+    export type Props = MaiLinkPresenter.Props& {};
 };
 
-export type MaiLinkProps = MaiLinkPresenter.Props& {};
+export {
+    MaiLink
+};

@@ -1,13 +1,13 @@
 // MaiLinkPresenter
 'use client';
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Link as NextUILink, LinkProps, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@nextui-org/react';
 
 import { MaiUI } from '../../types/mai-ui';
 
 import { MaiButton } from '../mai-button';
 
-const MaiLinkPresenter: React.FC<MaiLinkPresenter.Props> = (props) => {
+const MaiLinkPresenter = forwardRef<HTMLAnchorElement, MaiLinkPresenter.Props>((props, ref) => {
     const {
         isExternalLink,
         modal,
@@ -18,6 +18,7 @@ const MaiLinkPresenter: React.FC<MaiLinkPresenter.Props> = (props) => {
         <>
             <NextUILink
             { ...linkProps }
+            ref={ ref }
             />
 
             { isExternalLink && (<>
@@ -39,7 +40,7 @@ const MaiLinkPresenter: React.FC<MaiLinkPresenter.Props> = (props) => {
             </>)}
         </>
     );
-};
+});
 
 namespace MaiLinkPresenter {
     export type Props  = LinkProps & {
