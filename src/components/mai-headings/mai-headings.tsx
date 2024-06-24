@@ -3,13 +3,17 @@
 import React, { HTMLAttributes } from 'react';
 
 import { MaiHeadingsPresenter } from './mai-headings-presenter';
+import { useHeadingID } from './hooks';
 
 const MaiHeadings: React.FC<MaiHeadings.Props> = (props) => {
-    const { level, ...headingProps } = props;
+    const { id, level, ...headingProps } = props;
+
+    const { headingID } = useHeadingID(headingProps.children);
     
     return (
         <MaiHeadingsPresenter
         { ...headingProps }
+        id={ id ?? headingID }
         level={ level }
         />
     );
