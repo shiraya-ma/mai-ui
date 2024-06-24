@@ -1,6 +1,6 @@
 // MaiHeadings
 'use strict';
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, ReactNode } from 'react';
 
 import { MaiHeadingsPresenter } from './mai-headings-presenter';
 import { useHeadingClassName, useHeadingID } from './hooks';
@@ -14,7 +14,7 @@ const MaiHeadings: React.FC<MaiHeadings.Props> = (props) => {
     return (
         <MaiHeadingsPresenter
         { ...headingProps }
-        className={ headingClassName }
+        headingClassName={ headingClassName }
         id={ id ?? headingID }
         level={ level }
         />
@@ -24,7 +24,9 @@ const MaiHeadings: React.FC<MaiHeadings.Props> = (props) => {
 namespace MaiHeadings {
     export type Props = HTMLAttributes<HTMLHeadingElement> & {
         children: string;
+        endContent?: ReactNode;
         level: MaiHeadingsPresenter.HeadingLevel;
+        startContent?: ReactNode;
     };
 };
 
