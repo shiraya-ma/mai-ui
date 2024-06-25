@@ -8,8 +8,6 @@ import { margeClassNames } from '@mai-ui/libs';
 export const MaiCodeBlockPresenter: React.FC<MaiCodeBlockPresenterProps> = (props) => {
     const { children, className, filename, isPrism, language, style } = props;
 
-    console.log(style);
-
     return (
         <div
         className={ margeClassNames([
