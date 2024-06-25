@@ -1,7 +1,7 @@
 // App
 'use strict';
 import React from 'react';
-import { Navbar, Tab, Tabs } from '@nextui-org/react';
+import { Tab, Tabs } from '@nextui-org/react';
 import { Twitter } from 'react-bootstrap-icons';
 import 'tailwindcss/tailwind.css';
 import '@mai-ui/../fonts.css';
@@ -59,10 +59,6 @@ const App: React.FC<App.Props> = (props) => {
     
     return (
         <>
-            <Navbar className='backdrop-saturate-100 dark:bg-transparent' isBordered shouldHideOnScroll>
-
-            </Navbar>
-
             <main className={ S.container }>
                 <MaiH1>Mai UI</MaiH1>
 

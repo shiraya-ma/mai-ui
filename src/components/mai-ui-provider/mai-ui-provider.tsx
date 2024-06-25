@@ -1,6 +1,6 @@
 // MaiUIProvider
 'use client';
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { NextUIProvider, NextUIProviderProps } from '@nextui-org/react';
 
 import { ThemeContext } from '../../libs/theme';
