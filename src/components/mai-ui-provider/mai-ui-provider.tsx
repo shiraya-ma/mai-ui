@@ -7,6 +7,7 @@ import { ThemeContext } from '../../libs/theme';
 
 import { useThemeContext } from './hooks';
 import { PrefereThemeOvserver } from './prefere-theme-ovserver';
+import { NavigateContext } from '@mai-ui/libs';
 
 /**
  * MaiUIでテーマなどのコンテキストを提供するプロバイダーコンポーネント
@@ -36,19 +37,21 @@ import { PrefereThemeOvserver } from './prefere-theme-ovserver';
  * @returns 
  */
 const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
-    const { children, ...nextUIProviderProps } = props;
+    const { children, navigate, ...nextUIProviderProps } = props;
 
     const { context } = useThemeContext();
     
     return (
         <ThemeContext.Provider value={ context }>
-            <NextUIProvider
-            { ...nextUIProviderProps }
-            >
-                { children }
+            <NavigateContext.Provider value={{ navigate }}>
+                <NextUIProvider
+                { ...nextUIProviderProps }
+                >
+                    { children }
 
-                <PrefereThemeOvserver />
-            </NextUIProvider>
+                    <PrefereThemeOvserver />
+                </NextUIProvider>
+            </NavigateContext.Provider>
         </ThemeContext.Provider>
     );
 };

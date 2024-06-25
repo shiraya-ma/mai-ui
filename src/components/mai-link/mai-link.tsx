@@ -6,9 +6,9 @@ import { MaiLinkPresenter } from './mai-link-presenter';
 import { useExternalLink } from './hooks';
 
 const MaiLink = forwardRef<HTMLAnchorElement, MaiLink.Props>((props, ref) => {
-    const { onClick } = props;
+    const {} = props;
 
-    const { isExternalLink, modal, onClickLink } = useExternalLink(props.href, onClick);
+    const { isExternalLink, modal, onClickLink } = useExternalLink(props.href);
     
     return (
         <MaiLinkPresenter
