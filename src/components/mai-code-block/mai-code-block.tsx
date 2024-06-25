@@ -3,6 +3,7 @@
 import React, { CSSProperties } from 'react';
 
 import { MaiCodeBlockPresenter } from './mai-code-block-presenter';
+import { useHighlighterStyle } from './hooks';
 
 /**
  * SyntaxHighlighterをラップしたコンポーネント
@@ -10,7 +11,7 @@ import { MaiCodeBlockPresenter } from './mai-code-block-presenter';
  * ファイル名、言語を指定できる
  * 
  * 使用するスタイルは'react-syntax-highlighter'からimportする  
- * デフォルトはSolarized Dark
+ * デフォルトはNight Owl
  * 
  * @expamle
  * ```
@@ -38,13 +39,16 @@ export const MaiCodeBlock: React.FC<MaiCodeBlockProps> = (props) => {
         language,
         style
     } = props;
+
+    const { highlighterStyle, isPrism } = useHighlighterStyle(style);
     
     return (
         <MaiCodeBlockPresenter
         children={ children }
         filename={ filename }
+        isPrism={ isPrism }
         language={ language }
-        style={ style }
+        style={ highlighterStyle }
         />
     );
 };

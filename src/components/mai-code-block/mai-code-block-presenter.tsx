@@ -1,13 +1,14 @@
 // MaiCodeBlockPresenter
 'use client';
 import React, { CSSProperties } from 'react';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import solarizedDark from 'react-syntax-highlighter/dist/esm/styles/hljs/solarized-dark';
+import SyntaxHighlighter, { Prism } from 'react-syntax-highlighter';
 
 import { margeClassNames } from '@mai-ui/libs';
 
 export const MaiCodeBlockPresenter: React.FC<MaiCodeBlockPresenterProps> = (props) => {
-    const { children, className, filename, language, style } = props;
+    const { children, className, filename, isPrism, language, style } = props;
+
+    console.log(style);
 
     return (
         <div
@@ -23,13 +24,27 @@ export const MaiCodeBlockPresenter: React.FC<MaiCodeBlockPresenterProps> = (prop
                 </div>
             )}
             
-            <SyntaxHighlighter
-            language={ language }
-            style={ style ?? solarizedDark }
-            className='[&_*]:font-code'
-            >
-                { children }
-            </SyntaxHighlighter>
+            { isPrism? (
+                <>
+                    <Prism
+                    language={ language }
+                    style={ style }
+                    className='[&_*]:font-code'
+                    >
+                        { children }
+                    </Prism>
+                </>
+            ): (
+                <>
+                    <SyntaxHighlighter
+                    language={ language }
+                    style={ style }
+                    className='[&_*]:font-code'
+                    >
+                        { children }
+                    </SyntaxHighlighter>
+                </>
+            ) }            
         </div>
     );
 };
@@ -38,8 +53,9 @@ export type MaiCodeBlockPresenterProps = {
     children: string;
     className?: string;
     filename?: string;
+    isPrism: boolean;
     language?: string;
-    style?: {
+    style: {
         [key: string]: CSSProperties;
     };
 };

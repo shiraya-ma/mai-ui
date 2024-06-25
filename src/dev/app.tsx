@@ -5,6 +5,7 @@ import { Tab, Tabs } from '@nextui-org/react';
 import { Twitter } from 'react-bootstrap-icons';
 import 'tailwindcss/tailwind.css';
 import '@mai-ui/../fonts.css';
+import SyntaxHighlighterStyle from 'react-syntax-highlighter/dist/cjs/styles/prism/darcula';
 
 import type { MaiUI } from '@mai-ui/types/mai-ui';
 import {
@@ -121,7 +122,7 @@ const App: React.FC<App.Props> = (props) => {
                         <div>
                             <Tabs variant='underlined' aria-label='MaiCodeBlock Usage'>
                                 <Tab key='preview' title='preview'>
-                                    <MaiCodeBlock language='html'>{ codeBlockText1 }</MaiCodeBlock>
+                                    <MaiCodeBlock language='html' style={SyntaxHighlighterStyle}>{ codeBlockText1 }</MaiCodeBlock>
                                 </Tab>
 
                                 <Tab key='code' title='code'></Tab>
