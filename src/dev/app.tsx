@@ -18,7 +18,8 @@ import {
     MaiH5,
     MaiH6,
     MaiHeadings,
-    MaiLink
+    MaiLink,
+    MaiSNSLink
 } from '@mai-ui/components';
 
 import './global.scss';
@@ -225,6 +226,28 @@ const App: React.FC<App.Props> = (props) => {
 
                                 <Tab key='code' title='code'></Tab>
                             </Tabs>
+                        </div>
+                    </section>
+
+                    <MaiH2>MaiSNSLink</MaiH2>
+
+                    <section>
+                        <MaiH3>MaiSNSLink Usage</MaiH3>
+
+                        <div>
+                        <Tabs variant='underlined' aria-label='MaiSNSLink Usage'>
+                            <Tab key='preview' title='preview'  className='flex gap-4'>
+                                <MaiSNSLink.Twitter id='elonmusk'/>
+
+                                <MaiSNSLink.Twitter id='elonmusk' isX/>
+
+                                <MaiSNSLink.Instagram />
+
+                                <MaiSNSLink.Pixiv />
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                         </div>
                     </section>
                 </section>
