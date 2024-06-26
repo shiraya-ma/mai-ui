@@ -3,24 +3,34 @@
 import React from 'react';
 import { Twitter as TwitterIcon, TwitterX as TwitterXIcon } from 'react-bootstrap-icons';
 
-import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
+import { MaiSNSLinkOuter } from './mai-sns-link-outer';
 
 const Twitter: React.FC<Twitter.Props> = (props) => {
     const {
+        color,
         id,
-        isX,
-        ...anchorProps
+        isX
     } = props;
-    
+
     return (
-        <MaiSNSLinkPresenter
-        { ...anchorProps }
+        <MaiSNSLinkOuter
+        color={ color }
         href={`https://x.com/${ id.replace(/@/g, '')}`}
-        sns='Twitter'
+        sns='Twitter'        
         >
             { isX? <TwitterXIcon />: <TwitterIcon /> }
-        </MaiSNSLinkPresenter>
+        </MaiSNSLinkOuter>
     );
+    
+    // return (
+    //     <MaiSNSLinkPresenter
+    //     { ...anchorProps }
+    //     href={`https://x.com/${ id.replace(/@/g, '')}`}
+    //     sns='Twitter'
+    //     >
+    //         { isX? <TwitterXIcon />: <TwitterIcon /> }
+    //     </MaiSNSLinkPresenter>
+    // );
 };
 
 namespace Twitter {

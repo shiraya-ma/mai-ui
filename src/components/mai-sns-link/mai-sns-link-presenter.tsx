@@ -1,6 +1,6 @@
 // MaiSNSLinkPresenter
 'use strict';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, RefObject } from 'react';
 
 import { margeClassNames } from '@mai-ui/libs';
 
@@ -13,16 +13,21 @@ const MaiSNSLinkPresenter: React.FC<MaiSNSLinkPresenter.Props> = (props) => {
         children,
         className,
         href,
-        sns
+        sns,
+        title,
+        refLink
     } = props;
     
     return (
         <MaiLink
         className={ margeClassNames([ S.snsLink, className ]) }
         href={ href }
+        title={ title }
+        ref={ refLink }
         data-sns={ sns }
         >
             { children }
+            <div/>
         </MaiLink>
     );
 };
@@ -32,8 +37,12 @@ namespace MaiSNSLinkPresenter {
         children?: ReactNode;
         className?: string;
         href: string;
-        sns: 'Instagram' | 'pixiv' | 'Twitter';
+        sns: SNS;
+        title: string;
+        refLink: RefObject<HTMLAnchorElement>;
     };
+
+    export type SNS = 'Instagram' | 'pixiv' | 'Twitter';
 };
 
 export {

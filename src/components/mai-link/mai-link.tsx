@@ -22,7 +22,7 @@ const MaiLink = forwardRef<HTMLAnchorElement, MaiLink.Props>((props, ref) => {
 });
 
 namespace MaiLink {
-    export type Props = MaiLinkPresenter.Props& {};
+    export type Props = MaiLinkPresenter.Props & {};
 };
 
 export {

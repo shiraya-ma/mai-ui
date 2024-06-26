@@ -14,9 +14,6 @@ const MaiLinkPresenter = forwardRef<HTMLAnchorElement, MaiLinkPresenter.Props>((
         ...linkProps
     } = props;
 
-    // console.debug('onClick:', typeof props.onClick);
-    // console.debug('onPress:', typeof props.onPress);
-
     return (
         <>
             <NextUILink

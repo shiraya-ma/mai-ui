@@ -3,23 +3,33 @@
 import React from 'react';
 import { Instagram as InstagramIcon } from 'react-bootstrap-icons';
 
-import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
+import { MaiSNSLinkOuter } from './mai-sns-link-outer';
 
 const Instagram: React.FC<Instagram.Props> = (props) => {
     const {
-        id,
-        ...anchorProps
+        color,
+        id
     } = props;
-    
+
     return (
-        <MaiSNSLinkPresenter
-        { ...anchorProps }
+        <MaiSNSLinkOuter
+        color={ color }
         href={`https://www.instagram.com/${ id ?? '' }`}
-        sns='Instagram'
+        sns='Instagram'     
         >
             <InstagramIcon />
-        </MaiSNSLinkPresenter>
+        </MaiSNSLinkOuter>
     );
+    
+    // return (
+    //     <MaiSNSLinkPresenter
+    //     { ...anchorProps }
+    //     href={`https://www.instagram.com/${ id ?? '' }`}
+    //     sns='Instagram'
+    //     >
+    //         <InstagramIcon />
+    //     </MaiSNSLinkPresenter>
+    // );
 };
 
 namespace Instagram {
