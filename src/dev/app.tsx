@@ -237,9 +237,9 @@ const App: React.FC<App.Props> = (props) => {
                         <div>
                         <Tabs variant='underlined' aria-label='MaiSNSLink Usage'>
                             <Tab key='preview' title='preview'  className='flex gap-4'>
-                                <MaiSNSLink.Twitter id='elonmusk'/>
+                                <MaiSNSLink.Twitter />
 
-                                <MaiSNSLink.Twitter id='elonmusk' isX/>
+                                <MaiSNSLink.Twitter isX/>
 
                                 <MaiSNSLink.Instagram />
 

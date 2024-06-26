@@ -15,7 +15,7 @@ const Twitter: React.FC<Twitter.Props> = (props) => {
     return (
         <MaiSNSLinkOuter
         color={ color }
-        href={`https://x.com/${ id.replace(/@/g, '')}`}
+        href={`https://x.com/${ id? id.replace(/@/g, ''): '' }`}
         sns='Twitter'        
         >
             { isX? <TwitterXIcon />: <TwitterIcon /> }
@@ -32,7 +32,7 @@ namespace Twitter {
          * 
          * @default 'elonmusk'
          */
-        id: string;
+        id?: string;
 
         /**
          * Xのアイコンを使用するか
