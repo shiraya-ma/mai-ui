@@ -4,7 +4,7 @@
         "src/dev"
     ],
     "compilerOptions": {
-        "module": "ESNext",
-        "outDir": "dist/es"
+        "module": "CommonJS",
+        "outDir": "dist/cj"
     }
 }
