@@ -3,7 +3,7 @@
 import React, { PropsWithChildren } from 'react';
 
 import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
-import { margeClassNames } from '@mai-ui/libs';
+import { margeClassNames } from '../../libs';
 import { useColor } from './hooks';
 
 const MaiSNSLinkOuter: React.FC<MaiSNSLinkOuter.Props> = (props) => {

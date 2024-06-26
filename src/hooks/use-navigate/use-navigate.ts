@@ -1,7 +1,7 @@
 // useNavigate
 'use client';
 import { useCallback, useContext } from "react";
-import { NavigateContext } from "@mai-ui/libs";
+import { NavigateContext } from "../../libs";
 
 export function useNavigate () {
     const { navigate: _navigate } = useContext(NavigateContext);

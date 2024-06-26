@@ -2,8 +2,6 @@
 'use strict';
 import React, { HTMLAttributes, ReactNode } from 'react';
 
-// import { headingClassName } from '@mai-ui/libs';
-
 const MaiHeadingsPresenter: React.FC<MaiHeadingsPresenter.Props> = (props) => {
     const { children, className, endContent, headingClassName, level, startContent, ...headingsProps } = props;
     

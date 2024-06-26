@@ -3,11 +3,10 @@
 import React from 'react';
 import { NextUIProvider, NextUIProviderProps } from '@nextui-org/react';
 
-import { ThemeContext } from '../../libs/theme';
+import { NavigateContext, ThemeContext } from '../../libs';
 
 import { useThemeContext } from './hooks';
 import { PrefereThemeOvserver } from './prefere-theme-ovserver';
-import { NavigateContext } from '@mai-ui/libs';
 
 /**
  * MaiUIでテーマなどのコンテキストを提供するプロバイダーコンポーネント

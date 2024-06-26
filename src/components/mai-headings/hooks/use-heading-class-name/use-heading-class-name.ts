@@ -2,7 +2,7 @@
 'use client';
 import { useCallback, useMemo } from "react";
 
-import { margeClassNames } from "@mai-ui/libs";
+import { margeClassNames } from "../../../../libs";
 
 export function useHeadingClassName (className?: string) {
     const importantClassName = useMemo(() => className, [ className ]);

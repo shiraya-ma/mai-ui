@@ -3,7 +3,7 @@
 import React, { CSSProperties } from 'react';
 import SyntaxHighlighter, { Prism } from 'react-syntax-highlighter';
 
-import { margeClassNames } from '@mai-ui/libs';
+import { margeClassNames } from '../../libs';
 
 export const MaiCodeBlockPresenter: React.FC<MaiCodeBlockPresenterProps> = (props) => {
     const { children, className, filename, isPrism, language, style } = props;

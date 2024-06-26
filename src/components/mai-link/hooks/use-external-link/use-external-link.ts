@@ -6,7 +6,7 @@ import { useDisclosure } from "@nextui-org/react";
 
 import { isExternal } from "./is-external";
 import type { MaiLinkPresenter } from "../../mai-link-presenter";
-import { useNavigate } from "@mai-ui/hooks";
+import { useNavigate } from "../../../../hooks";
 
 export function useExternalLink (href?: string) {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
