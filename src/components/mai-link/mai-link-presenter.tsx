@@ -22,7 +22,7 @@ const MaiLinkPresenter = forwardRef<HTMLAnchorElement, MaiLinkPresenter.Props>((
             />
 
             { isExternalLink && (<>
-                <Modal isOpen={ modal?.isOpen } onOpenChange={ modal?.onOpenChange }>
+                <Modal isOpen={ modal?.isOpen } onOpenChange={ modal?.onOpenChange } placement='center'>
                     <ModalContent>
                         <ModalHeader>外部のURLを開きます</ModalHeader>
 
