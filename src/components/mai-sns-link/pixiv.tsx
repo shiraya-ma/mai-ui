@@ -2,7 +2,6 @@
 'use strict';
 import React from 'react';
 
-import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
 import { MaiSNSLinkOuter } from './mai-sns-link-outer';
 
 const Pixiv: React.FC<Pixiv.Props> = (props) => {

@@ -2,7 +2,6 @@
 'use strict';
 import React, { PropsWithChildren } from 'react';
 
-import S from './style.module.scss';
 import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
 import { margeClassNames } from '@mai-ui/libs';
 import { useColor } from './hooks';
@@ -20,7 +19,11 @@ const MaiSNSLinkOuter: React.FC<MaiSNSLinkOuter.Props> = (props) => {
     
     return (
         <MaiSNSLinkPresenter
-        className={ margeClassNames([ S.snsLink, className ]) }
+        className={ margeClassNames([
+            'flex size-16 border border-[var(--sns-link-color)] rounded-full',
+            '[&>svg]:m-auto [&>svg]:w-3/5 [&>svg]:h-3/5 [&>svg]:text-[var(--sns-link-color)]',
+            className
+        ]) }
         href={ href }
         sns={ sns }
         title={`${ sns }のユーザーページを開く`}

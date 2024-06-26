@@ -2,11 +2,7 @@
 'use strict';
 import React, { ReactNode, RefObject } from 'react';
 
-import { margeClassNames } from '@mai-ui/libs';
-
 import { MaiLink } from '../mai-link';
-
-import S from './style.module.scss';
 
 const MaiSNSLinkPresenter: React.FC<MaiSNSLinkPresenter.Props> = (props) => {
     const {
@@ -20,7 +16,7 @@ const MaiSNSLinkPresenter: React.FC<MaiSNSLinkPresenter.Props> = (props) => {
     
     return (
         <MaiLink
-        className={ margeClassNames([ S.snsLink, className ]) }
+        className={ className }
         href={ href }
         title={ title }
         ref={ refLink }
