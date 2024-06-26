@@ -23,7 +23,6 @@ const MaiSNSLinkPresenter: React.FC<MaiSNSLinkPresenter.Props> = (props) => {
         data-sns={ sns }
         >
             { children }
-            <div/>
         </MaiLink>
     );
 };

@@ -1,5 +1,5 @@
 // MaiSNSLinkOuter
-'use strict';
+'use client';
 import React, { PropsWithChildren } from 'react';
 
 import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';

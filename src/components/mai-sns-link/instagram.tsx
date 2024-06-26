@@ -20,16 +20,6 @@ const Instagram: React.FC<Instagram.Props> = (props) => {
             <InstagramIcon />
         </MaiSNSLinkOuter>
     );
-    
-    // return (
-    //     <MaiSNSLinkPresenter
-    //     { ...anchorProps }
-    //     href={`https://www.instagram.com/${ id ?? '' }`}
-    //     sns='Instagram'
-    //     >
-    //         <InstagramIcon />
-    //     </MaiSNSLinkPresenter>
-    // );
 };
 
 namespace Instagram {

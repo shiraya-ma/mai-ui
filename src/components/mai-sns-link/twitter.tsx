@@ -21,16 +21,6 @@ const Twitter: React.FC<Twitter.Props> = (props) => {
             { isX? <TwitterXIcon />: <TwitterIcon /> }
         </MaiSNSLinkOuter>
     );
-    
-    // return (
-    //     <MaiSNSLinkPresenter
-    //     { ...anchorProps }
-    //     href={`https://x.com/${ id.replace(/@/g, '')}`}
-    //     sns='Twitter'
-    //     >
-    //         { isX? <TwitterXIcon />: <TwitterIcon /> }
-    //     </MaiSNSLinkPresenter>
-    // );
 };
 
 namespace Twitter {

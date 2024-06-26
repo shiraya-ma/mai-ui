@@ -9,7 +9,7 @@ export function useColor (color?: string) {
     useEffect(() => {
         const link = refLink.current;
 
-        if (!link) {
+        if (typeof window === 'undefined' || !link) {
             return;
         }
 
