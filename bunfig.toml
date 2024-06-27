@@ -1,0 +1,5 @@
+[install.scopes]
+"@shiraya-ma" = { token = "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", url = "https://npm.pkg.github.com" }
+
+[test]
+preload = "./.bun-test/preloads.ts"

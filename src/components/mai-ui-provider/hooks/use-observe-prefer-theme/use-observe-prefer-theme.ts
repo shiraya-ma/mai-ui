@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 
 import { useTheme } from "../../../../hooks";
 import { getPreferTheme, storedTheme } from "../../../../libs/theme";
+import { log } from "../../../../libs/log";
 
 export function useObservePreferTheme () {
     const { updateTheme } = useTheme();
@@ -28,8 +29,7 @@ export function useObservePreferTheme () {
 
             const theme = getPreferTheme();
 
-            console.debug('prefer theme switched to', theme);
-
+            log.debug('prefer theme switched to', theme);
             document.body.classList.toggle('dark', theme === 'dark');
 
             updateTheme(theme);
