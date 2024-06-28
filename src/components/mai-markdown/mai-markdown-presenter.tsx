@@ -20,6 +20,7 @@ const MaiMarkdownPresenter: React.FC<MaiMarkdownPresenter.Props> = (props) => {
             h4: UI.H(4),
             h5: UI.H(5),
             h6: UI.H(6),
+            input: UI.Input,
             pre: UI.Pre
         }}
         remarkPlugins={[
