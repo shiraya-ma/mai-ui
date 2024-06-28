@@ -238,7 +238,7 @@ const App: React.FC<App.Props> = (props) => {
 
                         <div>
                             <Tabs variant='underlined' aria-label='MaiMarkdown Usage'>
-                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                                <Tab key='preview' title='preview'>
                                     <MaiMarkdown>
                                         { markdownText }
                                     </MaiMarkdown>
