@@ -1,7 +1,3 @@
-'use strict';
-
-export const markdownText = `
-
 ## テーブル
 
 | 列名1 | 列名2 | 列名3 | 列名4 |
@@ -49,9 +45,7 @@ B note[^2]
 | - | :- | -: | :-: |
 | hogehoge | fugafuga | piyopiyo | foobar |
 
-## CodeBlock
-
-\`\`\`html
+```html
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -64,9 +58,9 @@ B note[^2]
     </body>
 </html>
 
-\`\`\`
+```
 
-\`\`\`typescript:org-switcher.tsx
+```javascript
 'use client';
 import { OrganizationSwitcher } from "@clerk/nextjs";
 import { InviteButton } from "./invite-button";
@@ -102,9 +96,7 @@ export const OrgSwitcher = () => {
     </div>
   );
 };
-\`\`\`
-
-## Image with alt
+```
 
 ![alt-text](https://images.microcms-assets.io/assets/07cf8440c5bd4a639fe5e30682a5f7a2/9f4b7be55ef74e388ce8c4237704a86c/22_11_23_%E6%A8%8B%E5%8F%A3.png?w=300&h=400&priority=true)
 
@@ -129,12 +121,11 @@ export const OrgSwitcher = () => {
   - foo
   - bar
 
-### 添字の確認
-1. hoge  
+1. hoge
     1. hoge
         1. hoge
             1. hoge
                 1. hoge
                     - hoge
-                      1. hoge
-`;
+                        1. hoge
+                        
