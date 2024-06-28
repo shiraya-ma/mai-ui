@@ -1,20 +1,22 @@
 // A
 'use strict';
 import React, { HTMLAttributes } from 'react';
+import { AFC } from './a-fc';
 
 const A = (props: A.Props) => {
-    const { node, ...anchorProps } = props;
-    
+    const { children, href } = props;
+
     return (
-        <a
-        { ...anchorProps }
+        <AFC
+        href={ href! }
+        children={ children }
         />
     );
 };
 
 namespace A {
     export type Props = HTMLAttributes<HTMLAnchorElement> & {
-        node?: any;
+        href?: string;
     };
 };
 

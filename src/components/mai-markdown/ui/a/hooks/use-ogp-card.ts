@@ -14,8 +14,11 @@ export function useOGPCard (href: string | undefined, children: ReactNode) {
     const { data } = useSWR(fixedHref, ogpFetcher(isCardHref), {
         errorRetryCount: 0
     });
+
+    const color = useMemo(() => (data? 'forground': 'primary'), [ data ]);
     
     return {
+        color,
         fixedChildren,
         fixedHref,
         ogpData: data ?? null
