@@ -19,6 +19,7 @@ import {
     MaiH6,
     MaiHeadings,
     MaiLink,
+    MaiMarkdown,
     MaiSNSLink
 } from '@mai-ui/components';
 
@@ -27,6 +28,7 @@ import S from './style.module.scss';
 
 import { codeBlockText1 } from './_code-block-text-1';
 import { codeBlockText2 } from './_code-blocl-text-2';
+import { markdownText } from './_markdown-text';
 
 const App: React.FC<App.Props> = (props) => {
     const {} = props;
@@ -229,25 +231,43 @@ const App: React.FC<App.Props> = (props) => {
                         </div>
                     </section>
 
+                    <MaiH2>MaiMarkdown</MaiH2>
+
+                    <section>
+                        <MaiH3>Usage</MaiH3>
+
+                        <div>
+                            <Tabs variant='underlined' aria-label='MaiMarkdown Usage'>
+                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                                    <MaiMarkdown>
+                                        { markdownText }
+                                    </MaiMarkdown>
+                                </Tab>
+
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
+                        </div>
+                    </section>
+
                     <MaiH2>MaiSNSLink</MaiH2>
 
                     <section>
                         <MaiH3>MaiSNSLink Usage</MaiH3>
 
                         <div>
-                        <Tabs variant='underlined' aria-label='MaiSNSLink Usage'>
-                            <Tab key='preview' title='preview'  className='flex gap-4'>
-                                <MaiSNSLink.Twitter />
+                            <Tabs variant='underlined' aria-label='MaiSNSLink Usage'>
+                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                                    <MaiSNSLink.Twitter />
 
-                                <MaiSNSLink.Twitter isX/>
+                                    <MaiSNSLink.Twitter isX/>
 
-                                <MaiSNSLink.Instagram />
+                                    <MaiSNSLink.Instagram />
 
-                                <MaiSNSLink.Pixiv />
-                            </Tab>
+                                    <MaiSNSLink.Pixiv />
+                                </Tab>
 
-                            <Tab key='code' title='code'></Tab>
-                        </Tabs>
+                                <Tab key='code' title='code'></Tab>
+                            </Tabs>
                         </div>
                     </section>
                 </section>
