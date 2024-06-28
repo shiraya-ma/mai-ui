@@ -29,6 +29,8 @@ www.example.com, https://example.com, and contact@example.com.
 
 www.example.com?card
 
+https://azukiazusa.dev/blog/typescript-no-unchecked-indexed-access/?card
+
 ## Footnote
 
 A note[^1]
@@ -101,8 +103,6 @@ export const OrgSwitcher = () => {
 \`\`\`
 
 ![alt-text](https://images.microcms-assets.io/assets/07cf8440c5bd4a639fe5e30682a5f7a2/9f4b7be55ef74e388ce8c4237704a86c/22_11_23_%E6%A8%8B%E5%8F%A3.png?w=300&h=400&priority=true)
-
-https://www.pixiv.net/artworks/113943524?card
 
 ## Tasklist
 
