@@ -9,7 +9,7 @@ const H = (level: MaiHeadings.HeadingLevel) => (props: H.Props) => {
     
     return (
         <MaiHeadings
-        className='[&+*]:!block [&+*]:p-0'
+        className='[&+*]:!block [&+*]:!p-0'
         level={ level  }
         >
             { children as string }
