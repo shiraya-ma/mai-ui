@@ -22,6 +22,8 @@ const MaiHeadings: React.FC<MaiHeadings.Props> = (props) => {
 };
 
 namespace MaiHeadings {
+    export type HeadingLevel = MaiHeadingsPresenter.HeadingLevel;
+
     export type Props = HTMLAttributes<HTMLHeadingElement> & {
         children: string;
         endContent?: ReactNode;
