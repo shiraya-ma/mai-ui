@@ -3,13 +3,16 @@
 import React, { HTMLAttributes } from 'react';
 
 import { MaiCodeBlock } from '../../../../components';
+import { getProps } from './helpers';
 
 const Pre = (props: Pre.Props) => {
     const { children } = props;
-    
+
+    const { filename, fixedChildren, language } = getProps(children);
+
     return (
-        <MaiCodeBlock>
-            { children?.toString() ?? '' }
+        <MaiCodeBlock filename={ filename } language={ language }>
+            { fixedChildren }
         </MaiCodeBlock>
     );
 };
