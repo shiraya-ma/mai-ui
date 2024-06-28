@@ -27,7 +27,7 @@ export const MaiCodeBlockPresenter: React.FC<MaiCodeBlockPresenterProps> = (prop
                     <Prism
                     language={ language }
                     style={ style }
-                    className='[&_*]:font-code'
+                    className='!mt-0 !mb-4 [&_*]:font-code'
                     >
                         { children }
                     </Prism>
@@ -37,7 +37,7 @@ export const MaiCodeBlockPresenter: React.FC<MaiCodeBlockPresenterProps> = (prop
                     <SyntaxHighlighter
                     language={ language }
                     style={ style }
-                    className='[&_*]:font-code'
+                    className='!mt-0 !mb-4 [&_*]:font-code'
                     >
                         { children }
                     </SyntaxHighlighter>
