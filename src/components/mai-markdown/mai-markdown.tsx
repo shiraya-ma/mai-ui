@@ -5,15 +5,19 @@ import React from 'react';
 import { MaiMarkdownPresenter } from './mai-markdown-presenter';
 
 const MaiMarkdown: React.FC<MaiMarkdown.Props> = (props) => {
-    const {} = props;
+    const { children } = props;
     
     return (
-        <MaiMarkdownPresenter/>
+        <MaiMarkdownPresenter>
+            { children }
+        </MaiMarkdownPresenter>
     );
 };
 
 namespace MaiMarkdown {
-    export type Props = {};
+    export type Props = {
+        children: string;
+    };
 };
 
 export {
