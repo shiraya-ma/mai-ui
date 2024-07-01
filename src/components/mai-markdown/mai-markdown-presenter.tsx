@@ -5,6 +5,7 @@ import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 import * as UI from './ui';
+import { maiRehype } from './plugins';
 
 const MaiMarkdownPresenter: React.FC<MaiMarkdownPresenter.Props> = (props) => {
     const { children, tableIndexContext } = props;
@@ -26,10 +27,14 @@ const MaiMarkdownPresenter: React.FC<MaiMarkdownPresenter.Props> = (props) => {
                     input: UI.Input,
                     img: UI.Img,
                     ol: UI.OL,
+                    p: UI.P,
                     pre: UI.Pre,
                     table: UI.Table,
                     ul: UI.UL
                 }}
+                rehypePlugins={[
+                    maiRehype
+                ]}
                 remarkPlugins={[
                     remarkGfm
                 ]}
