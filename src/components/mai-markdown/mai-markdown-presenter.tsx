@@ -15,6 +15,7 @@ const MaiMarkdownPresenter: React.FC<MaiMarkdownPresenter.Props> = (props) => {
                 <Markdown
                 components={{
                     a: UI.A,
+                    blockquote: UI.BlockQuote,
                     code: UI.Code,
                     h1: UI.H(1),
                     h2: UI.H(2),
