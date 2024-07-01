@@ -48,8 +48,11 @@ B note[^2]
 | a | b  |  c |  d  |
 | - | :- | -: | :-: |
 | hogehoge | fugafuga | piyopiyo | foobar |
+| hogehoge | fugafuga | piyopiyo | foobar |
+| hogehoge | fugafuga | piyopiyo | foobar |
 
 ## CodeBlock
+\`hoge\`
 
 \`\`\`html
 <!DOCTYPE html>

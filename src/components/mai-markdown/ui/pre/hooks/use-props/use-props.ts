@@ -1,8 +1,10 @@
-'use strict';
-import { ReactNode } from "react";
+// useProps
+'use client';
+
+import { ReactNode, useMemo } from "react";
 import { parseCodeBlock } from "./parse-code-block";
 
-export function getProps (children: ReactNode) {
+export function useProps (children: ReactNode) {
     const jsxChildren = children as JSX.Element;
     const innerHTML = jsxChildren.props.children as string;
 
@@ -10,7 +12,7 @@ export function getProps (children: ReactNode) {
         filename,
         fixedChildren,
         language
-    } = parseCodeBlock(innerHTML);
+    } = useMemo(() => parseCodeBlock(innerHTML), [ innerHTML ]);
     
     return {
         filename,
