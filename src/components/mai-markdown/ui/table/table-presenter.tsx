@@ -3,19 +3,8 @@
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import React, { ReactNode } from 'react';
 
-// import {} from './style';
-// import * as S from './style';
-// import S from './style.module.scss';
-
 const TablePresenter: React.FC<TablePresenter.Props> = (props) => {
     const { columns, rows, index } = props;
-
-    // console.debug(columns);
-    console.debug(rows);
-    
-    // return (
-    //     <></>
-    // );
 
     return (
         <Table

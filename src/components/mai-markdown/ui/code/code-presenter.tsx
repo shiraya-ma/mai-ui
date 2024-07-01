@@ -6,8 +6,6 @@ import React, { ReactNode } from 'react';
 const CodePresenter: React.FC<CodePresenter.Props> = (props) => {
     const { children, inPre } = props;
 
-    console.debug(inPre, ':', children);    
-    
     return inPre? (
         <>
             { children }

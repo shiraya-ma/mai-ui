@@ -6,8 +6,6 @@ import type { TablePresenter } from "./table-presenter";
 export function useTableProps (children: Node[], tableIndex: number) {
     const [ childThead, childTBody ] = children;
 
-    // console.debug('childThead:', childThead);
-
     const columns: Column[] = useMemo(() => {
         const tr = childThead.props.children as Node;
 
@@ -28,9 +26,6 @@ export function useTableProps (children: Node[], tableIndex: number) {
 
         return columns;
     }, [ childThead ]);
-
-    // console.debug('childTBody:', childTBody);
-
 
     const rows: Row[] = useMemo(() => {
         const trs = childTBody.props.children as Node[];
