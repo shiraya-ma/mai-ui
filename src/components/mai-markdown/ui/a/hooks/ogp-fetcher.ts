@@ -16,6 +16,7 @@ export function ogpFetcher (isCardHref: boolean) {
             const workerUrl = URL.createObjectURL(new Blob([`
                 self.onmessage = async function (e) {
                     const res = await fetch("${ url }", {
+                        cache: "force-cache",
                         headers: {
                             "user-agent": "Twitterbot/1.0"
                         }
