@@ -25,3 +25,7 @@
 .h3 + section {
     @apply flex flex-col gap-4 p-4
 }
+
+.preview {
+    @apply flex gap-4 w-full [&>*]:max-w-full border border-[hsl(var(--nextui-divider))]/50 rounded-xl p-4 overflow-x-auto data-[col=true]:flex-col;
+}

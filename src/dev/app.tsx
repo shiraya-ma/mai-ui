@@ -72,49 +72,49 @@ const App: React.FC<App.Props> = (props) => {
                     <section>
                         <MaiH3>MaiButton Colors</MaiH3>
 
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiButton Colors'>
-                                <Tab key='preview' title='preview' className='flex gap-4'>
+                        <Tabs variant='underlined' aria-label='MaiButton Colors'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
                                     {maiButtonColors.map((c) => (
                                         <MaiButton color={ c } key={`mai-button-colors-${ c }`}>{ c }</MaiButton>
-                                    ))}  
-                                </Tab>
+                                    ))}
+                                </div>
+                            </Tab>
 
-                                <Tab key='code' title='code'>
-                                    
-                                </Tab>
-                            </Tabs>
-                        </div>
+                            <Tab key='code' title='code'>
+                                
+                            </Tab>
+                        </Tabs>
 
                         <MaiH3>MaiButton Variants</MaiH3>                       
 
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiButton Variants'>
-                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                        <Tabs variant='underlined' aria-label='MaiButton Variants'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
                                     {maiButtonVariants.map((v) => (
                                         <MaiButton color='primary' variant={ v } key={`mai-button-variants-${ v }`}>{ v }</MaiButton>
                                     ))}
-                                </Tab>
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
+                                </div>
+                            </Tab>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
 
                         <MaiH3>MaiButton as Link</MaiH3>  
 
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiButton LinkButton'>
-                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                        <Tabs variant='underlined' aria-label='MaiButton LinkButton'>
+                            <Tab key='preview' title='preview' >
+                                <div className={ S.preview }>
                                     <MaiButton
                                     as={ MaiLink }
                                     color='primary'
                                     href='https://www.google.com/'
                                     variant='shadow'
                                     >Google</MaiButton>
-                                </Tab>
+                                </div>
+                            </Tab>
 
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                     </section>
                     
                     <MaiH2>MaiCodeBlock</MaiH2>
@@ -122,27 +122,27 @@ const App: React.FC<App.Props> = (props) => {
                     <section>
                         <MaiH3>MaiCodeBlock Usage</MaiH3>
 
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiCodeBlock Usage'>
-                                <Tab key='preview' title='preview'>
+                        <Tabs variant='underlined' aria-label='MaiCodeBlock Usage'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
                                     <MaiCodeBlock language='html' style={SyntaxHighlighterStyle}>{ codeBlockText1 }</MaiCodeBlock>
-                                </Tab>
+                                </div>
+                            </Tab>
 
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
 
                         <MaiH3>MaiCodeBlock with file name</MaiH3>
 
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiCodeBlock with file name'>
-                                <Tab key='preview' title='preview'>
-                                    <MaiCodeBlock filename='App.js' language='javascript'>{ codeBlockText2 }</MaiCodeBlock>
-                                </Tab>
+                        <Tabs variant='underlined' aria-label='MaiCodeBlock with file name'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
+                                <MaiCodeBlock filename='App.js' language='javascript'>{ codeBlockText2 }</MaiCodeBlock>
+                                </div>
+                            </Tab>
 
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                     </section>
 
                     <MaiH2>MaiHeadings</MaiH2>
@@ -150,49 +150,50 @@ const App: React.FC<App.Props> = (props) => {
                     <section>
                         <MaiH3>MaiHeadings Usage</MaiH3>
 
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiHeadings Usage'>
-                                <Tab key='preview' title='preview'>
-                                    <MaiHeadings id='_' level={ 1 }>Header 1</MaiHeadings><br/>
-                                    <MaiHeadings id='_' level={ 2 }>Header 2</MaiHeadings><br/>
-                                    <MaiHeadings id='_' level={ 3 }>Header 3</MaiHeadings><br/>
-                                    <MaiHeadings id='_' level={ 4 }>Header 4</MaiHeadings><br/>
-                                    <MaiHeadings id='_' level={ 5 }>Header 5</MaiHeadings><br/>
-                                    <MaiHeadings id='_' level={ 6 }>Header 6</MaiHeadings>
-                                </Tab>
+                        <Tabs variant='underlined' aria-label='MaiHeadings Usage'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview } data-col={ true }>
+                                    <MaiHeadings id='_' level={ 1 }>Header 1</MaiHeadings>
+                                    <MaiHeadings id='_' level={ 2 }>Header 2</MaiHeadings>
+                                    <MaiHeadings id='_' level={ 3 }>Header 3</MaiHeadings>
+                                    <MaiHeadings id='_' level={ 4 }>Header 4</MaiHeadings>
+                                    <MaiHeadings id='_' level={ 5 }>Header 5</MaiHeadings>
+                                    <MaiHeadings id='_' level={ 6 }>Header 6</MaiHeadings>                                    
+                                </div>
+                            </Tab>
 
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                         
                         <MaiH3>MaiHeadings for individual import</MaiH3>
-
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiHeadings for individual import'>
+                        
+                        <Tabs variant='underlined' aria-label='MaiHeadings for individual import'>
                                 <Tab key='preview' title='preview'>
-                                    <MaiH1 id='_'>Header 1</MaiH1><br/>
-                                    <MaiH2 id='_'>Header 2</MaiH2><br/>
-                                    <MaiH3 id='_'>Header 3</MaiH3><br/>
-                                    <MaiH4 id='_'>Header 4</MaiH4><br/>
-                                    <MaiH5 id='_'>Header 5</MaiH5><br/>
-                                    <MaiH6 id='_'>Header 6</MaiH6>
+                                    <div className={ S.preview } data-col={ true }>
+                                        <MaiH1 id='_'>Header 1</MaiH1>
+                                        <MaiH2 id='_'>Header 2</MaiH2>
+                                        <MaiH3 id='_'>Header 3</MaiH3>
+                                        <MaiH4 id='_'>Header 4</MaiH4>
+                                        <MaiH5 id='_'>Header 5</MaiH5>
+                                        <MaiH6 id='_'>Header 6</MaiH6>
+                                    </div>
                                 </Tab>
 
                                 <Tab key='code' title='code'></Tab>
                             </Tabs>
-                        </div>
                         
                         <MaiH3>MaiHeadings with icon</MaiH3>
+                        
+                        <Tabs variant='underlined' aria-label='MaiHeadings with icon'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview } data-col="true">
+                                    <MaiH3 startContent={ <Twitter/> }>Twitter</MaiH3>
+                                </div>                                
+                            </Tab>
 
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiHeadings with icon'>
-                                <Tab key='preview' title='preview'>
-                                    <MaiH3 startContent={ <Twitter/> }>Twitter</MaiH3><br/>
-                                </Tab>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
 
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
                     </section>
                     
                     <MaiH2>MaiLink</MaiH2>
@@ -200,9 +201,9 @@ const App: React.FC<App.Props> = (props) => {
                     <section>
                         <MaiH3>MaiLink Usage</MaiH3>
 
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiLink Usage'>
-                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                        <Tabs variant='underlined' aria-label='MaiLink Usage'>
+                            <Tab key='preview' title='preview' >
+                                <div className={ S.preview }>
                                     <MaiLink href='/'>MaiLink</MaiLink>
 
                                     <MaiLink href='http://localhost:3000'>localhost</MaiLink>
@@ -210,43 +211,43 @@ const App: React.FC<App.Props> = (props) => {
                                     <MaiLink href='https://www.google.com/'>Google</MaiLink>
 
                                     <MaiLink href='mailto://contact@localhost:3000'>Contact us</MaiLink>
-                                </Tab>
+                                </div>
+                            </Tab>
 
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                         
                         <MaiH3>MaiLink Colors</MaiH3>
-                            
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiLink Colors'>
-                                <Tab key='preview' title='preview'  className='flex gap-4'>
+
+                        <Tabs variant='underlined' aria-label='MaiLink Colors'>
+                            <Tab key='preview' title='preview' >
+                                <div className={ S.preview }>
                                     { maiLinkColors.map(c => (
                                         <MaiLink color={ c } key={`mai-link-colors-${ c }`} href='/'>{ c }</MaiLink>
                                     ))}
-                                </Tab>
+                                </div>
+                            </Tab>
 
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>                            
                     </section>
 
                     <MaiH2>MaiMarkdown</MaiH2>
 
                     <section>
                         <MaiH3>Usage</MaiH3>
-
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiMarkdown Usage'>
-                                <Tab key='preview' title='preview'>
+                        
+                        <Tabs variant='underlined' aria-label='MaiMarkdown Usage'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
                                     <MaiMarkdown>
                                         { markdownText }
                                     </MaiMarkdown>
-                                </Tab>
+                                </div>
+                            </Tab>
 
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                     </section>
 
                     <MaiH2>MaiSNSLink</MaiH2>
@@ -254,9 +255,9 @@ const App: React.FC<App.Props> = (props) => {
                     <section>
                         <MaiH3>MaiSNSLink Usage</MaiH3>
 
-                        <div>
-                            <Tabs variant='underlined' aria-label='MaiSNSLink Usage'>
-                                <Tab key='preview' title='preview'  className='flex gap-4'>
+                        <Tabs variant='underlined' aria-label='MaiSNSLink Usage'>
+                            <Tab key='preview' title='preview' >
+                                <div className={ S.preview }>
                                     <MaiSNSLink.Twitter />
 
                                     <MaiSNSLink.Twitter isX/>
@@ -264,11 +265,11 @@ const App: React.FC<App.Props> = (props) => {
                                     <MaiSNSLink.Instagram />
 
                                     <MaiSNSLink.Pixiv />
-                                </Tab>
+                                </div>
+                            </Tab>
 
-                                <Tab key='code' title='code'></Tab>
-                            </Tabs>
-                        </div>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                     </section>
                 </section>
             </main>
