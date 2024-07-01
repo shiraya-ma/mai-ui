@@ -15,6 +15,7 @@ const OL = (props: OL.Props) => {
         [&_ol_ol]:list-[lower-roman]
         [&_ol_ol_ol]:list-[upper-alpha]
         [&_ol_ol_ol_ol]:list-[lower-alpha]
+        [&>li>p]:inline
         '
         >
             { children }
