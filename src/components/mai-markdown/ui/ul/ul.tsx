@@ -8,6 +8,7 @@ const UL = (props: UL.Props) => {
     return (
         <ul className='
         pl-4
+        list-inside
         list-disc
         [&_ul]:list-[circle]
         [&_ul_ul]:list-[square]

@@ -9,6 +9,7 @@ const OL = (props: OL.Props) => {
         <ol
         className='
         pl-4
+        list-inside
         list-decimal
         [&_ol]:list-[upper-roman]
         [&_ol_ol]:list-[lower-roman]
