@@ -6,7 +6,12 @@ const UL = (props: UL.Props) => {
     const { children } = props;
     
     return (
-        <ul className='pl-4 list-disc'>
+        <ul className='
+        pl-4
+        list-disc
+        [&_ul]:list-[circle]
+        [&_ul_ul]:list-[square]
+        '>
             { children }
         </ul>
     );
