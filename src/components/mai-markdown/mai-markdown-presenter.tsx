@@ -3,6 +3,7 @@
 import React from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from "rehype-raw";
 
 import * as UI from './ui';
 import { maiRehype } from './plugins';
@@ -33,11 +34,13 @@ const MaiMarkdownPresenter: React.FC<MaiMarkdownPresenter.Props> = (props) => {
                     ul: UI.UL
                 }}
                 rehypePlugins={[
+                    rehypeRaw,
                     maiRehype
                 ]}
                 remarkPlugins={[
                     remarkGfm
                 ]}
+                
                 >
                     { children }
                 </Markdown>
