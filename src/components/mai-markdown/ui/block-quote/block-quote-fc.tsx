@@ -8,14 +8,17 @@ const BlockQuoteFC: React.FC<BlockQuoteFC.Props> = (props) => {
     const { children } = props;
 
     const {
+        fixedChildren,
+        quoteType,
         refBlockQuote
     } = useBlockQuote(children);
     
     return (
         <BlockQuotePresenter
+        quoteType={ quoteType }
         refBlockQuote={ refBlockQuote }
         >
-            { children }
+            { fixedChildren }
         </BlockQuotePresenter>
     );
 };
