@@ -2,7 +2,7 @@
 'use strict';
 import React, { ReactNode } from 'react';
 
-import { MaiLink } from '@mai-ui/components/mai-link';
+import { MaiLink } from '../../../../components';
 
 import { OuterOGPData } from './outer-ogp-data';
 
