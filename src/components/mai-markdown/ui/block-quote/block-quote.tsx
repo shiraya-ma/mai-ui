@@ -1,15 +1,15 @@
 // BlockQuote
 'use strict';
 import React, { ReactNode } from 'react';
-import { BlockQuotePresenter } from './block-quote-presenter';
+import { BlockQuoteFC } from './block-quote-fc';
 
 const BlockQuote = (props: BlockQuote.Props) => {
     const { children } = props;
     
     return (
-        <BlockQuotePresenter>
+        <BlockQuoteFC>
             { children }
-        </BlockQuotePresenter>
+        </BlockQuoteFC>
     );
 };
 
