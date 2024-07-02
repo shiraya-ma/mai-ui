@@ -12,7 +12,6 @@ const Img = (props: Img.Props) => {
         <Image
         { ...props }
         radius='sm'
-        isBlurred
         isZoomed
         />
     );
