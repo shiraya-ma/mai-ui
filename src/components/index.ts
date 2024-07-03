@@ -1,5 +1,6 @@
 'use strict';
 
+export * from './mai-breadcrumbs';
 export * from './mai-button';
 export * from './mai-code-block';
 export * from './mai-headings';
