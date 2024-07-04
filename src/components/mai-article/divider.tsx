@@ -1,21 +1,20 @@
 // Divider
 'use strict';
-import React, { ReactNode } from 'react';
+import React, { HTMLAttributes } from 'react';
+import { Divider as _Divier } from '@nextui-org/react';
 
 const Divider: React.FC<Divider.Props> = (props) => {
-    const { children } = props;
+    const { ...divProps } = props;
     
     return (
-        <>
-            { children }
-        </>
+        <_Divier
+        { ...divProps }
+        />
     );
 };
 
 namespace Divider {
-    export type Props = {
-        children?: ReactNode;
-    };
+    export type Props = HTMLAttributes<HTMLDivElement> & {};
 };
 
 export {

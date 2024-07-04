@@ -1,20 +1,36 @@
 // Thumbnail
 'use strict';
-import React, { ReactNode } from 'react';
+import React from 'react';
+import { Image, ImageProps } from '@nextui-org/react';
+
+import { margeClassNames } from '../../libs';
 
 const Thumbnail: React.FC<Thumbnail.Props> = (props) => {
-    const { children } = props;
+    const {
+        alt,
+        className,
+        height,
+        width,
+        ...imageProps
+    } = props;
     
     return (
-        <>
-            { children }
-        </>
+        <Image
+        className={ margeClassNames([
+            'w-full max-w-full h-auto object-contain',
+            className
+        ])}
+        alt={ alt ?? 'サムネイル' }
+        width={ width ?? 1200 }
+        height={ height ?? 630 }
+        { ...imageProps }
+        />
     );
 };
 
 namespace Thumbnail {
-    export type Props = {
-        children?: ReactNode;
+    export type Props = ImageProps & {
+        priority?: boolean;
     };
 };
 
