@@ -7,11 +7,17 @@ import {  Breadcrumbs, BreadcrumbsProps } from '@nextui-org/react';
 import { MaiBreadcrumbItem } from './mai-breadcrumb-item';
 
 const MaiBreadcrumbs: React.FC<MaiBreadcrumbs.Props> = (props) => {
-    const { children, homeHref, ...breadcrumbsProps } = props;
+    const { children, className, homeHref, ...breadcrumbsProps } = props;
     
     return (
         <Breadcrumbs
         { ...breadcrumbsProps }
+        className={
+            [
+                'mb-4 py-2',
+                className
+            ].filter(c => c).join(' ')
+        }
         >   
             <MaiBreadcrumbItem
             href={ homeHref ?? '/'}
