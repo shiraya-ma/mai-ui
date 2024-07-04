@@ -30,11 +30,13 @@ const Twitter: React.FC<Twitter.Props> = (props) => {
     const {
         color,
         id,
-        isX
+        isX,
+        ...aProps
     } = props;
 
     return (
         <MaiSNSLinkOuter
+        { ...aProps }
         color={ color }
         href={`https://x.com/${ id? id.replace(/@/g, ''): '' }`}
         sns='Twitter'        

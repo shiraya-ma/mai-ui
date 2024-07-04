@@ -24,11 +24,13 @@ import { MaiSNSLinkOuter } from './mai-sns-link-outer';
 const Pixiv: React.FC<Pixiv.Props> = (props) => {
     const {
         color,
-        id
+        id,
+        ...aProps
     } = props;
 
     return (
         <MaiSNSLinkOuter
+        { ...aProps }
         color={ color }
         href={`https://www.pixiv.net/${ id?`$users/${ id }`: '' }`}
         sns='pixiv'

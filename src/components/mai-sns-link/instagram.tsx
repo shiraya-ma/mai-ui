@@ -25,11 +25,13 @@ import { MaiSNSLinkOuter } from './mai-sns-link-outer';
 const Instagram: React.FC<Instagram.Props> = (props) => {
     const {
         color,
-        id
+        id,
+        ...aProps
     } = props;
 
     return (
         <MaiSNSLinkOuter
+        { ...aProps }
         color={ color }
         href={`https://www.instagram.com/${ id ?? '' }`}
         sns='Instagram'     
