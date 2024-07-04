@@ -17,12 +17,12 @@ const Thumbnail: React.FC<Thumbnail.Props> = (props) => {
     return (
         <Image
         className={ margeClassNames([
-            'w-full max-w-full h-auto object-contain',
+            'w-full max-w-full h-auto object-contain aspect-[1200/630]',
             className
         ])}
         alt={ alt ?? 'サムネイル' }
-        width={ width ?? 1200 }
-        height={ height ?? 630 }
+        width={ 1200 }
+        height={ 630 }
         { ...imageProps }
         />
     );
