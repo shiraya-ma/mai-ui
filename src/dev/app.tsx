@@ -1,7 +1,7 @@
 // App
 'use strict';
 import React from 'react';
-import { Tab, Tabs } from '@nextui-org/react';
+import { BreadcrumbItem, Tab, Tabs } from '@nextui-org/react';
 import { Twitter } from 'react-bootstrap-icons';
 import 'tailwindcss/tailwind.css';
 import '@mai-ui/../fonts.css';
@@ -9,6 +9,8 @@ import SyntaxHighlighterStyle from 'react-syntax-highlighter/dist/cjs/styles/pri
 
 import type { MaiUI } from '@mai-ui/types/mai-ui';
 import {
+    MaiBreadcrumbItem,
+    MaiBreadcrumbs,
     MaiButton,
     MaiCodeBlock,
     MaiH1,
@@ -67,6 +69,24 @@ const App: React.FC<App.Props> = (props) => {
                 <MaiH1>Mai UI</MaiH1>
 
                 <section>
+                    <MaiH2>MaiBreadcrumbs</MaiH2>
+
+                    <section>
+                        <MaiH3>MaiBreadcrumbs Usage</MaiH3>
+
+                        <Tabs variant='underlined' aria-label='MaiBreadcrumbs Usage'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
+                                    <MaiBreadcrumbs homeHref='#'>
+                                        <MaiBreadcrumbItem href='#temp'>temp</MaiBreadcrumbItem>
+                                    </MaiBreadcrumbs>
+                                </div>
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
+                    </section>
+
                     <MaiH2>MaiButton</MaiH2>
 
                     <section>

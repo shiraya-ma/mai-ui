@@ -1,3 +1,4 @@
 'use strict';
 
-export * from './mai-buredcrumbs';
+export * from './mai-breadcrumbs';
+export * from './mai-breadcrumb-item';
