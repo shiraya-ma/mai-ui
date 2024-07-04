@@ -16,7 +16,7 @@ const Layout: React.FC<Layout.Props> = (props) => {
     
     return (
         <>
-            <Navbar className='backdrop-saturate-100 dark:bg-transparent' isBordered shouldHideOnScroll>
+            <Navbar className='backdrop-saturate-100 dark:bg-transparent' isBordered>
                 <NavbarContent className="sm:flex gap-4" justify="center">
                     <NavbarItem>
                         <MaiLink href='/'>HOME</MaiLink>

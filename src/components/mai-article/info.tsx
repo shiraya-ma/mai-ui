@@ -20,8 +20,8 @@ const Info: React.FC<Info.Props> = (props) => {
         >
             { data.map((data) => (
                 <p className='flex gap-2' key={`data-info-${ data.label }`}>
-                    <span className='text-chocolate-700/70'>{ data.label }</span>
-                    <span className='text-chocolate-700'>{ data.date }</span>
+                    <span className='text-chocolate-700/70 dark:text-white/70'>{ data.label }</span>
+                    <span className='text-chocolate-700 dark:text-white'>{ data.date }</span>
                 </p>
             ))}
         </div>

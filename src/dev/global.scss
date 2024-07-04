@@ -1,3 +1,7 @@
 html {
-    position: absolute;
+    @apply absolute;
+}
+
+body {
+    @apply lg:bg-mint-50 lg:dark:bg-gray-950/50;
 }
