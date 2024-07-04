@@ -4,6 +4,23 @@ import React from 'react';
 
 import { MaiSNSLinkOuter } from './mai-sns-link-outer';
 
+/**
+ * pixivリンクのコンポーネント
+ * 
+ * @param props 
+ * @returns 
+ * @example
+ * 'use strict'
+ * import { MaiPixivLink } from '@shiraya-ma/mai-ui';
+ * 
+ * function App () {
+ *      return (
+ *          <p>
+ *              <MaiPixivLink id="example"/>
+ *          </p>
+ *      );
+ * };
+ */
 const Pixiv: React.FC<Pixiv.Props> = (props) => {
     const {
         color,

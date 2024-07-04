@@ -77,8 +77,12 @@ const App: React.FC<App.Props> = (props) => {
                         <Tabs variant='underlined' aria-label='MaiBreadcrumbs Usage'>
                             <Tab key='preview' title='preview'>
                                 <div className={ S.preview }>
-                                    <MaiBreadcrumbs homeHref='#'>
-                                        <MaiBreadcrumbItem href='#temp'>temp</MaiBreadcrumbItem>
+                                    <MaiBreadcrumbs homeHref='/'>
+                                        <MaiBreadcrumbItem href='/temp'>hogehoge</MaiBreadcrumbItem>
+
+                                        <MaiBreadcrumbItem href='/temp'>fugafuga</MaiBreadcrumbItem>
+                                        
+                                        <MaiBreadcrumbItem href='/temp'>piyopiyo</MaiBreadcrumbItem>
                                     </MaiBreadcrumbs>
                                 </div>
                             </Tab>

@@ -5,6 +5,23 @@ import { Instagram as InstagramIcon } from 'react-bootstrap-icons';
 
 import { MaiSNSLinkOuter } from './mai-sns-link-outer';
 
+/**
+ * Instagramリンクのコンポーネント
+ * 
+ * @param props 
+ * @returns 
+ * @example
+ * 'use strict'
+ * import { MaiInstagramLink } from '@shiraya-ma/mai-ui';
+ * 
+ * function App () {
+ *      return (
+ *          <p>
+ *              <MaiInstagramLink id="example"/>
+ *          </p>
+ *      );
+ * };
+ */
 const Instagram: React.FC<Instagram.Props> = (props) => {
     const {
         color,
