@@ -1,21 +1,20 @@
 // MaiCardHeader
 'use strict';
-import React, { ReactNode } from 'react';
+import { HTMLAttributes, forwardRef } from 'react';
+import { CardHeader } from '@nextui-org/react';
 
-const MaiCardHeader: React.FC<MaiCardHeader.Props> = (props) => {
-    const { children } = props;
+const MaiCardHeader = forwardRef<"div", MaiCardHeader.Props>((props) => {
+    const { ...cardHeaderProps } = props;
     
     return (
-        <>
-            { children }
-        </>
+        <CardHeader
+        { ...cardHeaderProps }
+        />
     );
-};
+});
 
 namespace MaiCardHeader {
-    export type Props = {
-        children?: ReactNode;
-    };
+    export type Props = HTMLAttributes<HTMLDivElement> & {};
 };
 
 export {

@@ -1,17 +1,20 @@
 // MaiCardFooter
 'use strict';
-import React from 'react';
+import { forwardRef } from 'react';
+import { CardFooter, CardFooterProps } from '@nextui-org/react';
 
-const MaiCardFooter: React.FC<MaiCardFooter.Props> = (props) => {
-    const {} = props;
+const MaiCardFooter = forwardRef<"div", MaiCardFooter.Props>((props) => {
+    const { ...cardFooterProps } = props;
     
     return (
-        <></>
+        <CardFooter
+        { ...cardFooterProps }
+        />
     );
-};
+});
 
 namespace MaiCardFooter {
-    export type Props = {};
+    export type Props = CardFooterProps & {};
 };
 
 export {

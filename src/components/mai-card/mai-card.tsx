@@ -1,17 +1,46 @@
 // MaiCard
 'use strict';
-import React from 'react';
+import { forwardRef } from 'react';
+import { Card, CardProps } from '@nextui-org/react';
 
-const MaiCard: React.FC<MaiCard.Props> = (props) => {
-    const {} = props;
+import { margeClassNames } from '../../libs';
+
+/**
+ * カードのコンポーネント
+ * 
+ * デフォルトで背景にブラーをかけている。
+ * 
+ * @param props 
+ * @returns 
+ * @example
+ * 'use strict'
+ * import { MaiCard } from '@shiraya-ma/mai-ui';
+ * 
+ * function App () {
+ *      return (
+ *          <MaiCard>
+ *              hello world
+ *          </MaiCard>
+ *      );
+ * };
+ */
+const MaiCard = forwardRef<"div", MaiCard.Props>((props) => {
+    const { className, isBlurred, ...cardProps } = props;
     
     return (
-        <></>
+        <Card
+        className={margeClassNames([
+            'dark:!bg-gray-800/70',
+            className
+        ])}
+        isBlurred={ isBlurred ?? true }
+        { ...cardProps }
+        />
     );
-};
+});
 
 namespace MaiCard {
-    export type Props = {};
+    export type Props = CardProps & {};
 };
 
 export {
