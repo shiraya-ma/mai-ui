@@ -7,11 +7,13 @@ import { MaiUI } from '../../types/mai-ui';
 
 
 const MaiButtonPresenter: React.FC<MaiButtonPresenter.Props> = (props) => {
-    const {} = props;
+    const { color, variant, ...btnProps } = props;
     
     return (
         <Button
-        { ...props }
+        { ...btnProps }
+        color={ color ?? 'primary' }
+        variant={ variant ?? 'shadow' }
         />
     );
 };

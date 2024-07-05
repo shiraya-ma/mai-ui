@@ -9,7 +9,7 @@ const MaiHeadingsPresenter: React.FC<MaiHeadingsPresenter.Props> = (props) => {
         <h1
         { ...headingsProps }
         className={ headingClassName(
-            'my-8 text-4xl',
+            'my-8 text-4xl text-center',
         )}
         >{ startContent }{ children }{ endContent }</h1>
     ):
