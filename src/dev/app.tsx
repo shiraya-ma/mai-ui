@@ -160,6 +160,54 @@ const App: React.FC<App.Props> = (props) => {
                             <Tab key='code' title='code'></Tab>
                         </Tabs>
                     </section>
+
+                    <MaiH2>MaiCard</MaiH2>
+
+                    <section>
+                        <MaiH3>MaiCard Colors</MaiH3>
+
+                        <Tabs variant='underlined' aria-label='MaiCard Colors'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
+                                    mai card
+                                </div>
+                            </Tab>
+
+                            <Tab key='code' title='code'>
+                                
+                            </Tab>
+                        </Tabs>
+
+                        <MaiH3>MaiButton Variants</MaiH3>                       
+
+                        <Tabs variant='underlined' aria-label='MaiButton Variants'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
+                                    {maiButtonVariants.map((v) => (
+                                        <MaiButton color='primary' variant={ v } key={`mai-button-variants-${ v }`}>{ v }</MaiButton>
+                                    ))}
+                                </div>
+                            </Tab>
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
+
+                        <MaiH3>MaiButton as Link</MaiH3>  
+
+                        <Tabs variant='underlined' aria-label='MaiButton LinkButton'>
+                            <Tab key='preview' title='preview' >
+                                <div className={ S.preview }>
+                                    <MaiButton
+                                    as={ MaiLink }
+                                    color='primary'
+                                    href='https://www.google.com/'
+                                    variant='shadow'
+                                    >Google</MaiButton>
+                                </div>
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
+                    </section>
                     
                     <MaiH2>MaiCodeBlock</MaiH2>
 

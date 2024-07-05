@@ -3,6 +3,7 @@
 export * from './mai-article';
 export * from './mai-breadcrumbs';
 export * from './mai-button';
+export * from './mai-card';
 export * from './mai-code-block';
 export * from './mai-headings';
 export * from './mai-link';
