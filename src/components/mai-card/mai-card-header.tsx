@@ -3,7 +3,7 @@
 import { HTMLAttributes, forwardRef } from 'react';
 import { CardHeader } from '@nextui-org/react';
 
-const MaiCardHeader = forwardRef<"div", MaiCardHeader.Props>((props) => {
+const MaiCardHeader = forwardRef<HTMLDivElement, MaiCardHeader.Props>((props, ref) => {
     const { ...cardHeaderProps } = props;
     
     return (

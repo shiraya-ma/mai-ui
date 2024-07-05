@@ -24,7 +24,7 @@ import { margeClassNames } from '../../libs';
  *      );
  * };
  */
-const MaiCard = forwardRef<"div", MaiCard.Props>((props) => {
+const MaiCard = forwardRef<HTMLDivElement, MaiCard.Props>((props, ref) => {
     const { className, isBlurred, ...cardProps } = props;
     
     return (
@@ -34,6 +34,7 @@ const MaiCard = forwardRef<"div", MaiCard.Props>((props) => {
             className
         ])}
         isBlurred={ isBlurred ?? true }
+        ref={ ref }
         { ...cardProps }
         />
     );

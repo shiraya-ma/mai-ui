@@ -3,11 +3,12 @@
 import { forwardRef } from 'react';
 import { CardFooter, CardFooterProps } from '@nextui-org/react';
 
-const MaiCardFooter = forwardRef<"div", MaiCardFooter.Props>((props) => {
+const MaiCardFooter = forwardRef<"div", MaiCardFooter.Props>((props, ref) => {
     const { ...cardFooterProps } = props;
     
     return (
         <CardFooter
+        ref={ ref }
         { ...cardFooterProps }
         />
     );
