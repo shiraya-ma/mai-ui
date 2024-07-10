@@ -10,7 +10,6 @@ export function useHeadingClassName (className?: string) {
     const headingClassName = useCallback((className?: string) => {
         const commonClassName = 'flex align-center gap-2 font-bold font-heading dark:text-white';
 
-
         return margeClassNames(
             commonClassName,
             className,

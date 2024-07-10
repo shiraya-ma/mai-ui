@@ -30,8 +30,6 @@
 | Subscript | `<sub> </sub>` | `これは<sub>下付き</sub>テキストです` | これは<sub>下付き</sub>テキストです |
 | Superscript | `<sup> </sup>` | `これは<sup>上付き</sup>テキストです` | これは<sup>上付き</sup>テキストです |
 
-
-
 ## テーブル
 
 ```markdown
@@ -67,7 +65,6 @@ Text that is not a quote
 ## コードの引用
 
 単一のバッククォートで文章内のコードやコマンドを引用できます。 バッククォート内のテキストはフォーマットされません。
-
 
 ```markdown
 Use `git status` to list all new or modified files that haven't yet been committed.

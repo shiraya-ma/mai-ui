@@ -5,7 +5,6 @@ export function isExternal (href?: string) {
         return false;
     }
 
-
     if (!href) {
         return false;
     }
