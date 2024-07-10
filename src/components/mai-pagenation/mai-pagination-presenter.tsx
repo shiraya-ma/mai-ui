@@ -3,11 +3,17 @@
 import React from 'react';
 import { Pagination, PaginationProps } from "@nextui-org/react";
 
+import { margeClassNames } from '../../libs';
+
 const MaiPaginationPresenter: React.FC<MaiPaginationPresenter.Props> = (props) => {
-    const { ...paginationProps } = props;
+    const { className, ...paginationProps } = props;
     
     return (
         <Pagination
+        className={margeClassNames([
+            'dark:[&_li]:bg-gray-800',
+            className
+        ])}
         { ...paginationProps }
         />
     );
