@@ -1,17 +1,22 @@
 // MaiSkeleton
 'use strict';
-import React from 'react';
+import { forwardRef } from 'react';
+import { SkeletonProps } from '@nextui-org/react';
 
-const MaiSkeleton: React.FC<MaiSkeleton.Props> = (props) => {
-    const {} = props;
+import { MaiSkeletonPresenter } from './mai-skeleton-presenter';
+
+const MaiSkeleton = forwardRef<HTMLDivElement, MaiSkeleton.Props>((props) => {
+    const { ...skeletonProps } = props;
     
     return (
-        <></>
+        <MaiSkeletonPresenter
+        { ...skeletonProps }
+        />
     );
-};
+});
 
 namespace MaiSkeleton {
-    export type Props = {};
+    export type Props = SkeletonProps& {};
 };
 
 export {
