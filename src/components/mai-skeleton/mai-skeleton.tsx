@@ -22,7 +22,7 @@ import { MaiSkeletonPresenter } from './mai-skeleton-presenter';
  *      );
  * };
  */
-const MaiSkeleton = forwardRef<HTMLDivElement, MaiSkeleton.Props>((props) => {
+const MaiSkeleton = forwardRef<HTMLDivElement, MaiSkeleton.Props>((props, ref) => {
     const { ...skeletonProps } = props;
     
     return (

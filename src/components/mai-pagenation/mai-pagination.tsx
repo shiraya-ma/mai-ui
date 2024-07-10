@@ -23,7 +23,7 @@ import { MaiPaginationPresenter } from './mai-pagination-presenter';
  *      );
  * };
  */
-const MaiPagination = forwardRef<HTMLElement, MaiPagination.Props>((props) => {
+const MaiPagination = forwardRef<HTMLElement, MaiPagination.Props>((props, ref) => {
     const { ...paginationProps } = props;
     
     return (
