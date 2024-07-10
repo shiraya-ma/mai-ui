@@ -13,10 +13,10 @@ const Info: React.FC<Info.Props> = (props) => {
     return (
         <div
         { ...divProps }
-        className={ margeClassNames([
+        className={ margeClassNames(
             'flex flex-col',
             className
-        ]) }
+        ) }
         >
             { data.map((data) => (
                 <p className='flex gap-2' key={`data-info-${ data.label }`}>

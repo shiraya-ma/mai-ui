@@ -10,10 +10,10 @@ const MaiPaginationPresenter: React.FC<MaiPaginationPresenter.Props> = (props) =
     
     return (
         <Pagination
-        className={margeClassNames([
+        className={margeClassNames(
             'dark:[&_li]:bg-gray-800',
             className
-        ])}
+        )}
         { ...paginationProps }
         />
     );

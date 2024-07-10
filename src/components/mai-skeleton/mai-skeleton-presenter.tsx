@@ -10,10 +10,10 @@ const MaiSkeletonPresenter: React.FC<MaiSkeletonPresenter.Props> = (props) => {
     
     return (
         <Skeleton
-        className={margeClassNames([
+        className={margeClassNames(
             'dark:bg-gray-900/50',
             className
-        ])}
+        )}
         { ...skeletonProps }
         />
     );

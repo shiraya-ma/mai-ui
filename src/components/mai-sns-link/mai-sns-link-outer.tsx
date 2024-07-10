@@ -19,11 +19,11 @@ const MaiSNSLinkOuter: React.FC<MaiSNSLinkOuter.Props> = (props) => {
     
     return (
         <MaiSNSLinkPresenter
-        className={ margeClassNames([
+        className={ margeClassNames(
             'flex size-16 border border-[var(--sns-link-color)] rounded-full',
             '[&>svg]:m-auto [&>svg]:w-3/5 [&>svg]:h-3/5 [&>svg]:text-[var(--sns-link-color)]',
             className
-        ]) }
+        ) }
         href={ href }
         sns={ sns }
         title={`${ sns }のユーザーページを開く`}

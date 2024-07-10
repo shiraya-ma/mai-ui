@@ -29,10 +29,10 @@ const MaiCard = forwardRef<HTMLDivElement, MaiCard.Props>((props, ref) => {
     
     return (
         <Card
-        className={margeClassNames([
+        className={margeClassNames(
             'dark:!bg-gray-800/70',
             className
-        ])}
+        )}
         isBlurred={ isBlurred ?? true }
         ref={ ref }
         { ...cardProps }

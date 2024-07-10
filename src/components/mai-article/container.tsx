@@ -9,10 +9,10 @@ const Container: React.FC<Container.Props> = (props) => {
     
     return (
         <article
-        className={ margeClassNames([
+        className={ margeClassNames(
             'flex flex-col gap-4 px-4 py-12 lg:bg-white lg:dark:bg-gray-900 lg:rounded-md lg:shadow-medium',
             className
-        ]) }
+        ) }
         { ...articleProps }
         >
             { children }

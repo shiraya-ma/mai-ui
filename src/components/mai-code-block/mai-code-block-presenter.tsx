@@ -10,10 +10,10 @@ export const MaiCodeBlockPresenter: React.FC<MaiCodeBlockPresenterProps> = (prop
 
     return (
         <div
-        className={ margeClassNames([
+        className={ margeClassNames(
             `[&>pre]:rounded-lg [&>pre]:overflow-x-auto dark:[&>pre]:border dark:[&>pre]:border-white/10 [&>pre]:data-[with-filename=true]:rounded-tl-none`,
             className
-        ]) }
+        ) }
         data-with-filename={ filename !== undefined }
         >
             { filename && (
