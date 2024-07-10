@@ -28,6 +28,8 @@ import {
     MaiHeadings,
     MaiLink,
     MaiMarkdown,
+    MaiPagination,
+    MaiSkeleton,
     MaiSNSLink
 } from '@mai-ui/components';
 
@@ -367,6 +369,43 @@ const App: React.FC<App.Props> = (props) => {
                                     <MaiMarkdown>
                                         { markdownText }
                                     </MaiMarkdown>
+                                </div>
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
+                    </section>
+
+                    <MaiH2>MaiPagination</MaiH2>
+
+                    <section>
+                        <MaiH3>MaiPagination Usage</MaiH3>
+
+                        <Tabs variant='underlined' aria-label='MaiPagination Usage'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
+                                    <MaiPagination
+                                    total={ 10 }
+                                    initialPage={ 1 }
+                                    />
+                                </div>
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
+                    </section>
+
+                    <MaiH2>MaiSkeleton</MaiH2>
+
+                    <section>
+                        <MaiH3>MaiSkeleton Usage</MaiH3>
+
+                        <Tabs variant='underlined' aria-label='MaiSkeleton Usage'>
+                            <Tab key='preview' title='preview'>
+                                <div className={ S.preview }>
+                                    <MaiSkeleton
+                                    className='w-64 h-40'
+                                    />
                                 </div>
                             </Tab>
 
