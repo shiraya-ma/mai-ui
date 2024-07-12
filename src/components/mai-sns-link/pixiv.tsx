@@ -33,7 +33,7 @@ const Pixiv: React.FC<Pixiv.Props> = (props) => {
         <MaiSNSLinkOuter
         { ...aProps }
         color={ color }
-        href={`https://www.pixiv.net/${ id?`$users/${ id }`: '' }`}
+        href={`https://www.pixiv.net/${ id? `users/${ id }`: '' }`}
         sns='pixiv'
         withText={ withText }
         >
