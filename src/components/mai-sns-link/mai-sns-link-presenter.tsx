@@ -11,7 +11,8 @@ const MaiSNSLinkPresenter: React.FC<MaiSNSLinkPresenter.Props> = (props) => {
         href,
         sns,
         title,
-        refLink
+        refLink,
+        withText
     } = props;
     
     return (
@@ -21,6 +22,7 @@ const MaiSNSLinkPresenter: React.FC<MaiSNSLinkPresenter.Props> = (props) => {
         title={ title }
         ref={ refLink }
         data-sns={ sns }
+        data-with-text={ withText }
         >
             { children }
         </MaiLink>
@@ -35,6 +37,7 @@ namespace MaiSNSLinkPresenter {
         sns: SNS;
         title: string;
         refLink: RefObject<HTMLAnchorElement>;
+        withText?: boolean;
     };
 
     export type SNS = 'Instagram' | 'pixiv' | 'Twitter';

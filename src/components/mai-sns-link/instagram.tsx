@@ -26,6 +26,7 @@ const Instagram: React.FC<Instagram.Props> = (props) => {
     const {
         color,
         id,
+        withText,
         ...aProps
     } = props;
 
@@ -34,9 +35,14 @@ const Instagram: React.FC<Instagram.Props> = (props) => {
         { ...aProps }
         color={ color }
         href={`https://www.instagram.com/${ id ?? '' }`}
-        sns='Instagram'     
+        sns='Instagram'
+        withText={ withText }
         >
             <InstagramIcon />
+
+            { withText && (
+                <span>Instagram</span>
+            )}
         </MaiSNSLinkOuter>
     );
 };
@@ -47,6 +53,8 @@ namespace Instagram {
          * InstagramのID
          */
         id?: string;
+
+        withText?: boolean;
     };
 };
 

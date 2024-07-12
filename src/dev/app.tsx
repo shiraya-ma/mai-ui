@@ -433,6 +433,24 @@ const App: React.FC<App.Props> = (props) => {
 
                             <Tab key='code' title='code'></Tab>
                         </Tabs>
+                        
+                        <MaiH3>MaiSNSLink with Text</MaiH3>
+
+                        <Tabs variant='underlined' aria-label='MaiSNSLink with Text'>
+                            <Tab key='preview' title='preview' >
+                                <div className={ S.preview } data-col="true">
+                                    <MaiSNSLink.Twitter withText/>
+
+                                    <MaiSNSLink.Twitter isX withText/>
+
+                                    <MaiSNSLink.Instagram withText/>
+
+                                    <MaiSNSLink.Pixiv withText/>
+                                </div>
+                            </Tab>
+
+                            <Tab key='code' title='code'></Tab>
+                        </Tabs>
                     </section>
                 </section>
             </MaiArticle.Container>

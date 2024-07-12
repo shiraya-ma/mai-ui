@@ -12,7 +12,8 @@ const MaiSNSLinkOuter: React.FC<MaiSNSLinkOuter.Props> = (props) => {
         className,
         color,
         href,
-        sns
+        sns,
+        withText
     } = props;
 
     const { refLink } = useColor(color);
@@ -20,14 +21,16 @@ const MaiSNSLinkOuter: React.FC<MaiSNSLinkOuter.Props> = (props) => {
     return (
         <MaiSNSLinkPresenter
         className={ margeClassNames(
-            'flex size-16 border border-[var(--sns-link-color)] rounded-full',
-            '[&>svg]:m-auto [&>svg]:w-3/5 [&>svg]:h-3/5 [&>svg]:text-[var(--sns-link-color)]',
+            'flex gap-2 justify-center size-16 border border-[var(--sns-link-color)] rounded-full',
+            '[&>svg]:w-auto [&>svg]:h-3/5 [&>svg]:aspect-square [&>*]:text-[var(--sns-link-color)] [&>span]:text-3xl',
+            'data-[with-text=true]:w-auto',
             className
         ) }
         href={ href }
         sns={ sns }
         title={`${ sns }のユーザーページを開く`}
         refLink={ refLink }
+        withText={ withText }
         >
             { children }
         </MaiSNSLinkPresenter>
@@ -40,6 +43,7 @@ namespace MaiSNSLinkOuter {
         color?: string;
         href: string;
         sns: MaiSNSLinkPresenter.SNS;
+        withText?: boolean;
     };
 };
 

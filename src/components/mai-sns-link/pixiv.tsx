@@ -25,6 +25,7 @@ const Pixiv: React.FC<Pixiv.Props> = (props) => {
     const {
         color,
         id,
+        withText,
         ...aProps
     } = props;
 
@@ -34,6 +35,7 @@ const Pixiv: React.FC<Pixiv.Props> = (props) => {
         color={ color }
         href={`https://www.pixiv.net/${ id?`$users/${ id }`: '' }`}
         sns='pixiv'
+        withText={ withText }
         >
             <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -50,6 +52,10 @@ const Pixiv: React.FC<Pixiv.Props> = (props) => {
                    4-1.1s2.9.6,3.8,1.6c.9.9,1.4,2.2,1.4,3.6s-.5,2.5-1.4,3.5h0Z'
                 />
             </svg>
+
+            { withText && (
+                <span>pixiv</span>
+            )}
         </MaiSNSLinkOuter>
     );
 };
@@ -60,6 +66,8 @@ namespace Pixiv {
          * pixivのID
          */
         id?: string;
+
+        withText?: boolean;
     };
 };
 

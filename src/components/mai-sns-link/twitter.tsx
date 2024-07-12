@@ -31,6 +31,7 @@ const Twitter: React.FC<Twitter.Props> = (props) => {
         color,
         id,
         isX,
+        withText,
         ...aProps
     } = props;
 
@@ -39,9 +40,14 @@ const Twitter: React.FC<Twitter.Props> = (props) => {
         { ...aProps }
         color={ color }
         href={`https://x.com/${ id? id.replace(/@/g, ''): '' }`}
-        sns='Twitter'        
+        sns='Twitter'
+        withText={ withText }
         >
             { isX? <TwitterXIcon />: <TwitterIcon /> }
+
+            { withText && (
+                <span>{ isX? 'X': 'Twitter' }</span>
+            )}
         </MaiSNSLinkOuter>
     );
 };
@@ -61,6 +67,8 @@ namespace Twitter {
          * Xのアイコンを使用するか
          */
         isX?: boolean;
+
+        withText?: boolean;
     };
 };
 
