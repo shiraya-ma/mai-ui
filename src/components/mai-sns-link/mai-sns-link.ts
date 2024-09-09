@@ -1,7 +1,8 @@
 'use strict';
-import { Instagram } from "./instagram";
-import { Pixiv } from "./pixiv";
-import { Twitter } from "./twitter";
+
+import { MaiInstagramLink } from "./mai-instagram-link";
+import { MaiPixivLink } from "./mai-pixiv-link";
+import { MaiTwitterLink } from "./mai-twitter-link";
 
 /**
  * SNSリンクのコンポーネント
@@ -17,7 +18,7 @@ import { Twitter } from "./twitter";
  * function App () {
  *      return (
  *          <p>
- *              <MaiSNSLink.Twitter id="elonmusk"/>
+ *              <MaiSNSLink.Twitter/>
  *              <br/>
  *              <MaiSNSLink.Instagram/>
  *              <br/>
@@ -27,7 +28,7 @@ import { Twitter } from "./twitter";
  * };
  */
 export const MaiSNSLink = {
-    Instagram,
-    Pixiv,
-    Twitter
+    Instagram: MaiInstagramLink,
+    Pixiv: MaiPixivLink,
+    Twitter: MaiTwitterLink
 };

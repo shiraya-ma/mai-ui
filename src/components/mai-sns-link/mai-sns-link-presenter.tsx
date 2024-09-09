@@ -1,43 +1,31 @@
 // MaiSNSLinkPresenter
 'use strict';
-import React, { ReactNode, RefObject } from 'react';
+import { forwardRef } from 'react';
+import { Button, type ButtonProps } from '@nextui-org/react';
 
 import { MaiLink } from '../mai-link';
+import { useMaiSNSLink } from './hooks/use-mai-sns-link/use-mai-sns-link';
 
-const MaiSNSLinkPresenter: React.FC<MaiSNSLinkPresenter.Props> = (props) => {
-    const {
-        children,
-        className,
-        href,
-        sns,
-        title,
-        refLink,
-        withText
-    } = props;
+const MaiSNSLinkPresenter = forwardRef<HTMLButtonElement, MaiSNSLinkPresenter.Props>((props, ref) => {
+    const { color, sns, withChildren, ...btnProps } = useMaiSNSLink(props);
     
     return (
-        <MaiLink
-        className={ className }
-        href={ href }
-        title={ title }
-        ref={ refLink }
+        <Button
+        as={ MaiLink }
+        color={ color ?? 'default' }
+        radius='full'
+        variant='bordered'
+        ref={ ref }
+        { ...btnProps }
         data-sns={ sns }
-        data-with-text={ withText }
-        >
-            { children }
-        </MaiLink>
+        data-with-text={ withChildren }/>
     );
-};
+});
 
 namespace MaiSNSLinkPresenter {
-    export type Props = {
-        children?: ReactNode;
-        className?: string;
-        href: string;
+    export type Props = ButtonProps & {
         sns: SNS;
-        title: string;
-        refLink: RefObject<HTMLAnchorElement>;
-        withText?: boolean;
+        withChildren?: boolean;
     };
 
     export type SNS = 'Instagram' | 'pixiv' | 'Twitter';
