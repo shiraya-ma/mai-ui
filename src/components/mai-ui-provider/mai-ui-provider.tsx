@@ -4,6 +4,7 @@ import React from 'react';
 import { NextUIProvider, NextUIProviderProps } from '@nextui-org/react';
 
 import { NavigateContext, ThemeContext } from '../../libs';
+import { ExternalLinkModal, ExternalLinkProvider } from '../../features/external-link';
 
 import { useThemeContext } from './hooks';
 import { PrefereThemeOvserver } from './prefere-theme-ovserver';
@@ -42,15 +43,18 @@ const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
     
     return (
         <ThemeContext.Provider value={ context }>
-            <NavigateContext.Provider value={{ navigate }}>
-                <NextUIProvider
-                { ...nextUIProviderProps }
-                >
-                    { children }
+            <ExternalLinkProvider>
+                <NavigateContext.Provider value={{ navigate }}>
+                    <NextUIProvider
+                    { ...nextUIProviderProps }>
+                        { children }
 
-                    <PrefereThemeOvserver />
-                </NextUIProvider>
-            </NavigateContext.Provider>
+                        <ExternalLinkModal />
+
+                        <PrefereThemeOvserver />
+                    </NextUIProvider>
+                </NavigateContext.Provider>
+            </ExternalLinkProvider>
         </ThemeContext.Provider>
     );
 };

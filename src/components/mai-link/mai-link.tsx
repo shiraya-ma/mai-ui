@@ -1,9 +1,11 @@
 // MaiLink
-'use client';
+'use strict';
 import { forwardRef } from 'react';
+import { Link, type LinkProps} from '@nextui-org/react';
 
-import { MaiLinkPresenter } from './mai-link-presenter';
-import { useExternalLink } from './hooks';
+import { classNames } from '../../libs';
+
+import { useMaiLink } from './hooks';
 
 /**
  * リンクのコンポーネント
@@ -27,23 +29,21 @@ import { useExternalLink } from './hooks';
  * };
  */
 const MaiLink = forwardRef<HTMLAnchorElement, MaiLink.Props>((props, ref) => {
-    const {} = props;
-
-    const { isExternalLink, modal, onClickLink } = useExternalLink(props.href);
+    const { className, ...linkProps } = useMaiLink(props);
     
     return (
-        <MaiLinkPresenter
-        { ...props }
-        isExternalLink={ isExternalLink }
-        modal={ modal }
-        onClick={ onClickLink }
-        ref={ ref }
-        />
+        <Link
+        className={classNames(
+            'cursor-pointer',
+            className
+        )}
+        { ...linkProps }
+        ref={ ref }/>
     );
 });
 
 namespace MaiLink {
-    export type Props = MaiLinkPresenter.Props & {};
+    export type Props = LinkProps & {};
 };
 
 export {
