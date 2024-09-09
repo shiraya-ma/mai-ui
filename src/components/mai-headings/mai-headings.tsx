@@ -1,36 +1,68 @@
 // MaiHeadings
-'use strict';
-import React, { HTMLAttributes, ReactNode } from 'react';
+'use client';
+import React from 'react';
 
-import { MaiHeadingsPresenter } from './mai-headings-presenter';
-import { useHeadingClassName, useHeadingID } from './hooks';
+import { useMaiHeadings } from './hooks';
+import { type MaiHeadingsProps } from './props-types';
 
+/**
+ * 見出しのコンポーネント
+ * 
+ * levelを指定することで動的に設定可能
+ * 
+ * @param props 
+ * @returns 
+ * @example
+ * 'use strict'
+ * import { MaiHeadings } from '@shiraya-ma/mai-ui';
+ * 
+ * function App () {
+ *      return (
+ *          <MaiHeadings level={ 1 }>
+ *              hello world
+ *          </MaiHeadings>
+ *      );
+ * };
+ */
 const MaiHeadings: React.FC<MaiHeadings.Props> = (props) => {
-    const { className, id, node, level, ...headingProps } = props;
+    const { level, ...headingsProps } = useMaiHeadings(props);
 
-    const { headingClassName } = useHeadingClassName(className);
-    const { headingID } = useHeadingID(headingProps.children);
-    
-    return (
-        <MaiHeadingsPresenter
-        { ...headingProps }
-        headingClassName={ headingClassName }
-        id={ id ?? headingID }
-        level={ level }
-        />
-    );
+    switch (level) {
+        case 1: {
+            return (
+                <h1 { ...headingsProps }/>
+            );
+        }
+        case 2: {
+            return (
+                <h2 { ...headingsProps }/>
+            );
+        }
+        case 3: {
+            return (
+                <h3 { ...headingsProps }/>
+            );
+        }
+        case 4: {
+            return (
+                <h4 { ...headingsProps }/>
+            );
+        }
+        case 5: {
+            return (
+                <h5 { ...headingsProps }/>
+            );
+        }
+        default: {
+            return (
+                <h6 { ...headingsProps }/>
+            );
+        }
+    }
 };
 
 namespace MaiHeadings {
-    export type HeadingLevel = MaiHeadingsPresenter.HeadingLevel;
-
-    export type Props = HTMLAttributes<HTMLHeadingElement> & {
-        children: string;
-        endContent?: ReactNode;
-        node?: any;
-        level: MaiHeadingsPresenter.HeadingLevel;
-        startContent?: ReactNode;
-    };
+    export type Props = MaiHeadingsProps;
 };
 
 export {

@@ -1,26 +1,37 @@
 // MaiH1
 'use strict';
-import { HTMLAttributes, ReactNode } from 'react';
+import React from 'react';
 
+import { MaiHedingProps } from './props-types';
 import { MaiHeadings } from './mai-headings';
 
-const MaiH1 = (props: MaiH1.Props) => {
-    const { children, ...headingProps } = props;
-    
-    return (
-        <MaiHeadings
-        { ...headingProps }
-        children={ children as string }
-        level={ 1 }
-        />
-    );
-};
+/**
+ * 見出しのコンポーネント
+ * 
+ * h1に相当する見出しを追加する
+ * 
+ * @param props 
+ * @returns 
+ * @example
+ * 'use strict'
+ * import { MaiH1 } from '@shiraya-ma/mai-ui';
+ * 
+ * function App () {
+ *      return (
+ *          <MaiH1>
+ *              hello world
+ *          </MaiH1>
+ *      );
+ * };
+ */
+const MaiH1: React.FC<MaiH1.Props> = (props) => (
+    <MaiHeadings
+    level={ 1 }
+    { ...props }/>
+);
 
 namespace MaiH1 {
-    export type Props = HTMLAttributes<HTMLHeadingElement> & {
-        endContent?: ReactNode;
-        startContent?: ReactNode;
-    };
+    export type Props = MaiHedingProps;
 };
 
 export {
