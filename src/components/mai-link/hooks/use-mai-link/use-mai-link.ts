@@ -29,6 +29,7 @@ export function useMaiLink (props: MaiLink.Props) {
     }, [ href, hrefIsExternal, open ]);
 
     return {
+        href,
         onClick: handleClickLink,
         ...linkProps
     };
