@@ -3,7 +3,7 @@
 import { forwardRef } from 'react';
 import { Card, CardProps } from '@nextui-org/react';
 
-import { margeClassNames } from '../../libs';
+import { classNames } from '../../libs';
 
 /**
  * カードのコンポーネント
@@ -29,7 +29,7 @@ const MaiCard = forwardRef<HTMLDivElement, MaiCard.Props>((props, ref) => {
     
     return (
         <Card
-        className={margeClassNames(
+        className={classNames(
             'dark:!bg-gray-800/70',
             className
         )}

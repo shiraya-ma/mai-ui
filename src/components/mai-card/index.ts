@@ -1,6 +1,9 @@
 'use strict';
 
+export {
+    CardBody as MaiCardMaiBody,
+    CardFooter as MaiCardFooter,
+    CardHeader as MaiCardHeader,
+} from '@nextui-org/react';
+
 export * from './mai-card';
-export * from './mai-card-body';
-export * from './mai-card-footer';
-export * from './mai-card-header';
