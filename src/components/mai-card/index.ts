@@ -1,7 +1,7 @@
 'use strict';
 
 export {
-    CardBody as MaiCardMaiBody,
+    CardBody as MaiCardBody,
     CardFooter as MaiCardFooter,
     CardHeader as MaiCardHeader,
 } from '@nextui-org/react';
