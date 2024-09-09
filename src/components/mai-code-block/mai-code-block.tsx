@@ -1,9 +1,11 @@
 // MaiCodeBlock
 'use client';
 import React, { CSSProperties } from 'react';
+import SyntaxHighlighter, { Prism } from 'react-syntax-highlighter';
 
-import { MaiCodeBlockPresenter } from './mai-code-block-presenter';
-import { useHighlighterStyle } from './hooks';
+import { classNames } from '../../libs';
+
+import { useMaiCodeBlock } from './hooks';
 
 /**
  * SyntaxHighlighterをラップしたコンポーネント
@@ -32,33 +34,70 @@ import { useHighlighterStyle } from './hooks';
  * @param props 
  * @returns 
  */
-export const MaiCodeBlock: React.FC<MaiCodeBlockProps> = (props) => {
+const MaiCodeBlock: React.FC<MaiCodeBlock.Props> = (props) => {
     const {
         children,
+        className,
         filename,
+        isPrism,
         language,
         style
-    } = props;
-
-    const { highlighterStyle, isPrism } = useHighlighterStyle(style);
+    } = useMaiCodeBlock(props); 
     
     return (
-        <MaiCodeBlockPresenter
-        children={ children }
-        filename={ filename }
-        isPrism={ isPrism }
-        language={ language }
-        style={ highlighterStyle }
-        />
+        <div
+        className={classNames(
+            '[&>pre]:rounded-lg [&>pre]:overflow-x-auto',
+            'dark:[&>pre]:border dark:[&>pre]:border-white/10',
+            '[&>pre]:data-[with-filename=true]:rounded-tl-none',
+            className
+        )}
+        data-with-filename={ filename !== undefined }>
+            { filename && (
+                <div className='w-fit rounded-t-md bg-mint-300 text-white px-2'>
+                    { filename }
+                </div>
+            )}
+
+            { isPrism? (
+                <>
+                    <Prism
+                    language={ language }
+                    style={ style }
+                    className='!mt-0 !mb-4 [&_*]:font-code'
+                    >
+                        { children }
+                    </Prism>
+                </>
+            ): (
+                <>
+                    <SyntaxHighlighter
+                    language={ language }
+                    style={ style }
+                    className='!mt-0 !mb-4 [&_*]:font-code'
+                    >
+                        { children }
+                    </SyntaxHighlighter>
+                </>
+            ) }     
+        </div>
     );
 };
 
-export type MaiCodeBlockProps = {
-    children: string;
-    className?: string;
-    filename?: string;
-    language?: string;
-    style?: {
+namespace MaiCodeBlock {
+    export type Props = {
+        children: string;
+        className?: string;
+        filename?: string;
+        language?: string;
+        style?: Style;
+    };
+
+    export type Style = {
         [key: string]: CSSProperties;
     };
+};
+
+export {
+    MaiCodeBlock
 };
