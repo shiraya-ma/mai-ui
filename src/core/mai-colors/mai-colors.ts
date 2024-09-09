@@ -1,4 +1,5 @@
 'use strict';
+import type { RecursiveKeyValuePair } from 'tailwindcss/types/config'
 
 /** 
  * tailwind用のカラーセット
@@ -11,13 +12,15 @@
  *  content: [],
  *  theme: {
  *      extend: {
- *          colors: maiColors
+ *          colors: {
+ *              ...maiColors
+ *          }
  *      }
  *  }
  *  plugins: [maiui()]
  * };
 */
-export const maiColors = {
+export const maiColors: MaiColors = {
     chocolate: {
         50:  "#fce6e4",
         100: "#e1c4c5",
@@ -78,4 +81,12 @@ export const maiColors = {
         800: '#b81232',
         900: '#a90026',
     },
+};
+
+type MaiColors = {
+    chocolate: RecursiveKeyValuePair,
+    cider: RecursiveKeyValuePair,
+    citrus: RecursiveKeyValuePair,
+    mint: RecursiveKeyValuePair,
+    strawberry: RecursiveKeyValuePair
 };

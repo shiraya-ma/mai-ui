@@ -1,7 +1,7 @@
 'use strict';
 
 /** 
- * tailwind用のカラーセット
+ * tailwind用の基本フォントセット
  * 
  * @example
  * 'use strict'
@@ -10,7 +10,9 @@
  * module.exports = {
  *  content: [],
  *  theme: {
- *      fontFamily: maiFonts
+ *      fontFamily: {
+ *          ...maiFonts
+ *      }
  *  }
  *  plugins: [maiui()]
  * };
