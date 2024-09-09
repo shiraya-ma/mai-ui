@@ -1,9 +1,9 @@
 // MaiPagination
 'use strict';
 import { forwardRef } from 'react';
-import { PaginationProps } from "@nextui-org/react";
+import { Pagination, type PaginationProps } from '@nextui-org/react';
 
-import { MaiPaginationPresenter } from './mai-pagination-presenter';
+import { classNames } from '../../libs';
 
 /**
  * ページネーションのコンポーネント
@@ -24,12 +24,16 @@ import { MaiPaginationPresenter } from './mai-pagination-presenter';
  * };
  */
 const MaiPagination = forwardRef<HTMLElement, MaiPagination.Props>((props, ref) => {
-    const { ...paginationProps } = props;
-    
+    const { className, ...paginationProps } = props;
+
     return (
-        <MaiPaginationPresenter
-        { ...paginationProps }        
-        />
+        <Pagination
+        className={classNames(
+            'dark:[&_li]:bg-gray-900/50 dark:text-white',            
+            className
+        )}
+        ref={ ref }
+        { ...paginationProps }/>
     );
 });
 
