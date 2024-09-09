@@ -1,6 +1,6 @@
 // useMaiLink
 'use client';
-import { MouseEvent, useContext, useMemo } from "react";
+import { MouseEvent, useCallback, useContext, useMemo } from "react";
 
 import { ExternalLinkOpenerContext } from "../../../../features/external-link";
 
@@ -10,27 +10,21 @@ import { isExternal } from "./is-external";
 export function useMaiLink (props: MaiLink.Props) {
     const { href, ...linkProps } = props;
     const open = useContext(ExternalLinkOpenerContext);
-    const hrefIsExternal = linkProps.isExternal ?? isExternal(href);
+    const hrefIsExternal = linkProps.isExternal || isExternal(href);
 
-    const handleClickLink = useMemo(() => {
+    const handleClickLink = useCallback((ev: MouseEvent<HTMLAnchorElement>) => {
         if (!hrefIsExternal) {
-            return undefined;
+            return;
         }
 
-        const handler = (ev: MouseEvent<HTMLAnchorElement>) => {
-            if (hrefIsExternal) {
-                ev.preventDefault();
+        ev.preventDefault();
 
-                open(href || null)
-            }
-        };
-
-        return handler;
+        open(href || null);
     }, [ href, hrefIsExternal, open ]);
 
     return {
         href,
-        onClick: handleClickLink,
-        ...linkProps
+        ...linkProps,
+        onClick: handleClickLink
     };
 };
