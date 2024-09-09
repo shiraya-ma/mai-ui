@@ -8,6 +8,6 @@ export * from './mai-code-block';
 export * from './mai-headings';
 export * from './mai-link';
 export * from './mai-markdown';
-export * from './mai-pagenation';
+export * from './mai-pagination';
 export * from './mai-skeleton';
 export * from './mai-sns-link';
