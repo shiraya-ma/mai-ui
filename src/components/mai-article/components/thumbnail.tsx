@@ -3,7 +3,7 @@
 import React from 'react';
 import { Image, ImageProps } from '@nextui-org/react';
 
-import { margeClassNames } from '../../libs';
+import { classNames } from '../../../libs';
 
 const Thumbnail: React.FC<Thumbnail.Props> = (props) => {
     const {
@@ -16,7 +16,7 @@ const Thumbnail: React.FC<Thumbnail.Props> = (props) => {
     
     return (
         <Image
-        className={ margeClassNames(
+        className={classNames(
             'w-full max-w-full h-auto object-contain aspect-[1200/630]',
             className
         )}

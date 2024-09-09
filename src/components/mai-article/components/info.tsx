@@ -2,8 +2,8 @@
 'use strict';
 import React, { HTMLAttributes } from 'react';
 
-import { margeClassNames } from '../../libs';
-import { getInfoProps } from './helpers';
+import { classNames } from '../../../libs';
+import { getInfoProps } from '../helpers';
 
 const Info: React.FC<Info.Props> = (props) => {
     const { children, className, publishedAt, updatedAt, ...divProps } = props;
@@ -13,11 +13,10 @@ const Info: React.FC<Info.Props> = (props) => {
     return (
         <div
         { ...divProps }
-        className={ margeClassNames(
+        className={classNames(
             'flex flex-col',
             className
-        ) }
-        >
+        )}>
             { data.map((data) => (
                 <p className='flex gap-2' key={`data-info-${ data.label }`}>
                     <span className='text-chocolate-700/70 dark:text-white/70'>{ data.label }</span>

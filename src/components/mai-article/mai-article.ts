@@ -1,8 +1,10 @@
 'use strict';
-import { Container } from "./container";
-import { Divider } from "./divider";
-import { Info } from "./info";
-import { Thumbnail } from "./thumbnail";
+import {
+    Container,
+    Divider,
+    Info,
+    Thumbnail
+} from './components';
 
 export const MaiArticle = {
     Container,

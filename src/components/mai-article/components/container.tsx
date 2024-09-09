@@ -2,14 +2,14 @@
 'use strict';
 import React, { HTMLAttributes } from 'react';
 
-import { margeClassNames } from '../../libs';
+import { classNames } from '../../../libs';
 
 const Container: React.FC<Container.Props> = (props) => {
     const { children, className, ...articleProps } = props;
     
     return (
         <article
-        className={ margeClassNames(
+        className={ classNames(
             'flex flex-col gap-4 px-4 py-12 lg:bg-white lg:dark:bg-gray-900 lg:rounded-md lg:shadow-medium',
             className
         ) }
