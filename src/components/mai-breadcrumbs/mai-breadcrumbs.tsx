@@ -2,7 +2,9 @@
 'use strict';
 import React from 'react';
 import { HouseFill } from 'react-bootstrap-icons';
-import {  Breadcrumbs, BreadcrumbsProps } from '@nextui-org/react';
+import { Breadcrumbs, type BreadcrumbsProps } from '@nextui-org/react';
+
+import { classNames } from '../../libs';
 
 import { MaiBreadcrumbItem } from './mai-breadcrumb-item';
 
@@ -36,17 +38,14 @@ const MaiBreadcrumbs: React.FC<MaiBreadcrumbs.Props> = (props) => {
     
     return (
         <Breadcrumbs
-        { ...breadcrumbsProps }
-        className={
-            [
-                'mb-4 py-2',
-                className
-            ].filter(c => c).join(' ')
-        }
-        >   
+        className={classNames(
+            'mb-4 py-2',
+            '[&>ol>li>*:first-child]:text-mint-300',
+            className
+        )}
+        { ...breadcrumbsProps }>   
             <MaiBreadcrumbItem
             href={ homeHref ?? '/'}
-            color='primary'
             >
                 <HouseFill />&nbsp;home
             </MaiBreadcrumbItem>
