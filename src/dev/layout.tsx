@@ -1,35 +1,49 @@
 // Layout
 'use strict';
 import React, { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     Navbar,
     NavbarContent,
-    NavbarItem
+    NavbarItem,
 } from '@nextui-org/react';
-import { MaiLink } from '..';
 
-// import {} from './style';
-// import * as S from './style';
+import { MaiLink, MaiUIProvider } from '..';
+
+import {
+    ThemeSwitcher
+} from './components';
 
 const Layout: React.FC<Layout.Props> = (props) => {
     const { children } = props;
+
+    const navigate = useNavigate();
     
     return (
-        <>
-            <Navbar className='backdrop-saturate-100 dark:bg-transparent' isBordered>
-                <NavbarContent className="sm:flex gap-4" justify="center">
-                    <NavbarItem>
+        <MaiUIProvider navigate={ navigate }>
+            <Navbar
+            className='bg-transparent backdrop-saturate-100
+            [&>header]:w-screen [&>header]:max-w-[100ch]' 
+            isBordered>
+                <NavbarContent>
+                    <NavbarItem className='flex gap-4 grow'>
                         <MaiLink href='/'>HOME</MaiLink>
+                        
+                        <MaiLink href='/components'>COMPONENTS</MaiLink>
+                        
+                        <MaiLink href='/temp'>TEMP</MaiLink>
                     </NavbarItem>
                     
                     <NavbarItem>
-                        <MaiLink href='/temp'>TEMP</MaiLink>
+                        <ThemeSwitcher />
                     </NavbarItem>
                 </NavbarContent>
             </Navbar>
 
-            { children }
-        </>
+            <main className='flex flex-col mx-auto w-full max-w-[100ch]'>
+                { children }
+            </main>
+        </MaiUIProvider>
     );
 };
 
