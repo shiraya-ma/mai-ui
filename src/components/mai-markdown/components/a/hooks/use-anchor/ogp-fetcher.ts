@@ -4,7 +4,7 @@ import { log } from "../../../../../../libs";
 
 const TAG = '[OGP-FETCHER]';
 
-const ENDPOINT = 'http://localhost:8080/api/ogp';
+const ENDPOINT = 'http://api.shiraya.ma/ogp';
 
 export const ogpFetcher = async (url: string | undefined) => {
     if (!url) {

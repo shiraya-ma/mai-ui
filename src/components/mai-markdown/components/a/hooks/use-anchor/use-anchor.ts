@@ -24,7 +24,7 @@ export function useAnchor (props: A.Props) {
     const { allowedByCSP } = useMemo(() => {
         const connectSrc = csp.connectSrc;
 
-        const allowedByCSP = connectSrc.some(v => v === '*') || connectSrc.some(v => /localhost:8080/.test(v));
+        const allowedByCSP = connectSrc.some(v => v === '*') || connectSrc.some(v => /api\.shiraya\.ma/.test(v));
 
         return {
             allowedByCSP
