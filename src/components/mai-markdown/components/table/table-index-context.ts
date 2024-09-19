@@ -1,5 +1,4 @@
-'use string';
-
+'use strict';
 import { createContext } from "react";
 
 const TableIndexContext = createContext<TableIndexContext.Props>({
