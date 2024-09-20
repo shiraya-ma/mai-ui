@@ -12,3 +12,6 @@ dist/**/dev/**/*
 !package.json
 
 !README.md
+
+!setup.d.ts
+!setup.js

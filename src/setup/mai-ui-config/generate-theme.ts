@@ -1,8 +1,7 @@
 'use strict';
 import type { CustomThemeConfig } from 'tailwindcss/types/config';
 
-import { maiColors } from '../mai-colors';
-import { maiFonts } from '../mai-fonts';
+import { maiColors, maiFonts } from '../../core';
 
 export function generateTheme (userTheme: ThemeConfig | undefined): ThemeConfig {
     if (userTheme === undefined) {

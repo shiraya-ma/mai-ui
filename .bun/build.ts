@@ -14,9 +14,13 @@ await Promise.all([
 ]);
 
 const entrypoints = ['./src/index.ts'];
+const external = [
+    'react'
+];
 
 const browserConfig: BuildConfig = {
     entrypoints,
+    external,
     outdir: './dist/es',
     target: 'browser',
 };
@@ -27,5 +31,12 @@ const nodeConfig: BuildConfig = {
     target: 'node'
 };
 
+const setupConfig: BuildConfig = {
+    entrypoints: ['./src/setup/setup.ts'],
+    outdir: './',
+    target: 'node'
+};
+
 await Bun.build(browserConfig);
 await Bun.build(nodeConfig);
+await Bun.build(setupConfig);

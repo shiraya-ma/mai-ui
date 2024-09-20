@@ -4,7 +4,7 @@ import type { RecursiveKeyValuePair } from 'tailwindcss/types/config';
 import { nextui } from '@nextui-org/react';
 import type { ColorScale, NextUIPluginConfig } from "@nextui-org/react";
 
-import { maiColors } from "../";
+import { maiColors } from "../../core";
 
 /**
  * NextUIのテーマを拡張するプラグイン
