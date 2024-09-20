@@ -13,7 +13,7 @@ import { NextUIPluginConfig } from '@nextui-org/react';
  * 
  * @example
  * 'use strict'
- * const { maiUIConfig } = require('@shiraya-ma/mai-ui');
+ * const { maiUIConfig } = require('@shiraya-ma/mai-ui/setup');
  * 
  * module.exports = maiUIConfig();
  * 
