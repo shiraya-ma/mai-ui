@@ -6,6 +6,7 @@ import { NextUIProvider, type NextUIProviderProps } from '@nextui-org/react';
 import { ContentSecurityPolicyProvider } from '../../features/csp';
 import { ExternalLinkModal, ExternalLinkProvider } from '../../features/external-link';
 import { PreferThemeObserver, ThemeContextProvider } from '../../features/theme';
+import { NavigateContextProvider } from '../../features/navigate';
 
 /**
  * MaiUIでテーマなどのコンテキストを提供するプロバイダーコンポーネント
@@ -35,19 +36,23 @@ import { PreferThemeObserver, ThemeContextProvider } from '../../features/theme'
  * @returns 
  */
 const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
-    const { children, ...nextUIProviderProps } = props;
+    const { children, navigate, ...nextUIProviderProps } = props;
     
     return (
         <ContentSecurityPolicyProvider>
             <ThemeContextProvider>
                 <ExternalLinkProvider>
-                    <NextUIProvider { ...nextUIProviderProps }>
-                        { children }
+                    <NavigateContextProvider navigate={ navigate }>
+                        <NextUIProvider
+                        navigate={ navigate }
+                        { ...nextUIProviderProps }>
+                            { children }
 
-                        <ExternalLinkModal />
+                            <ExternalLinkModal />
 
-                        <PreferThemeObserver />
-                    </NextUIProvider>
+                            <PreferThemeObserver />
+                        </NextUIProvider>
+                    </NavigateContextProvider>
                 </ExternalLinkProvider>
             </ThemeContextProvider>
         </ContentSecurityPolicyProvider>
