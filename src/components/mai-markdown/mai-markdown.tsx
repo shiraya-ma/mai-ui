@@ -7,9 +7,10 @@ import remarkGfm from 'remark-gfm';
 
 import * as C from './components';
 import { rehypeMai } from './plugins';
+import { useMaiMarkdown } from './hooks';
 
 const MaiMarkdown = forwardRef<HTMLDivElement, MaiMarkdown.Props>((props, ref) => {
-    const { children } = props;
+    const { children } = useMaiMarkdown(props);
     
     return (
         <C.TableIndexContextProvider>
