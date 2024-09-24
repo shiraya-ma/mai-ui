@@ -1,5 +1,5 @@
 'use strict';
-const { maiUIConfig } = require('./src/core');
+const { maiUIConfig } = require('./src/setup');
 
 export default maiUIConfig({
   content: []
