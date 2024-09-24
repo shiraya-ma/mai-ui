@@ -7,6 +7,7 @@ import { Breadcrumbs, type BreadcrumbsProps } from '@nextui-org/react';
 import { classNames } from '../../libs';
 
 import { MaiBreadcrumbItem } from './mai-breadcrumb-item';
+import { useMaiBreadcrumbs } from './hooks';
 
 /**
  * パンくずリストのラッパーコンポーネント
@@ -34,7 +35,7 @@ import { MaiBreadcrumbItem } from './mai-breadcrumb-item';
  * };
  */
 const MaiBreadcrumbs: React.FC<MaiBreadcrumbs.Props> = (props) => {
-    const { children, className, homeHref, ...breadcrumbsProps } = props;
+    const { children, className, homeHref, refDiv, ...breadcrumbsProps } = useMaiBreadcrumbs(props);
     
     return (
         <Breadcrumbs
@@ -43,6 +44,7 @@ const MaiBreadcrumbs: React.FC<MaiBreadcrumbs.Props> = (props) => {
             '[&>ol>li>*:first-child]:text-mint-300',
             className
         )}
+        ref={ refDiv }
         { ...breadcrumbsProps }>   
             <MaiBreadcrumbItem
             href={ homeHref ?? '/'}
