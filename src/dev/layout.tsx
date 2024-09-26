@@ -14,6 +14,8 @@ import {
     ThemeSwitcher
 } from './components';
 
+import './global.css';
+
 const Layout: React.FC<Layout.Props> = (props) => {
     const { children } = props;
 
