@@ -24,23 +24,23 @@ const BlockQuoteFC: React.FC<BlockQuote.Props> = (props) => {
         <blockquote
         { ...blockQuoteprops }
         className={[
-            'flex-col gap-2 border-l-8',
+            'block border-l-8',
             'data-[quote=DEFAULT]:border-gray-500',
             'data-[quote=NOTE]:border-cider-500',
-            '[&>span]:data-[quote=NOTE]:text-cider-500',
+            '[&>p]:data-[quote=NOTE]:text-cider-500',
             'data-[quote=TIP]:border-mint-500',
-            '[&>span]:data-[quote=TIP]:text-mint-500',
+            '[&>p]:data-[quote=TIP]:text-mint-500',
             'data-[quote=IMPORTANT]:border-purple-500',
-            '[&>span]:data-[quote=IMPORTANT]:text-purple-500',
+            '[&>p]:data-[quote=IMPORTANT]:text-purple-500',
             'data-[quote=WARNING]:border-citrus-500',
-            '[&>span]:data-[quote=WARNING]:text-citrus-500',
+            '[&>p]:data-[quote=WARNING]:text-citrus-500',
             'data-[quote=CAUTION]:border-strawberry-500',
-            '[&>span]:data-[quote=CAUTION]:text-strawberry-500',
+            '[&>p]:data-[quote=CAUTION]:text-strawberry-500',
         ].join(' ')}
         ref={ refBlockQuote }
         data-quote={ quoteType }>
             { quoteType !== 'DEFAULT' && (
-                <span className='[&>svg]:inline'>
+                <p className='[&>svg]:inline'>
                     {
                         quoteType === 'NOTE'? <InfoCircle />:
                         quoteType === 'TIP'? <Lightbulb/>:
@@ -50,7 +50,7 @@ const BlockQuoteFC: React.FC<BlockQuote.Props> = (props) => {
                     }
                     &nbsp;
                     { quoteType }
-                </span>
+                </p>
             )}
             
             { children }

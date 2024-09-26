@@ -22,15 +22,8 @@ export function useBlockQuote (props: QuoteHTMLAttributes<HTMLQuoteElement>) {
             return;
         }
 
-        blockQuote.setAttribute('style', 'display: flex !important; padding-left: .5rem !important');
+        blockQuote.setAttribute('style', 'padding-left: .5rem !important');
     }, []);
-
-    // return {
-    //     children/*: fixedChildren */,
-    //     quoteType: 'DEFAULT',
-    //     refBlockQuote,
-    //     ...quoteBlockProps
-    // };
     
     return {
         children: fixedChildren,
