@@ -1,21 +1,23 @@
 'use strict';
 import Bun, { $, type BuildConfig } from 'bun';
 import { resolve } from 'path';
+import { existsSync, rmdirSync } from 'fs';
 
-const __rootDir = resolve(__dirname, '..');
+const rootdir = resolve(__dirname, '..');
+console.log('rootdir:', rootdir);
 
-$.cwd(__rootDir);
+$.cwd(rootdir);
 
-await $`bunx rimraf ./dist`;
+const distdir = resolve(rootdir, 'dist');
+console.log('distdir:', distdir);
+
+if (existsSync(distdir)) {
+    console.log('found dist directory. remove dist directory before build process.');
+
+    rmdirSync(distdir, { recursive: true });
+}
 
 await Promise.all([
     $`bunx tsc -p tsconfig.es.json`,
     $`bunx tsc -p tsconfig.cj.json`
 ]);
-
-const setupConfig: BuildConfig = {
-    entrypoints: ['./src/setup/setup.ts'],
-    outdir: './',
-    target: 'node'
-};
-await Bun.build(setupConfig);
