@@ -13,5 +13,4 @@ dist/**/dev/**/*
 
 !README.md
 
-!setup.d.ts
-!setup.js
+!setup/**/*

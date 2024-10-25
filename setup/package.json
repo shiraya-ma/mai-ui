@@ -1,0 +1,11 @@
+{
+    "name": "@shiraya-ma/mai-ui-setup",
+    "version": "1.0.0-alpha3",
+    "description": "Component library for React and Next.js",
+    "main": "./setup/cjs",
+    "module": "./setup.mjs",
+    "types": "./setup.d.ts",
+    "author": "shiraya-ma <138377007+shiraya-ma@users.noreply.github.com> (https://www.shiraya.ma/)",
+    "license": "MIT"
+  }
+  
