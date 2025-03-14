@@ -14,6 +14,8 @@
   ],
   "author": "shiraya-ma <138377007+shiraya-ma@users.noreply.github.com> (https://www.shiraya.ma/)",
   "license": "MIT",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/bun": "^1.2.5"
+  },
   "dependencies": {}
 }
