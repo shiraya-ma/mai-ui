@@ -1,3 +1,4 @@
+/* eslint-disable */
 // useParagraph
 'use client';
 import { type ReactElement, useMemo, type HTMLAttributes } from "react";

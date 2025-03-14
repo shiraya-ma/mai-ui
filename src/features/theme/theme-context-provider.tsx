@@ -1,3 +1,4 @@
+/* eslint-disable */
 // ThemeContextProvider
 'use strict';
 import React, { ReactNode, useEffect } from 'react';

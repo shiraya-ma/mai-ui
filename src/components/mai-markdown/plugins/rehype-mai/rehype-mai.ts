@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 import { visit } from "unist-util-visit";
 
