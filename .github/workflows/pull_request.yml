@@ -1,4 +1,4 @@
-name: CI
+name: Pull Request
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: auto-test-on-pull-request
+    name: Auto linting and test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
