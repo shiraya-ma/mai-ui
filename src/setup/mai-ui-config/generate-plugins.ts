@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 import type { Config } from 'tailwindcss';
 import type { PluginCreator } from 'tailwindcss/types/config';

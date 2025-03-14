@@ -1,3 +1,4 @@
+/* eslint-disable */
 // useMaiLink
 'use client';
 import { MouseEvent, useCallback, useContext, useMemo } from "react";

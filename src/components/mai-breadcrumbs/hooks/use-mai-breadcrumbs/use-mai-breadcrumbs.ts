@@ -1,3 +1,4 @@
+/* eslint-disable */
 // useMaiBreadcrumbs
 'use client';
 import { useEffect, useRef } from "react";

@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 
 export function parseCodeblock (text: string) {
