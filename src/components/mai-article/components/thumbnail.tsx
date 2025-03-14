@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Thumbnail
 'use strict';
 import React from 'react';

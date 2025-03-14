@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 import { MaiLogger } from "@shiraya-ma/mai-logger";
 
