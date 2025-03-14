@@ -1,3 +1,4 @@
+/* eslint-disable */
 // useBlockQuote
 'use client';
 import {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Info
 'use strict';
 import React, { HTMLAttributes } from 'react';

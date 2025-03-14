@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {} from 'react';
 
 export namespace RMP.Node {

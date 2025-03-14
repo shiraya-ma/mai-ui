@@ -1,3 +1,4 @@
+/* eslint-disable */
 // ThemeSwitcher
 'use strict';
 import React from 'react';

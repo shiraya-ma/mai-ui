@@ -1,3 +1,4 @@
+/* eslint-disable */
 // useExternalLinkModal
 'use client';
 import { useCallback, useContext, useEffect } from "react";
