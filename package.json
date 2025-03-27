@@ -19,10 +19,20 @@
   "devDependencies": {
     "@eslint/js": "^9.22.0",
     "@types/bun": "^1.2.5",
+    "@types/lodash": "^4.17.16",
+    "autoprefixer": "^10.4.21",
+    "color": "^5.0.0",
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "postcss": "^8.5.3",
     "typescript-eslint": "^8.26.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@heroui/system": "^2.4.12",
+    "@heroui/theme": "^2.4.12",
+    "@shiraya-ma/mai-colors": "^0.0.0",
+    "deepmerge": "^4.3.1",
+    "tailwindcss": "^3"
+  }
 }
