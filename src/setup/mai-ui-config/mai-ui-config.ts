@@ -1,15 +1,17 @@
 'use strict';
 import type { Config } from 'tailwindcss';
+import type { HeroUIPluginConfig } from '@heroui/theme';
 
-import { generateContent } from './generate-content';
-import { generateTheme } from './generate-theme';
-import { generatePlugins } from './generate-plugins';
-import { NextUIPluginConfig } from '@nextui-org/react';
+import {
+  _generateContent,
+  _generatePlugins,
+  _generateTheme,
+} from './_internal';
 
 /** 
- * tailwind用の設定関数
+ * Function to configuration tailwindcss
  * 
- * NextUI、MaiUIに関する設定は組み込み済み
+ * Pre-installed settings for HeroUI and MaiUI
  * 
  * @example
  * 'use strict'
@@ -22,24 +24,42 @@ import { NextUIPluginConfig } from '@nextui-org/react';
  * const { maiui, maiUIConfig } = require('@shiraya-ma/mai-ui');
  * 
  * module.exports = maiUIConfig({
- *      content: [],
+ *    // tailwindcss configs...
  * }, {
- *      layout: {},
- *      themes: {
- *          yourTheme: {}
- *      }
- *  });
+ *    // HeroUI configs...
+ *    layout: {},
+ *    themes: {
+ *      yourTheme: {}
+ *    }
+ * });
 */
-export function maiUIConfig (userConfig?: Config, nextUIPluginConfig?: NextUIPluginConfig): Config {
-    const { content, darkMode, theme, plugins, ..._userConfig } = userConfig? userConfig: { content: [], darkMode: undefined, theme: undefined, plugins: undefined };
-    
-    const _config: Config = {
-        content: generateContent(content),
-        darkMode: darkMode? darkMode: ['class'],
-        theme: generateTheme(theme),
-        plugins: generatePlugins(plugins, nextUIPluginConfig),
-        ..._userConfig
-    };
+export function maiUIConfig (userConfig?: Partial<Config>, heroUIPluginConfig?: HeroUIPluginConfig): Config {
+  const {
+    content:  userContent,
+    darkMode: userDarkMode,
+    theme:    userTheme,
+    plugins:  userPlugin,
+    ...userConfigProps
+  } = userConfig 
+  || {
+    content:  undefined,
+    darkMode: undefined,
+    theme:    undefined,
+    plugins:  []
+  };
 
-    return _config;
+  const content = _generateContent(userContent || []);
+  const darkMode = userDarkMode || ['class'];
+  const theme = _generateTheme(userTheme);
+  const plugins = _generatePlugins(userPlugin);
+  
+  const _config: Config = {
+    content,
+    darkMode,
+    theme,
+    plugins: _generatePlugins(plugins, heroUIPluginConfig),
+    ...userConfigProps
+  };
+
+  return _config;
 };
