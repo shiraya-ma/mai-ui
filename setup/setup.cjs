@@ -1,4 +1,4 @@
 'use strict';
-const { maiUIConfig } = require('../dist/cj/setup/index.js');
+const { maiui, maiUIConfig } = require('../dist/cj/setup/index.js');
 
-module.exports = { maiUIConfig };
+module.exports = { maiui, maiUIConfig };
