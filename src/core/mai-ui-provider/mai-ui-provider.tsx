@@ -1,12 +1,12 @@
 // MaiUIProvider
 'use client';
 import React from 'react';
-import { NextUIProvider, type NextUIProviderProps } from '@nextui-org/react';
+// import { NextUIProvider, type NextUIProviderProps } from '@nextui-org/react';
 
-import { ContentSecurityPolicyProvider } from '../../features/csp';
-import { ExternalLinkModal, ExternalLinkProvider } from '../../features/external-link';
-import { PreferThemeObserver, ThemeContextProvider } from '../../features/theme';
-import { NavigateContextProvider } from '../../features/navigate';
+// import { ContentSecurityPolicyProvider } from '../../features/csp';
+// import { ExternalLinkModal, ExternalLinkProvider } from '../../features/external-link';
+// import { PreferThemeObserver, ThemeContextProvider } from '../../features/theme';
+// import { NavigateContextProvider } from '../../features/navigate';
 
 /**
  * MaiUIでテーマなどのコンテキストを提供するプロバイダーコンポーネント
@@ -36,31 +36,36 @@ import { NavigateContextProvider } from '../../features/navigate';
  * @returns 
  */
 const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
-    const { children, navigate, ...nextUIProviderProps } = props;
+    const {} = props;
+    // const { children, navigate, ...nextUIProviderProps } = props;
     
-    return (
-        <ContentSecurityPolicyProvider>
-            <ThemeContextProvider>
-                <ExternalLinkProvider>
-                    <NavigateContextProvider navigate={ navigate }>
-                        <NextUIProvider
-                        navigate={ navigate }
-                        { ...nextUIProviderProps }>
-                            { children }
+    // return (
+    //     <ContentSecurityPolicyProvider>
+    //         <ThemeContextProvider>
+    //             <ExternalLinkProvider>
+    //                 <NavigateContextProvider navigate={ navigate }>
+    //                     <NextUIProvider
+    //                     navigate={ navigate }
+    //                     { ...nextUIProviderProps }>
+    //                         { children }
 
-                            <ExternalLinkModal />
+    //                         <ExternalLinkModal />
 
-                            <PreferThemeObserver />
-                        </NextUIProvider>
-                    </NavigateContextProvider>
-                </ExternalLinkProvider>
-            </ThemeContextProvider>
-        </ContentSecurityPolicyProvider>
-    );
+    //                         <PreferThemeObserver />
+    //                     </NextUIProvider>
+    //                 </NavigateContextProvider>
+    //             </ExternalLinkProvider>
+    //         </ThemeContextProvider>
+    //     </ContentSecurityPolicyProvider>
+    // );
+    return <>{props.children}</>
 };
 
 namespace MaiUIProvider {
-    export type Props = NextUIProviderProps & {}
+    export type Props = {
+        children: React.ReactNode;
+    }
+    // export type Props = NextUIProviderProps & {}
 };
 
 export {

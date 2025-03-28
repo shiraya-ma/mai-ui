@@ -1,8 +1,6 @@
 /* eslint-disable */
 'use strict';
 
-import { log } from "../../../../../../libs";
-
 const TAG = '[OGP-FETCHER]';
 
 const ENDPOINT = 'http://api.shiraya.ma/ogp';
@@ -13,7 +11,7 @@ export const ogpFetcher = async (url: string | undefined) => {
     }
 
     try {
-        log.debug(TAG, 'Try fetch to', url);
+        console.debug(TAG, 'Try fetch to', url);
 
         const fetchURL = `${ ENDPOINT }?url=${ url }`;
 
@@ -40,7 +38,7 @@ export const ogpFetcher = async (url: string | undefined) => {
     } catch (e) {
         const err = e as Error;
 
-        log.error(TAG, err.message);
+        console.error(TAG, err.message);
 
         return undefined;
     }

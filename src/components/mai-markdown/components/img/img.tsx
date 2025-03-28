@@ -1,18 +1,20 @@
 // Img
 'use strict';
 import React from 'react';
-import { Image } from '@nextui-org/react';
+// import { Image } from '@nextui-org/react';
 
 const Img = (props: Img.Props) => {
     const {} = props;    
     
-    return (
-        <Image
-        { ...props }
-        radius='sm'
-        isZoomed
-        />
-    );
+    // return (
+    //     <Image
+    //     { ...props }
+    //     radius='sm'
+    //     isZoomed
+    //     />
+    // );
+
+    return <></>
 };
 
 namespace Img {

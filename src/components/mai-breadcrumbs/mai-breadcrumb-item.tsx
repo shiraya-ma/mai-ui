@@ -1,6 +1,6 @@
 // MaiBreadcrumbItem
 'use strict';
-import { BreadcrumbItem } from '@nextui-org/react';
+// import { BreadcrumbItem } from '@nextui-org/react';
 
 /**
  * パンくずリストのコンポーネント
@@ -24,7 +24,11 @@ import { BreadcrumbItem } from '@nextui-org/react';
  *      );
  * };
  */
-const MaiBreadcrumbItem = BreadcrumbItem;
+// const MaiBreadcrumbItem = BreadcrumbItem;
+const MaiBreadcrumbItem = (props: object) => {
+    const {} = props;
+    return <></>
+};
 
 export {
     MaiBreadcrumbItem
