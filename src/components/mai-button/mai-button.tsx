@@ -1,6 +1,6 @@
 // MaiButton
 'use client';
-import { Button, extendVariants } from '@nextui-org/react';
+// import { Button, extendVariants } from '@nextui-org/react';
 
 /**
  * ボタンのコンポーネント
@@ -21,12 +21,17 @@ import { Button, extendVariants } from '@nextui-org/react';
  *      );
  * };
  */
-const MaiButton = extendVariants(Button, {
-    defaultVariants: {
-        color: 'primary',
-        variant: 'shadow'
-    }
-});
+// const MaiButton = extendVariants(Button, {
+//     defaultVariants: {
+//         color: 'primary',
+//         variant: 'shadow'
+//     }
+// });
+const MaiButton = (props: object) => {
+    const {} = props;
+    
+    return <></>
+};
 
 export {
     MaiButton

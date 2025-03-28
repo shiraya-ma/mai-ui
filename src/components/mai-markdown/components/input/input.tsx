@@ -1,16 +1,19 @@
 // Input
 'use strict';
 import React, { type InputHTMLAttributes } from 'react';
-import { Checkbox, Input as NextInput } from '@nextui-org/react';
+// import { Checkbox, Input as NextInput } from '@nextui-org/react';
 
 const Input = (props: Input.Props) => {
-    const { checked, type, value } = props;
+    const {} = props;
+    // const { checked, type, value } = props;
     
-    return type === 'checkbox'? (
-        <Checkbox isSelected={ checked } onSelect={() => {}}/>
-    ): (
-        <NextInput value={ JSON.stringify(value) } />
-    );
+    // return type === 'checkbox'? (
+    //     <Checkbox isSelected={ checked } onSelect={() => {}}/>
+    // ): (
+    //     <NextInput value={ JSON.stringify(value) } />
+    // );
+
+    return <></>
 };
 
 namespace Input {

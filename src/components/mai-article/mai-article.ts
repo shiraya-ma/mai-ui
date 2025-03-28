@@ -1,14 +1,14 @@
 'use strict';
 import {
     Container,
-    Divider,
+    // Divider,
     Info,
     Thumbnail
 } from './components';
 
 export const MaiArticle = {
     Container,
-    Divider,
+    // Divider,
     Info,
     Thumbnail
 };

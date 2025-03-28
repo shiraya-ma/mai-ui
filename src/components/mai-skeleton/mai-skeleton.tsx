@@ -1,9 +1,9 @@
 // MaiSkeleton
 'use strict';
 import { forwardRef } from 'react';
-import { Skeleton, type SkeletonProps } from '@nextui-org/react';
+// import { Skeleton, type SkeletonProps } from '@nextui-org/react';
 
-import { classNames } from '../../libs';
+// import { classNames } from '../../libs';
 
 /**
  * スケルトンのコンポーネント
@@ -23,21 +23,26 @@ import { classNames } from '../../libs';
  * };
  */
 const MaiSkeleton = forwardRef<HTMLDivElement, MaiSkeleton.Props>((props, ref) => {
-    const { className, ...skeletonProps } = props;
+    const {} = props;
+    const {} = ref!;
+    // const { className, ...skeletonProps } = props;
     
-    return (
-        <Skeleton
-        className={classNames(
-            'dark:bg-[#01011d80]',
-            className
-        )}
-        ref={ ref }
-        { ...skeletonProps }/>
-    );
+    // return (
+    //     <Skeleton
+    //     className={classNames(
+    //         'dark:bg-[#01011d80]',
+    //         className
+    //     )}
+    //     ref={ ref }
+    //     { ...skeletonProps }/>
+    // );
+
+    return <></>
 });
 
 namespace MaiSkeleton {
-    export type Props = SkeletonProps & {};
+    export type Props = object;
+    // export type Props = SkeletonProps & {};
 };
 
 export {

@@ -2,8 +2,6 @@
 'use client';
 import { useEffect, useState } from "react";
 
-import { log } from '../../libs';
-
 import {
     CSP,
     getCSP,
@@ -28,7 +26,7 @@ export function useContentSecurityPolicyContext () {
     }, [ setCSP ]);
 
     useEffect(() => {
-        log.debug('Updated content security policy.');
+        console.debug('Updated content security policy.');
 
         // log.debug(JSON.stringify(csp, null, 2));
     }, [ csp ]);

@@ -1,11 +1,11 @@
 // MaiLink
 'use strict';
 import { forwardRef } from 'react';
-import { Link, type LinkProps} from '@nextui-org/react';
+// import { Link, type LinkProps} from '@nextui-org/react';
 
-import { classNames } from '../../libs';
+// import { classNames } from '../../libs';
 
-import { useMaiLink } from './hooks';
+// import { useMaiLink } from './hooks';
 
 /**
  * リンクのコンポーネント
@@ -29,21 +29,26 @@ import { useMaiLink } from './hooks';
  * };
  */
 const MaiLink = forwardRef<HTMLAnchorElement, MaiLink.Props>((props, ref) => {
-    const { className, ...linkProps } = useMaiLink(props);
+    const {} = props;
+    const {} = ref!;
+    // const { className, ...linkProps } = useMaiLink(props);
     
-    return (
-        <Link
-        className={classNames(
-            'cursor-pointer',
-            className
-        )}
-        { ...linkProps }
-        ref={ ref }/>
-    );
+    // return (
+    //     <Link
+    //     className={classNames(
+    //         'cursor-pointer',
+    //         className
+    //     )}
+    //     { ...linkProps }
+    //     ref={ ref }/>
+    // );
+
+    return <></>
 });
 
 namespace MaiLink {
-    export type Props = LinkProps & {};
+    // export type Props = LinkProps & {};
+    export type Props = object;
 };
 
 export {
