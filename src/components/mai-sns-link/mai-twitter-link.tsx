@@ -1,10 +1,10 @@
 // MaiTwitterLink
 'use strict';
 import { forwardRef } from 'react';
-import { type ButtonProps } from '@nextui-org/react';
-import { Twitter, TwitterX } from 'react-bootstrap-icons';
+// import { type ButtonProps } from '@nextui-org/react';
+// import { Twitter, TwitterX } from 'react-bootstrap-icons';
 
-import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
+// import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
 
 /**
  * Twitterリンクのコンポーネント
@@ -28,48 +28,52 @@ import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
  * };
  */
 const MaiTwitterLink = forwardRef<HTMLButtonElement, MaiTwitterLink.Props>((props, ref) => {
-    const {
-        children, 
-        href,
-        isX, 
-        twitterID, 
-        ...btnProps
-    } = props;
+    const {} = props;
+    const {} = ref!;
+    // const {
+    //     children, 
+    //     href,
+    //     isX, 
+    //     twitterID, 
+    //     ...btnProps
+    // } = props;
 
-    const _href = href ?? `https://twitter.com/${ twitterID?.replace(/@/g, '') ?? 'elonmusk' }`;
+    // const _href = href ?? `https://twitter.com/${ twitterID?.replace(/@/g, '') ?? 'elonmusk' }`;
     
-    return (
-        <MaiSNSLinkPresenter
-        href={ _href }
-        ref={ ref }
-        sns='Twitter'
-        withChildren={ typeof children !== 'undefined' }
-        { ...btnProps }>
-            { isX? (<TwitterX />): (<Twitter />) }
+    // return (
+    //     <MaiSNSLinkPresenter
+    //     href={ _href }
+    //     ref={ ref }
+    //     sns='Twitter'
+    //     withChildren={ typeof children !== 'undefined' }
+    //     { ...btnProps }>
+    //         { isX? (<TwitterX />): (<Twitter />) }
 
-            { children && (
-                <span>{ children }</span>
-            )}
-        </MaiSNSLinkPresenter>
-    );
+    //         { children && (
+    //             <span>{ children }</span>
+    //         )}
+    //     </MaiSNSLinkPresenter>
+    // );
+    return <></>
 });
 
 namespace MaiTwitterLink {
-    export type Props = ButtonProps & {
-        /**
-         * TwitterのID
-         * 
-         * \@マークはあってもなくてもいい
-         * 
-         * @default 'elonmusk'
-         */
-        twitterID?: string;
+    export type Props = {};
+    // export type Props = ButtonProps & {
+    //     /**
+    //      * TwitterのID
+    //      * 
+    //      * \@マークはあってもなくてもいい
+    //      * 
+    //      * @default 'elonmusk'
+    //      */
+    //     twitterID?: string;
 
-        /**
-         * Xのアイコンを使用するか
-         */
-        isX?: boolean;
-    };
+    //     /**
+    //      * Xのアイコンを使用するか
+    //      */
+    //     isX?: boolean;
+    // };
 };
 
 export {

@@ -2,8 +2,6 @@
 'use client';
 import { useEffect, useRef } from "react";
 
-import { log } from '../../libs';
-
 import { useTheme } from './use-theme';
 
 export function usePreferThemeObserver () {
@@ -18,7 +16,7 @@ export function usePreferThemeObserver () {
             return;
         }
 
-        log.debug('Start observe prefer theme.');
+        console.debug('Start observe prefer theme.');
 
         const observer = new IntersectionObserver(() => {            
             const isDark = window.getComputedStyle(div).display === 'block';
@@ -27,7 +25,7 @@ export function usePreferThemeObserver () {
                 return;
             }
 
-            log.debug('Switched prefer theme to', isDark? 'dark': 'light');
+            console.debug('Switched prefer theme to', isDark? 'dark': 'light');
 
             updateTheme({
                 isDark,
@@ -38,7 +36,7 @@ export function usePreferThemeObserver () {
         observer.observe(div);
 
         return () => {
-            log.debug('Disconnect PreferThemeObserver.');
+            console.debug('Disconnect PreferThemeObserver.');
 
             observer.disconnect();
         }

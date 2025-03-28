@@ -9,23 +9,23 @@ import { type MaiLink } from '../../mai-link';
 import { isExternal } from "./is-external";
 
 export function useMaiLink (props: MaiLink.Props) {
-    const { href, ...linkProps } = props;
-    const open = useContext(ExternalLinkOpenerContext);
-    const hrefIsExternal = linkProps.isExternal || isExternal(href);
+    // const { href, ...linkProps } = props;
+    // const open = useContext(ExternalLinkOpenerContext);
+    // const hrefIsExternal = linkProps.isExternal || isExternal(href);
 
-    const handleClickLink = useCallback((ev: MouseEvent<HTMLAnchorElement>) => {
-        if (!hrefIsExternal) {
-            return;
-        }
+    // const handleClickLink = useCallback((ev: MouseEvent<HTMLAnchorElement>) => {
+    //     if (!hrefIsExternal) {
+    //         return;
+    //     }
 
-        ev.preventDefault();
+    //     ev.preventDefault();
 
-        open(href || null);
-    }, [ href, hrefIsExternal, open ]);
+    //     open(href || null);
+    // }, [ href, hrefIsExternal, open ]);
 
-    return {
-        href,
-        ...linkProps,
-        onClick: handleClickLink
-    };
+    // return {
+    //     href,
+    //     ...linkProps,
+    //     onClick: handleClickLink
+    // };
 };
