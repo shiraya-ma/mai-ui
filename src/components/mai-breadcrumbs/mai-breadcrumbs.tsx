@@ -1,13 +1,13 @@
 // MaiBreadcrumbs
 'use strict';
 import React from 'react';
-import { HouseFill } from 'react-bootstrap-icons';
-import { Breadcrumbs, type BreadcrumbsProps } from '@nextui-org/react';
+// import { HouseFill } from 'react-bootstrap-icons';
+// import { Breadcrumbs, type BreadcrumbsProps } from '@nextui-org/react';
 
-import { classNames } from '../../libs';
+// import { classNames } from '../../libs';
 
-import { MaiBreadcrumbItem } from './mai-breadcrumb-item';
-import { useMaiBreadcrumbs } from './hooks';
+// import { MaiBreadcrumbItem } from './mai-breadcrumb-item';
+// import { useMaiBreadcrumbs } from './hooks';
 
 /**
  * パンくずリストのラッパーコンポーネント
@@ -35,35 +35,39 @@ import { useMaiBreadcrumbs } from './hooks';
  * };
  */
 const MaiBreadcrumbs: React.FC<MaiBreadcrumbs.Props> = (props) => {
-    const { children, className, homeHref, refDiv, ...breadcrumbsProps } = useMaiBreadcrumbs(props);
+    const {} = props;
+    // const { children, className, homeHref, refDiv, ...breadcrumbsProps } = useMaiBreadcrumbs(props);
     
-    return (
-        <Breadcrumbs
-        className={classNames(
-            'mb-4 py-2',
-            '[&>ol>li>*:first-child]:text-mint-300',
-            className
-        )}
-        ref={ refDiv }
-        { ...breadcrumbsProps }>   
-            <MaiBreadcrumbItem
-            href={ homeHref ?? '/'}
-            >
-                <HouseFill />&nbsp;home
-            </MaiBreadcrumbItem>
+    // return (
+    //     <Breadcrumbs
+    //     className={classNames(
+    //         'mb-4 py-2',
+    //         '[&>ol>li>*:first-child]:text-mint-300',
+    //         className
+    //     )}
+    //     ref={ refDiv }
+    //     { ...breadcrumbsProps }>   
+    //         <MaiBreadcrumbItem
+    //         href={ homeHref ?? '/'}
+    //         >
+    //             <HouseFill />&nbsp;home
+    //         </MaiBreadcrumbItem>
 
-            { children }
-        </Breadcrumbs>
-    );
+    //         { children }
+    //     </Breadcrumbs>
+    // );
+
+    return <></>;
 };
 
 namespace MaiBreadcrumbs {
-    export type Props = BreadcrumbsProps & {
-        /**
-         * @default '/'
-         */
-        homeHref?: string;
-    };
+    export type Props = object;
+    // export type Props = BreadcrumbsProps & {
+    //     /**
+    //      * @default '/'
+    //      */
+    //     homeHref?: string;
+    // };
 };
 
 export {

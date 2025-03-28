@@ -1,10 +1,10 @@
 // MaiInstagramLink
 'use strict';
 import { forwardRef } from 'react';
-import { type ButtonProps } from '@nextui-org/react';
-import { Instagram } from 'react-bootstrap-icons';
+// import { type ButtonProps } from '@nextui-org/react';
+// import { Instagram } from 'react-bootstrap-icons';
 
-import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
+// import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
 
 /**
  * Instagramリンクのコンポーネント
@@ -24,38 +24,43 @@ import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
  * };
  */
 const MaiInstagramLink = forwardRef<HTMLButtonElement, MaiInstagramLink.Props>((props, ref) => {
-    const {
-        children, 
-        href,
-        instagramID,
-        ...btnProps
-    } = props;
+    const {} = props;
+    const {} = ref!;
+    // const {
+    //     children, 
+    //     href,
+    //     instagramID,
+    //     ...btnProps
+    // } = props;
 
-    const _href = href ?? `https://www.instagram.com/${ instagramID ?? '' }`;
+    // const _href = href ?? `https://www.instagram.com/${ instagramID ?? '' }`;
     
-    return (
-        <MaiSNSLinkPresenter
-        href={ _href }
-        ref={ ref }
-        sns='Instagram'
-        withChildren={ typeof children !== 'undefined' }
-        { ...btnProps }>
-            <Instagram />
+    // return (
+    //     <MaiSNSLinkPresenter
+    //     href={ _href }
+    //     ref={ ref }
+    //     sns='Instagram'
+    //     withChildren={ typeof children !== 'undefined' }
+    //     { ...btnProps }>
+    //         <Instagram />
 
-            { children && (
-                <span>{ children }</span>
-            )}
-        </MaiSNSLinkPresenter>
-    );
+    //         { children && (
+    //             <span>{ children }</span>
+    //         )}
+    //     </MaiSNSLinkPresenter>
+    // );
+
+    return <></>
 });
 
 namespace MaiInstagramLink {
-    export type Props = ButtonProps & {
-        /**
-         * InstagramのID
-         */
-        instagramID?: string;
-    };
+    export type Props = {};
+    // export type Props = ButtonProps & {
+    //     /**
+    //      * InstagramのID
+    //      */
+    //     instagramID?: string;
+    // };
 };
 
 export {

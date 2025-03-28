@@ -7,8 +7,6 @@ import {
     type Theme,
 } from "./";
 
-import { log } from "../../libs";
-
 export function useThemeContext () {
     const [ theme, setTheme ] = useReducer<(state: Theme, theme: Theme) => Theme>((_, theme) => theme, storedTheme.get());
 
@@ -25,7 +23,7 @@ export function useThemeContext () {
 
         document.documentElement.classList.toggle('dark', theme.isDark);
 
-        log.debug(`Updated theme.\n\tdark : ${ theme.isDark }\n\tsystem: ${ theme.isSystem }`);
+        console.debug(`Updated theme.\n\tdark : ${ theme.isDark }\n\tsystem: ${ theme.isSystem }`);
     }, [ theme ]);
 
     return {

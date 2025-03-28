@@ -1,8 +1,8 @@
 // useMaiHeadings
 'use client';
 import { useMemo } from 'react';
-import { Link } from '@nextui-org/react';
-import { Link45deg } from 'react-bootstrap-icons';
+// import { Link } from '@nextui-org/react';
+// import { Link45deg } from 'react-bootstrap-icons';
 
 import type { MaiHeadingsProps } from '../../props-types';
 
@@ -18,9 +18,9 @@ export function useMaiHeadings (props: MaiHeadingsProps) {
             { endIcon }
         </span>
 
-        <Link href={`#${ id }`} className='align-text-bottom invisible'>
+        {/* <Link href={`#${ id }`} className='align-text-bottom invisible'>
             <Link45deg />
-        </Link>
+        </Link> */}
 
     </>);
 

@@ -1,9 +1,9 @@
 // MaiCard
 'use strict';
 import { forwardRef } from 'react';
-import { Card, CardProps } from '@nextui-org/react';
+// import { Card, CardProps } from '@nextui-org/react';
 
-import { classNames } from '../../libs';
+// import { classNames } from '../../libs';
 
 /**
  * カードのコンポーネント
@@ -25,23 +25,27 @@ import { classNames } from '../../libs';
  * };
  */
 const MaiCard = forwardRef<HTMLDivElement, MaiCard.Props>((props, ref) => {
-    const { className, isBlurred, ...cardProps } = props;
+    const {} = props;
+    const {} = ref!;
+    // const { className, isBlurred, ...cardProps } = props;
     
-    return (
-        <Card
-        className={classNames(
-            'dark:!bg-gray-800/70',
-            className
-        )}
-        isBlurred={ isBlurred ?? true }
-        ref={ ref }
-        { ...cardProps }
-        />
-    );
+    // return (
+    //     <Card
+    //     className={classNames(
+    //         'dark:!bg-gray-800/70',
+    //         className
+    //     )}
+    //     isBlurred={ isBlurred ?? true }
+    //     ref={ ref }
+    //     { ...cardProps }
+    //     />
+    // );
+    return <></>;
 });
 
 namespace MaiCard {
-    export type Props = CardProps & {};
+    export type Props = object;
+    // export type Props = CardProps & {};
 };
 
 export {
