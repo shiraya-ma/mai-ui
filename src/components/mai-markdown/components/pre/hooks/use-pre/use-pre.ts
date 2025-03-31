@@ -1,6 +1,6 @@
 // usePre
 'use client';
-import { useMemo, type HTMLAttributes } from 'react';
+import { JSX, useMemo, type HTMLAttributes } from 'react';
 
 import { parseCodeBlock } from './parse-code-block';
 

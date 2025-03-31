@@ -1,6 +1,6 @@
 // MaiCodeBlock
 'use client';
-import React, { CSSProperties } from 'react';
+import React, { type CSSProperties } from 'react';
 // import SyntaxHighlighter, { Prism } from 'react-syntax-highlighter';
 
 // import { classNames } from '../../libs';
