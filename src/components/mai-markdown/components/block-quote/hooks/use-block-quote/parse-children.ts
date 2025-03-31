@@ -10,11 +10,11 @@ export function parseChildren (children: ReactNode) {
 
     const target: ReactElement = (children as any)[1];
 
-    if (typeof target === 'string' || target.props?.children === undefined) {
+    if (typeof target === 'string' || (target.props as any).children === undefined) {
         return DEFAULT;
     }
 
-    const targetChildren = target.props.children as ReactNode;
+    const targetChildren = (target.props as any).children as ReactNode;
 
     const REG_ALERT_TAG = /^\[\!\S+[^\]]\]/;
 

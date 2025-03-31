@@ -1,6 +1,6 @@
 // Container
 'use strict';
-import React, { HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
 
 import { classNames } from '../../../libs';
 

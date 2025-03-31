@@ -2,7 +2,7 @@
 'use strict';
 import React from 'react';
 
-import { MaiHedingProps } from './props-types';
+import { type MaiHedingProps } from './props-types';
 import { MaiHeadings } from './mai-headings';
 
 /**
