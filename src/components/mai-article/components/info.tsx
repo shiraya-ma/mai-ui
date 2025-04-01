@@ -1,7 +1,7 @@
 /* eslint-disable */
 // Info
 'use strict';
-import React, { HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from 'react';
 
 import { classNames } from '../../../libs';
 import { getInfoProps } from '../helpers';

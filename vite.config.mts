@@ -1,60 +1,60 @@
 'use strict';
-import { resolve } from 'node:path';
+import { resolve } from 'path';
 import { defineConfig }from 'vite';
 import react from '@vitejs/plugin-react';
-import reactRefresh from "@vitejs/plugin-react-refresh";
 import dts from 'vite-plugin-dts';
-import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin';
 
 export default defineConfig({
-    build: {
-        lib: {
-            entry: resolve(import.meta.dirname, 'src', 'index.ts'),
-            fileName: (format) => `index.${format}.js`,
-            formats: ['es', 'cjs'],
-            name: 'MaiUI',            
-        },
-        outDir: './dist',
-        rollupOptions: {
-            external: [
-                'next',
-                'react',
-                'react-dom',
-                '@nextui-org/react',
-                'framer-motion',
-                'react-highlight',
-                'react-syntax-highlighter'
-            ],
-            output: {
-                exports: 'named',
-                globals: {
-                    react: 'React',
-                    'react-dom': 'ReactDOM'
-                }
-            }
-        },
-        sourcemap: true
+  build: {
+    outDir: './dist',
+    lib: {
+      entry: {
+        index: resolve(__dirname, 'src', 'index.ts'),
+        setup: resolve(__dirname, 'src', 'setup', 'index.ts'),
+      },
+      fileName: (format, name) => `${name}.${format.replace(/^es$/, 'mjs')}`,
+      formats: ['cjs', 'es'],
+      name: 'MaiUI',
     },
-    optimizeDeps: {
-        include: [
-            'react',
-            'react-dom'
-        ]
-    },
-    plugins: [
-        react(),
-        reactRefresh(),
-        dts({
-            tsconfigPath: 'tsconfig.prod.json'
-        }),
-        vanillaExtractPlugin()
-    ],
-    resolve: {
-        alias: {
-            "@mai-ui": resolve(import.meta.dirname, 'src')
+    rollupOptions: {
+      input: {
+        index: './src/index.ts',
+        setup: './src/setup/index.ts',
+      },
+      external: [
+        'react',
+        'react-dom',
+      ],
+      output: {
+        exports: 'named',
+        globals: {
+          'react': 'React',
+          'react-dom': 'ReactDOM'
         }
+      }
     },
-    server: {
-        port: 3000
-    }
+  },
+  plugins: [
+    react(),
+    dts({
+      insertTypesEntry: true,  // Automatically generate a types entry file
+      outDir: 'dist',  // Output directory
+      copyDtsFiles: true, // Copy other type files
+      beforeWriteFile: (filePath, content) => {
+        // Output different type files for main.ts and secondary.ts
+        if (filePath.includes('main')) {
+          return {
+            filePath: filePath.replace('main', 'dist/main.d.ts'),
+            content,
+          }
+        } else if (filePath.includes('secondary')) {
+          return {
+            filePath: filePath.replace('secondary', 'dist/secondary.d.ts'),
+            content,
+          }
+        }
+        return { filePath, content }
+      }
+    })
+  ],
 });

@@ -8,7 +8,7 @@ import {
 } from "./";
 
 export function useThemeContext () {
-    const [ theme, setTheme ] = useReducer<(state: Theme, theme: Theme) => Theme>((_, theme) => theme, storedTheme.get());
+    const [ theme, setTheme ] = useReducer((_, theme) => theme, storedTheme.get());
 
     const updateTheme = useCallback((theme: Theme) => {
         storedTheme.set(theme);

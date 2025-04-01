@@ -2,12 +2,24 @@
   "name": "@shiraya-ma/mai-ui",
   "version": "1.0.0",
   "description": "Component library for React and Next.js",
-  "main": "dist/cj/index.js",
-  "module": "dist/es/index.js",
-  "types": "dist/es/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./setup": {
+      "types": "./dist/setup.d.ts",
+      "require": "./dist/setup.cjs",
+      "import": "./dist/setup.mjs"
+    }
+  },
   "scripts": {
     "dev": "vite dev",
-    "build": "bun ./.bun/build.ts",
+    "build": "vite build",
     "lint": "eslint .",
     "test": "bun test"
   },
@@ -20,13 +32,18 @@
     "@eslint/js": "^9.22.0",
     "@types/bun": "^1.2.5",
     "@types/lodash": "^4.17.16",
+    "@types/react": ">=18 || >=19.0.0-rc.0",
+    "@types/react-dom": ">=18 || >=19.0.0-rc.0",
+    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "color": "^5.0.0",
     "eslint": "^9.22.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "postcss": "^8.5.3",
-    "typescript-eslint": "^8.26.1"
+    "typescript-eslint": "^8.26.1",
+    "vite": "^6.2.4",
+    "vite-plugin-dts": "^3"
   },
   "dependencies": {
     "@heroui/system": "^2.4.12",
@@ -34,5 +51,10 @@
     "@shiraya-ma/mai-colors": "^0.0.0",
     "deepmerge": "^4.3.1",
     "tailwindcss": "^3"
+  },
+  "peerDependencies": {
+    "framer-motion": ">=11.5.6 || >=12.0.0-alpha.1",
+    "react": ">=18 || >=19.0.0-rc.0",
+    "react-dom": ">=18 || >=19.0.0-rc.0"
   }
 }
