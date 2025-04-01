@@ -2,12 +2,24 @@
   "name": "@shiraya-ma/mai-ui",
   "version": "1.0.0",
   "description": "Component library for React and Next.js",
-  "main": "dist/cj/index.js",
-  "module": "dist/es/index.js",
-  "types": "dist/es/index.d.ts",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./setup": {
+      "types": "./dist/setup.d.ts",
+      "require": "./dist/setup.cjs",
+      "import": "./dist/setup.mjs"
+    }
+  },
   "scripts": {
     "dev": "vite dev",
-    "build": "bun ./.bun/build.ts",
+    "build": "vite build",
     "lint": "eslint .",
     "test": "bun test"
   },
