@@ -1,7 +1,0 @@
-{
-    "name": "@shiraya-ma/mai-ui-setup",
-    "main": "./setup.cjs",
-    "module": "./setup.mjs",
-    "types": "./setup.d.ts"
-  }
-  
