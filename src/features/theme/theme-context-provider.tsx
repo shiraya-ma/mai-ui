@@ -1,31 +1,26 @@
-/* eslint-disable */
-// ThemeContextProvider
-'use strict';
-import React, { ReactNode, useEffect } from 'react';
+'use client';
+import React, { type PropsWithChildren } from 'react';
+import { ThemeContext, useThemeContextProvider } from './internal';
 
-import { ThemeContext, ThemeUpdaterContext } from './theme-context';
-import { useThemeContext } from './use-theme-context';
-
+/** @internal */
 const ThemeContextProvider: React.FC<ThemeContextProvider.Props> = (props) => {
-    const { children } = props;
-
-    const { theme, updateTheme } = useThemeContext();
-
-    return (
-        <ThemeContext.Provider value={ theme }>
-            <ThemeUpdaterContext.Provider value={ updateTheme }>
-                { children }
-            </ThemeUpdaterContext.Provider>
-        </ThemeContext.Provider>
-    );
+  const { children, context } = useThemeContextProvider(props);
+  
+  return (
+    <ThemeContext.Provider value={context}>
+      { children }
+    </ThemeContext.Provider>
+  );
 };
 
+ThemeContextProvider.displayName = 'ThemeContextProvider';
+
 namespace ThemeContextProvider {
-    export type Props = {
-        children?: ReactNode;
-    };
+  export type Props = PropsWithChildren<{
+    disabledTheme?: boolean;
+  }>;
 };
 
 export {
-    ThemeContextProvider
+  ThemeContextProvider
 };

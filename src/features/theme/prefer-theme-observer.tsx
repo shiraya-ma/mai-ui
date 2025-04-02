@@ -1,34 +1,28 @@
-// PreferThemeObserver
-'use strict';
+'use client';
 import React from 'react';
 
-import { usePreferThemeObserver } from './use-prefer-theme-observer'
+import { usePreferThemeObserver } from './internal';
 
+/** @internal */
 const PreferThemeObserver: React.FC<PreferThemeObserver.Props> = (props) => {
-    const {} = props;
-
-    const { refPreferThemeObserver } = usePreferThemeObserver();
-    
-    return (
-        <div
-            className='fixed top-0 left-0 -z-10 hidden'
-            id='preferThemeObserver'
-            ref={ refPreferThemeObserver }>
-                <style>
-                    {`@media (prefers-color-scheme: dark) {
-  div#preferThemeObserver {
-    display: block
-  }
-}`}
-                </style>
-            </div>
-    );
+  usePreferThemeObserver(props);
+  
+  return (
+    <div
+      className='absolute size-0 top-0 left-0 -z-10 hidden'
+      data-testid='PreferThemeObserver'
+    />
+  );
 };
 
+PreferThemeObserver.displayName = 'PreferThemeObserver';
+
 namespace PreferThemeObserver {
-    export type Props = {};
+  export type Props = {
+    disabledTheme?: boolean;
+  };
 };
 
 export {
-    PreferThemeObserver
+  PreferThemeObserver
 };

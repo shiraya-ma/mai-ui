@@ -1,73 +1,61 @@
-// MaiUIProvider
 'use client';
 import React from 'react';
-// import { NextUIProvider, type NextUIProviderProps } from '@nextui-org/react';
+import { HeroUIProvider, type HeroUIProviderProps } from '@heroui/system';
 
-// import { ContentSecurityPolicyProvider } from '../../features/csp';
-// import { ExternalLinkModal, ExternalLinkProvider } from '../../features/external-link';
-// import { PreferThemeObserver, ThemeContextProvider } from '../../features/theme';
-// import { NavigateContextProvider } from '../../features/navigate';
+import { PreferThemeObserver, ThemeContextProvider } from '@/features/theme';
 
 /**
- * MaiUIでテーマなどのコンテキストを提供するプロバイダーコンポーネント
+ * Provider component that supplies context such as themes in MaiUI.
  * 
- * ReactRouterDOMやNext.jsなどでルーティングの最適化を行う場合、  
- * propsにナビゲーション関数を渡す。  
- * (MaiLinkクリック時に呼び出される)
+ * When optimizing routing with ReactRouterDOM or Next.js,  
+ * pass a navigation function as a prop.  
+ * (Called when MaiLink is clicked)
  * 
  * @example
- * import React, { PropsWithChildren }  from 'react';
+ * import React, { PropsWithChildren } from 'react';
  * import { useNavigate } from 'react-router-dom';
  * import { MaiUIProvider } from '@shiraya-ma/mai-ui';
  * 
  * export const App: React.FC<PropsWithChildren> = (props) => {
- *      const { children } = props;
+ *    const { children } = props;
  * 
- *      const navigate = useNavigate();
+ *    const navigate = useNavigate();
  * 
- *      return (
- *          <MaiUIProvider navigate={ navigate }>
- *              { children }
- *          </MaiUIProvider>
- *      );
+ *    return (
+ *      <MaiUIProvider navigate={ navigate }>
+ *        { children }
+ *      </MaiUIProvider>
+ *    );
  * };
  * 
  * @param props 
  * @returns 
  */
 const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
-    const {} = props;
-    // const { children, navigate, ...nextUIProviderProps } = props;
-    
-    // return (
-    //     <ContentSecurityPolicyProvider>
-    //         <ThemeContextProvider>
-    //             <ExternalLinkProvider>
-    //                 <NavigateContextProvider navigate={ navigate }>
-    //                     <NextUIProvider
-    //                     navigate={ navigate }
-    //                     { ...nextUIProviderProps }>
-    //                         { children }
+  const { children, disabledTheme, navigate, ...heroUIProviderProps } = props;
+  
+  return (
+    <ThemeContextProvider disabledTheme={disabledTheme}>
+      <HeroUIProvider
+        navigate={navigate}
+        {...heroUIProviderProps}
+      >
+        {children}
 
-    //                         <ExternalLinkModal />
-
-    //                         <PreferThemeObserver />
-    //                     </NextUIProvider>
-    //                 </NavigateContextProvider>
-    //             </ExternalLinkProvider>
-    //         </ThemeContextProvider>
-    //     </ContentSecurityPolicyProvider>
-    // );
-    return <>{props.children}</>
+        {!disabledTheme && (<PreferThemeObserver />)}
+      </HeroUIProvider>
+    </ThemeContextProvider>
+  );
 };
 
+MaiUIProvider.displayName = 'MaiUIProvider';
+
 namespace MaiUIProvider {
-    export type Props = {
-        children: React.ReactNode;
-    }
-    // export type Props = NextUIProviderProps & {}
+  export type Props = HeroUIProviderProps & {
+    disabledTheme?: boolean;
+  }
 };
 
 export {
-    MaiUIProvider
+  MaiUIProvider
 };
