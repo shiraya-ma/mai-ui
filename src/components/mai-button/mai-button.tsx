@@ -1,11 +1,13 @@
-// MaiButton
 'use client';
-// import { Button, extendVariants } from '@nextui-org/react';
+import React from 'react';
+import { Button, type ButtonProps } from '@heroui/button';
+
+import { useMaiButton } from './use-mai-button';
 
 /**
- * ボタンのコンポーネント
+ * Button component
  * 
- * 中身はButtonそのもの（import文削減用)
+ * Essentially the same as Button (for reducing import statements)
  * 
  * @param props 
  * @returns 
@@ -14,25 +16,29 @@
  * import { MaiButton } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <MaiButton color="primary" variant="shadow">
- *              hello world
- *          </MaiButton>
- *      );
+ *   return (
+ *     <MaiButton color="primary" variant="shadow">
+ *       hello world
+ *     </MaiButton>
+ *   );
  * };
  */
-// const MaiButton = extendVariants(Button, {
-//     defaultVariants: {
-//         color: 'primary',
-//         variant: 'shadow'
-//     }
-// });
-const MaiButton = (props: object) => {
-    const {} = props;
-    
-    return <></>
+const MaiButton: React.FC<MaiButton.Props> = (props) => {
+  const { ...btnProps } = useMaiButton(props);
+
+  return (
+    <Button
+      {...btnProps}
+    />
+  );
+};
+
+MaiButton.displayName = 'MaiButton';
+
+namespace MaiButton {
+  export type Props = ButtonProps;
 };
 
 export {
-    MaiButton
+  MaiButton
 };
