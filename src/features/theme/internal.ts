@@ -1,6 +1,8 @@
 'use strict';
+import { useEffect, useState } from "react";
 
 import { MaiUI } from "@/types/mai-ui";
+import type { ThemeContextProvider } from "./theme-context-provider";
 
 const _KEY = 'mai-ui-theme-v2';
 const _DEFAULT: MaiUI.ThemeState = {
@@ -37,4 +39,39 @@ export function isPreferThemeDark () {
   const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   return isDark;
+};
+
+/** @internal */
+export function useThemeContextProvider (props: ThemeContextProvider.Props) {
+  const { disabledTheme, ..._props } = props;
+  const [ theme, setTheme ] = useState<MaiUI.ThemeState>(store.get());
+
+  const updateTheme = (theme: MaiUI.ThemeState) => {
+    if (disabledTheme) return;
+    setTheme(theme);
+    store.set(theme);
+  };
+  const updateThemeBySystem = (isDark: boolean) => updateTheme({isDark, isSystem: true});
+  const updateThemeByUser = (isDark: boolean) => updateTheme({isDark, isSystem: false});
+
+  const context: MaiUI.ThemeContextProps = {
+    theme,
+    updateTheme,
+    updateThemeBySystem,
+    updateThemeByUser
+  };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    document.documentElement.classList.toggle('dark', theme.isDark);
+    document.documentElement.setAttribute('data-theme', theme.isDark? 'dark': 'light');
+
+    console.debug(`Updated theme.\n\tdark : ${theme.isDark}\n\tsystem: ${theme.isSystem}`);
+  }, [theme]);
+
+  return {
+    context,
+    ..._props
+  };
 };
