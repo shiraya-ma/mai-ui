@@ -1,7 +1,29 @@
 'use strict';
 
-export * from './components';
-export * from './core';
-export * from './features/theme';
-export * from './libs';
+import {
+} from './components';
+
+import {
+  maiFonts,
+  MaiUIProvider,
+} from './core';
+
+import {
+  useTheme,
+} from './features/theme';
+
 export * from './types/mai-ui';
+
+export {
+  maiFonts,
+  useTheme,
+  MaiUIProvider,
+};
+
+const MaiUI = {
+  fonts: maiFonts,
+  useTheme,
+  Provider: MaiUIProvider
+};
+
+export default MaiUI;
