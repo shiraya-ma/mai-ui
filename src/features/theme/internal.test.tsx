@@ -1,13 +1,15 @@
 'use strict';
 import { afterEach,  beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
-import { createElement } from 'react';
-import { renderHook, waitFor } from '@testing-library/react';
+import React, { createElement, PropsWithChildren } from 'react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import {
   isPreferThemeDark,
   store,
+  usePreferThemeObserver,
   useThemeContextProvider,
 } from './internal';
+import { ThemeContextProvider } from './theme-context-provider';
 
 describe('isPreferThemeDark', () => {
   let originalMatchMedia: typeof window.matchMedia;
@@ -130,6 +132,62 @@ describe('store', () => {
     store.set(null);
 
     expect(localStorage.getItem('mai-ui-theme-v2')).toBeNull();
+  });
+});
+
+describe('usePreferThemeObserver', () => {
+  const originalMatchMedia = window.matchMedia;
+  const originalDebug      = window.console.debug;
+  const wrapper = ({children}: PropsWithChildren) => (<ThemeContextProvider>{children}</ThemeContextProvider>);
+
+  beforeEach(() => {
+    // Mock console.debug
+    spyOn(console, 'debug').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    window.matchMedia = originalMatchMedia;
+
+    spyOn(console, 'debug').mockImplementation(originalDebug);
+  });
+
+  it('should initialize with the correct theme based on system preference', () => {
+    // Mock matchMedia to simulate system preference
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window.matchMedia as any) = mock((query: string) => ({
+      matches: query === '(prefers-color-scheme: dark)',
+      addEventListener: mock(() => {}),
+      removeEventListener: mock(() => {}),
+    }));
+
+    const { result } = renderHook(() => usePreferThemeObserver({}), {wrapper});
+
+    expect(result.current.theme).toEqual({
+      isDark  : false,  // System preference is dark
+      isSystem: true,
+    });
+  });
+
+  it('should update theme when system preference changes', async () => {
+    const { result } = renderHook(() => usePreferThemeObserver({}), {wrapper});
+
+    act(() => window.maiUI!.togglePreferThemeDark!(false));
+    await waitFor(() => expect(result.current.theme).toEqual({
+      isDark: false,
+      isSystem: true,
+    }));
+    
+    act(() => window.maiUI!.togglePreferThemeDark!(true));
+    await waitFor(() => expect(result.current.theme).toEqual({
+      isDark: true,
+      isSystem: true,
+    }));
+
+    act(() => window.maiUI!.togglePreferThemeDark!(false));
+    await waitFor(() => expect(result.current.theme).toEqual({
+      isDark: false,
+      isSystem: true,
+    }));
   });
 });
 
