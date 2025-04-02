@@ -1,9 +1,12 @@
 'use strict';
 import { afterEach,  beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
+import { createElement } from 'react';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import {
   isPreferThemeDark,
   store,
+  useThemeContextProvider,
 } from './internal';
 
 describe('isPreferThemeDark', () => {
@@ -108,7 +111,6 @@ describe('store', () => {
     expect(localStorage.getItem('mai-ui-theme-v2')).toEqual(JSON.stringify(newTheme));
   });
 
-  // TODO
   it('should return default theme when window is undefined', () => {
     const originalWindow = global.window;
     // @ts-expect-error for test
@@ -128,5 +130,121 @@ describe('store', () => {
     store.set(null);
 
     expect(localStorage.getItem('mai-ui-theme-v2')).toBeNull();
+  });
+});
+
+describe('useThemeContextProvider', () => {
+  const originalLS = window.localStorage;
+  const originalHTML = window.document.documentElement;
+  const originalDebug = window.console.debug;
+
+  beforeEach(() => {
+    // Mock localStorage
+    const store: Record<string, string> = {};
+    spyOn(localStorage, 'getItem').mockImplementation((key: string) => store[key] || null);
+    spyOn(localStorage, 'setItem').mockImplementation((key: string, value: string) => {
+      store[key] = value;
+    });
+    spyOn(localStorage, 'removeItem').mockImplementation((key: string) => {
+      delete store[key];
+    });
+
+    localStorage.removeItem('mai-ui-theme-v2');
+
+    // Mock document.documentElement
+    Object.defineProperty(document, 'documentElement', {
+      value: {
+        ...originalHTML,
+        classList: {
+          add: mock(originalHTML.classList.add),
+          remove: mock(originalHTML.classList.remove),
+          toggle: mock(originalHTML.classList.toggle),
+        },
+        setAttribute: mock(originalHTML.setAttribute),
+        removeAttribute: mock(originalHTML.removeAttribute),
+      },
+      writable: true,
+    });
+
+    // Mock console.debug
+    spyOn(console, 'debug').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    spyOn(localStorage, 'getItem').mockImplementation(originalLS.getItem);
+    spyOn(localStorage, 'setItem').mockImplementation(originalLS.setItem);
+    spyOn(localStorage, 'removeItem').mockImplementation(originalLS.removeItem);
+
+    Object.defineProperty(document, 'documentElement', {
+      value: originalHTML,
+      writable: true,
+    });
+
+    spyOn(console, 'debug').mockImplementation(originalDebug);
+  });
+
+  it('should initialize with the stored theme', () => {
+    const storedTheme = { isDark: true, isSystem: false };
+    localStorage.setItem('mai-ui-theme-v2', JSON.stringify(storedTheme));
+
+    const wrapper = ({ children }: { children: React.ReactNode }) =>
+      createElement('div', {}, children);
+
+    const { result } = renderHook(() => useThemeContextProvider({ disabledTheme: false }), {
+      wrapper,
+    });
+    const { context } = result.current;
+
+    expect(context.theme).toEqual(storedTheme);
+  });
+
+  it('should update theme and store it in localStorage', async () => {
+    const { result } = renderHook(() => useThemeContextProvider({ disabledTheme: false }));
+    const { context } = result.current;
+
+    const newTheme = { isDark: true, isSystem: false };
+    context.updateTheme(newTheme);
+
+    expect(localStorage.getItem('mai-ui-theme-v2')).toEqual(JSON.stringify(newTheme));
+    await waitFor(() => expect(result.current.context.theme).toEqual(newTheme));
+  });
+
+  it('should not update theme if disabledTheme is true', async () => {
+    const { result } = renderHook(() => useThemeContextProvider({ disabledTheme: true }));
+    const { context } = result.current;
+
+    const newTheme = { isDark: true, isSystem: false };
+    context.updateTheme(newTheme);
+
+    expect(localStorage.getItem('mai-ui-theme-v2')).toBeNull();
+    await waitFor(() => expect(result.current.context.theme).not.toEqual(newTheme));
+  });
+
+  it('should update theme by system preference', async () => {
+    const { result } = renderHook(() => useThemeContextProvider({ disabledTheme: false }));
+    const { context } = result.current;
+
+    context.updateThemeBySystem(true);
+    
+    await waitFor(() => expect(result.current.context.theme).toEqual({ isDark: true, isSystem: true }));
+  });
+
+  it('should update theme by user preference', async () => {
+    const { result } = renderHook(() => useThemeContextProvider({ disabledTheme: false }));
+    const { context } = result.current;
+
+    context.updateThemeByUser(false);
+
+    await waitFor(() => expect(result.current.context.theme).toEqual({ isDark: false, isSystem: false }));
+  });
+
+  it('should toggle dark class on document.documentElement', async () => {
+    const { result } = renderHook(() => useThemeContextProvider({ disabledTheme: false }));
+    const { context } = result.current;
+
+    context.updateTheme({ isDark: true, isSystem: false });
+
+    await waitFor(() => expect(document.documentElement.classList.toggle).toHaveBeenCalledWith('dark', true));
+    await waitFor(() => expect(document.documentElement.setAttribute).toHaveBeenCalledWith('data-theme', 'dark'));
   });
 });
