@@ -1,7 +1,8 @@
-// MaiUIProvider
 'use client';
 import React from 'react';
 import { HeroUIProvider, type HeroUIProviderProps } from '@heroui/system';
+
+import { PreferThemeObserver, ThemeContextProvider } from '@/features/theme';
 
 /**
  * Provider component that supplies context such as themes in MaiUI.
@@ -31,22 +32,28 @@ import { HeroUIProvider, type HeroUIProviderProps } from '@heroui/system';
  * @returns 
  */
 const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
-  const { children, navigate, ...heroUIProviderProps } = props;
+  const { children, disabledTheme, navigate, ...heroUIProviderProps } = props;
   
   return (
-    <HeroUIProvider
-      navigate={navigate}
-      {...heroUIProviderProps}
-    >
-      {children}
-    </HeroUIProvider>
+    <ThemeContextProvider disabledTheme={disabledTheme}>
+      <HeroUIProvider
+        navigate={navigate}
+        {...heroUIProviderProps}
+      >
+        {children}
+
+        {!disabledTheme && (<PreferThemeObserver />)}
+      </HeroUIProvider>
+    </ThemeContextProvider>
   );
 };
 
 MaiUIProvider.displayName = 'MaiUIProvider';
 
 namespace MaiUIProvider {
-  export type Props = HeroUIProviderProps & {}
+  export type Props = HeroUIProviderProps & {
+    disabledTheme?: boolean;
+  }
 };
 
 export {
