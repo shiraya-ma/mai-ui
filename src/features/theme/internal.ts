@@ -3,7 +3,9 @@ import { createContext, useEffect, useState } from "react";
 
 import { MaiUI } from "@/types/mai-ui";
 
+import type { PreferThemeObserver } from "./prefer-theme-observer";
 import type { ThemeContextProvider } from "./theme-context-provider";
+import { useTheme } from "./use-theme";
 
 const _KEY = 'mai-ui-theme-v2';
 const _DEFAULT: MaiUI.ThemeState = {
@@ -43,6 +45,65 @@ export function isPreferThemeDark () {
   const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   return isDark;
+};
+
+/** @internal */
+export function usePreferThemeObserver (props: PreferThemeObserver.Props) {
+  const { disabledTheme } = props;
+  const { theme, updateThemeBySystem } = useTheme();
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || disabledTheme || !theme.isSystem) {
+      return () => {
+        if (window.maiUI) {
+          window.maiUI.togglePreferThemeDark = () => {};
+        } else {
+          window.maiUI = {
+            togglePreferThemeDark: () => {},
+          }
+        }
+      };
+    };
+
+    const observer = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const handleChangePreferTheme = (ev: MediaQueryListEvent) => {
+      const isDark = ev.matches;
+      if (theme.isDark === isDark) return;
+
+      console.debug('Switched prefer theme to', isDark? 'dark': 'light');
+
+      updateThemeBySystem(isDark);
+    };
+
+    observer.addEventListener('change', handleChangePreferTheme);
+
+    const togglePreferThemeDark = (isDark?: boolean) => {
+      const mediaQueryListEvent = new MediaQueryListEvent('change', {
+        media: '(prefers-color-scheme: dark)',
+        matches: isDark
+      });
+
+      handleChangePreferTheme(mediaQueryListEvent);
+    };    
+
+    if (window.maiUI) {
+      window.maiUI.togglePreferThemeDark = togglePreferThemeDark;
+    } else {
+      window.maiUI = {
+        togglePreferThemeDark,
+      }
+    }
+
+    return () => {
+      window.maiUI!.togglePreferThemeDark = () => {};
+      observer.removeEventListener('change', handleChangePreferTheme);
+    };
+  }, [ disabledTheme, theme, updateThemeBySystem ]);
+
+  return {
+    theme
+  };
 };
 
 /** @internal */
