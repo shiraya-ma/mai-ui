@@ -1,7 +1,8 @@
 'use strict';
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import { MaiUI } from "@/types/mai-ui";
+
 import type { ThemeContextProvider } from "./theme-context-provider";
 
 const _KEY = 'mai-ui-theme-v2';
@@ -31,6 +32,9 @@ export const store = {
     }
   }
 };
+
+/** @internal */
+export const ThemeContext = createContext<MaiUI.ThemeContextProps | undefined>(undefined);
 
 /** @internal */
 export function isPreferThemeDark () {
