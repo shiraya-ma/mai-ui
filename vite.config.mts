@@ -7,6 +7,7 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
   build: {
     outDir: './dist',
+    sourcemap: process.env.NODE_ENV === 'development', // Enable sourcemap generation
     lib: {
       entry: {
         index: resolve(__dirname, 'src', 'index.ts'),
