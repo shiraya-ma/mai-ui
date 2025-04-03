@@ -131,3 +131,6 @@ dist
 .npmrc
 
 setup.js
+
+docs
+*storybook.log
