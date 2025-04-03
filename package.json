@@ -22,7 +22,9 @@
     "build": "vite build",
     "build-s": "NODE_ENV=development vite build",
     "lint": "eslint .",
-    "test": "bun test"
+    "test": "bun test",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o docs"
   },
   "keywords": [
     "components"
@@ -71,5 +73,10 @@
     "framer-motion": ">=11.5.6 || >=12.0.0-alpha.1",
     "react": ">=18 || >=19.0.0-rc.0",
     "react-dom": ">=18 || >=19.0.0-rc.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }
