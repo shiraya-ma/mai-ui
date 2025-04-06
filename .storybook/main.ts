@@ -19,10 +19,16 @@ const config: StorybookConfig = {
       },
     },
   ],
+  docs: {
+    autodocs: true,
+  },
   framework: {
     name: "@storybook/react-vite",
     options: {}
-  }
+  },
+  typescript: {
+    reactDocgen: 'react-docgen-typescript'
+  },
 };
 
 export default config;
