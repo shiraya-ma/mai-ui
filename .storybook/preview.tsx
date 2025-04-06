@@ -17,7 +17,7 @@ export const decorators: Decorator[] = [
       updateTheme();
       matcher.addEventListener('change', updateTheme);
       return () => matcher.removeEventListener('change', updateTheme);
-    }, []);
+    }, [context]);
 
     return (
       <MaiUIProvider>
