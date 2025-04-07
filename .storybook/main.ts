@@ -4,7 +4,6 @@ import potcss from 'postcss';
 
 const config: StorybookConfig = {
   stories: [
-    "../src/**/*.mdx",
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   addons: [
@@ -20,10 +19,19 @@ const config: StorybookConfig = {
       },
     },
   ],
+  docs: {
+    autodocs: true,
+  },
   framework: {
     name: "@storybook/react-vite",
     options: {}
-  }
+  },
+  staticDirs: [
+    "../public",
+  ],
+  typescript: {
+    reactDocgen: 'react-docgen-typescript'
+  },
 };
 
 export default config;
