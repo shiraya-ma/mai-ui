@@ -64,6 +64,7 @@
   },
   "dependencies": {
     "@heroui/button": "^2.2.16",
+    "@heroui/modal": "^2.2.14",
     "@heroui/system": "^2.4.12",
     "@heroui/theme": "^2.4.12",
     "@shiraya-ma/mai-colors": "^0.0.0",
