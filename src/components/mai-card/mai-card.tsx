@@ -44,11 +44,12 @@ const ExtendedCard = extendVariants(Card, {
  * };
  */
 const MaiCard: React.FC<MaiCard.Props> = (props) => {
-  const { ref: _, ...cardProps } = props;
+  const { ...cardProps } = props;
   
   return (
     <ExtendedCard
-      {...cardProps}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      {...cardProps as any}
     />
   );
 };
