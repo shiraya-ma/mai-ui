@@ -1,6 +1,7 @@
 'use strict';
 
 import {
+  MaiButton,
 } from './components';
 
 import {
@@ -17,12 +18,14 @@ export * from './types/mai-ui';
 export {
   maiFonts,
   useTheme,
+  MaiButton,
   MaiUIProvider,
 };
 
 const MaiUI = {
   fonts: maiFonts,
   useTheme,
+  Button: MaiButton,
   Provider: MaiUIProvider
 };
 
