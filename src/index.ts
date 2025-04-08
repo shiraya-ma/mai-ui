@@ -2,6 +2,13 @@
 
 import {
   MaiButton,
+  MaiModal,
+  MaiModalBody,
+  MaiModalContent,
+  MaiModalFooter,
+  MaiModalHeader,
+  useDisclosure,
+  useDraggable,
 } from './components';
 
 import {
@@ -17,16 +24,30 @@ export * from './types/mai-ui';
 
 export {
   maiFonts,
+  useDisclosure,
+  useDraggable,
   useTheme,
   MaiButton,
+  MaiModal,
+  MaiModalBody,
+  MaiModalContent,
+  MaiModalFooter,
+  MaiModalHeader,
   MaiUIProvider,
 };
 
 const MaiUI = {
   fonts: maiFonts,
+  useDisclosure,
+  useDraggable,
   useTheme,
   Button: MaiButton,
-  Provider: MaiUIProvider
+  Modal: MaiModal,
+  ModalBody: MaiModal,
+  ModalContent: MaiModalContent,
+  ModalFooter: MaiModalFooter,
+  ModalHeader: MaiModalHeader,
+  Provider: MaiUIProvider,
 };
 
 export default MaiUI;
