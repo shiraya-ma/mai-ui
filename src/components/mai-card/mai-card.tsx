@@ -1,53 +1,66 @@
-// MaiCard
-'use strict';
-import { forwardRef } from 'react';
-// import { Card, CardProps } from '@nextui-org/react';
+'use client';   
+import React from 'react';
+import { extendVariants } from '@heroui/system';
+import { Card, type CardProps } from '@heroui/card';
 
-// import { classNames } from '../../libs';
+const ExtendedCard = extendVariants(Card, {
+  variants: {
+    isGlassy: {
+      true: {
+        base: 'border border-white bg-white/25 backdrop-blur-sm'
+      },
+    },
+  },
+});
 
 /**
  * カードのコンポーネント
  * 
- * デフォルトで背景にブラーをかけている。
+ * グラスモーフィズム用のスタイルを追加している。
  * 
- * @param props 
- * @returns 
  * @example
  * 'use strict'
- * import { MaiCard } from '@shiraya-ma/mai-ui';
+ * import {
+ *    MaiCard,
+ *    MaiCardBody,
+ *    MaiCardFooter,
+ *    MaiCardHeader,
+ * } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <MaiCard>
- *              hello world
- *          </MaiCard>
- *      );
+ *    return (
+ *      <MaiCard isGlassy>
+ *        <MaiCardHeader>TITLE</MaiCardHeader>
+ * 
+ *        <MaiCardBody>
+ *          <p>MaiCard is glassy</p>
+ *        </MaiCardBody>
+ * 
+ *        <MaiCardFooter>
+ *          ...btns
+ *        </MaiCardFooter>
+ *      </MaiCard>
+ *    );
  * };
  */
-const MaiCard = forwardRef<HTMLDivElement, MaiCard.Props>((props, ref) => {
-    const {} = props;
-    const {} = ref!;
-    // const { className, isBlurred, ...cardProps } = props;
-    
-    // return (
-    //     <Card
-    //     className={classNames(
-    //         'dark:!bg-gray-800/70',
-    //         className
-    //     )}
-    //     isBlurred={ isBlurred ?? true }
-    //     ref={ ref }
-    //     { ...cardProps }
-    //     />
-    // );
-    return <></>;
-});
+const MaiCard: React.FC<MaiCard.Props> = (props) => {
+  const { ref: _, ...cardProps } = props;
+  
+  return (
+    <ExtendedCard
+      {...cardProps}
+    />
+  );
+};
+
+MaiCard.displayName = 'MaiCard';
 
 namespace MaiCard {
-    export type Props = object;
-    // export type Props = CardProps & {};
+  export type Props = CardProps & {
+    isGlassy?: boolean;
+  };
 };
 
 export {
-    MaiCard
+  MaiCard
 };
