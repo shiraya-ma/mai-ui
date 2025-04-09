@@ -1,75 +1,112 @@
-// MaiBreadcrumbs
 'use strict';
 import React from 'react';
-// import { HouseFill } from 'react-bootstrap-icons';
-// import { Breadcrumbs, type BreadcrumbsProps } from '@nextui-org/react';
+import { extendVariants } from '@heroui/system';
+import { cn } from '@heroui/theme';
+import { Breadcrumbs, type BreadcrumbsProps } from '@heroui/breadcrumbs';
 
-// import { classNames } from '../../libs';
+import { HouseFill } from '@/icons';
+import { MaiBreadcrumbItem } from './mai-breadcrumb-item';
 
-// import { MaiBreadcrumbItem } from './mai-breadcrumb-item';
-// import { useMaiBreadcrumbs } from './hooks';
+const ExtendedBreadcrumbs = extendVariants(Breadcrumbs, {
+  variants: {
+    variant: {
+      glassy: {
+        base: 'w-fit border-1 bg-opacity-25 backdrop-blur-sm py-2 px-3',
+      },
+    },
+  },
+}) as React.FC<MaiBreadcrumbs.Props>;
 
 /**
- * パンくずリストのラッパーコンポーネント
+ * Wrapper component for breadcrumbs.
  * 
- * デフォルトでホームが追加されている。  
- * ホームのhrefを変更する場合はpropsのhomeRefを指定する。  
+ * Adds a glassmorphism variant. 
+ * Use MaiBreadcrumbItem or BreadcrumbItem as child elements.
  * 
- * 子要素はMaiBreadcrumbItemまたはBreadcrumbItemを使用する。
- * 
- * @param props 
- * @returns 
  * @example
  * 'use strict'
- * import { BreadcrumbItem } from '@nextui-org/react';
+ * import { BreadcrumbItem } from '@heroui/react';
  * import { MaiBreadcrumbs, MaiBreadcrumbItem } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <MaiBreadcrumbs>
- *              <MaiBreadcrumbItem href="/foo">foo</MaiBreadcrumbItem>
- * 
- *              <BreadcrumbItem href="/bar">bar</BreadcrumbItem>
- *          </MaiBreadcrumbs>
- *      );
+ *  return (
+ *    <MaiBreadcrumbs
+ *      homeHref='/'
+ *      showHomeIcon
+ *    >
+ *      <MaiBreadcrumbItem href="/foo">foo</MaiBreadcrumbItem>
+ *      <BreadcrumbItem href="/bar">bar</BreadcrumbItem>
+ *    </MaiBreadcrumbs>
+ *  );
  * };
  */
 const MaiBreadcrumbs: React.FC<MaiBreadcrumbs.Props> = (props) => {
-    const {} = props;
-    // const { children, className, homeHref, refDiv, ...breadcrumbsProps } = useMaiBreadcrumbs(props);
-    
-    // return (
-    //     <Breadcrumbs
-    //     className={classNames(
-    //         'mb-4 py-2',
-    //         '[&>ol>li>*:first-child]:text-mint-300',
-    //         className
-    //     )}
-    //     ref={ refDiv }
-    //     { ...breadcrumbsProps }>   
-    //         <MaiBreadcrumbItem
-    //         href={ homeHref ?? '/'}
-    //         >
-    //             <HouseFill />&nbsp;home
-    //         </MaiBreadcrumbItem>
+  const {
+    children,
+    classNames: userClassNames,
+    color,
+    homeRef,
+    radius,
+    showHomeIcon,
+    variant,
+    ...breadcrumbsProps
+  } = props;
+  const { base, ...classNames } = userClassNames || {};
 
-    //         { children }
-    //     </Breadcrumbs>
-    // );
+  return (
+    <ExtendedBreadcrumbs
+      color={color}
+      data-color={color}
+      variant={variant}
+      data-variant={variant}
+      radius={radius}
+      data-radius={radius}
+      classNames={{
+        base: cn(
+          variant === 'glassy'?
+            color === 'primary'? 'bg-primary-400 border-primary-400': 
+            color === 'secondary'? 'bg-secondary-400 border-secondary-400':
+            color === 'success'? 'bg-success-400 border-success-400':
+            color === 'danger'? 'bg-danger-400 border-danger-400':
+            color === 'warning'? 'bg-warning-500 border-warning-400':
+            'bg-white border-white' // foreground or undefined
+            : undefined,
+          variant  === 'glassy'?
+            radius === 'sm'? 'rounded-md':
+            radius === 'none'? 'rounded-none':
+            radius === 'lg'? 'rounded-xl':
+            radius === 'full'? 'rounded-full':
+            'rounded-lg' // none or undefined
+            : undefined,
+          base,
+        ),
+        ...classNames
+      }}
+      {...breadcrumbsProps}
+    >
+      {homeRef && (
+        <MaiBreadcrumbItem href={homeRef}>
+          {showHomeIcon && (<>
+            <HouseFill />
+            &nbsp;
+          </>)}
+          HOME
+        </MaiBreadcrumbItem>
+      )}
 
-    return <></>;
+      {children}
+    </ExtendedBreadcrumbs>
+  );
 };
 
 namespace MaiBreadcrumbs {
-    export type Props = object;
-    // export type Props = BreadcrumbsProps & {
-    //     /**
-    //      * @default '/'
-    //      */
-    //     homeHref?: string;
-    // };
+	export type Props = Omit<BreadcrumbsProps, 'variant'> & {
+		homeRef?: string;
+    showHomeIcon?: boolean;
+    variant?: 'bordered' | 'solid' | 'light' | 'glassy';
+	};
 };
 
 export {
-    MaiBreadcrumbs
+	MaiBreadcrumbs,
 };
