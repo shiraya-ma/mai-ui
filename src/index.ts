@@ -1,6 +1,8 @@
 'use strict';
 
 import {
+  MaiBreadcrumbItem,
+  MaiBreadcrumbs,
   MaiButton,
   MaiCard,
   MaiCardBody,
@@ -32,6 +34,8 @@ export {
   useDisclosure,
   useDraggable,
   useTheme,
+  MaiBreadcrumbItem,
+  MaiBreadcrumbs,
   MaiButton,
   MaiCard,
   MaiCardBody,
@@ -51,6 +55,8 @@ const MaiUI = {
   useDisclosure,
   useDraggable,
   useTheme,
+  BreadcrumbItem: MaiBreadcrumbItem,
+  Breadcrumbs: MaiBreadcrumbs,
   Button: MaiButton,
   Card: MaiCard,
   CardBody: MaiCardBody,
