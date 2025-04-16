@@ -1,50 +1,41 @@
-// MaiSkeleton
 'use strict';
-import { forwardRef } from 'react';
-// import { Skeleton, type SkeletonProps } from '@nextui-org/react';
-
-// import { classNames } from '../../libs';
+import React  from 'react';
+import { Skeleton, type SkeletonProps } from '@heroui/skeleton';
 
 /**
- * スケルトンのコンポーネント
+ * Skeleton component
  * 
- * @param props 
- * @returns 
+ * For reducing the number of imports
+ * 
  * @example
  * 'use strict'
  * import { MaiSkeleton } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <MaiSkeleton>
- *              any elements or components
- *          </MaiSkeleton>
- *      );
+ *    return (
+ *      <MaiSkeleton>
+ *        any elements or components
+ *      </MaiSkeleton>
+ *    );
  * };
  */
-const MaiSkeleton = forwardRef<HTMLDivElement, MaiSkeleton.Props>((props, ref) => {
-    const {} = props;
-    const {} = ref!;
-    // const { className, ...skeletonProps } = props;
-    
-    // return (
-    //     <Skeleton
-    //     className={classNames(
-    //         'dark:bg-[#01011d80]',
-    //         className
-    //     )}
-    //     ref={ ref }
-    //     { ...skeletonProps }/>
-    // );
+const MaiSkeleton: React.FC<MaiSkeleton.Props> = (props) => {
+  const {
+    ...skeletonProps
+  } = props;
 
-    return <></>
-});
+  return (
+    <Skeleton
+      {...skeletonProps}
+    />
+  );
+};
+MaiSkeleton.displayName = 'MaiSkeleton';
 
 namespace MaiSkeleton {
-    export type Props = object;
-    // export type Props = SkeletonProps & {};
+  export type Props = SkeletonProps & {};
 };
 
 export {
-    MaiSkeleton
+  MaiSkeleton
 };
