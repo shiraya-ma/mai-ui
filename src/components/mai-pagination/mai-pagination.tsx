@@ -81,6 +81,7 @@ const MaiPagination: React.FC<MaiPagination.Props> = (props) => {
     />
   );
 };
+MaiPagination.displayName = 'MaiPagination';
 
 namespace MaiPagination {
   export type Props = Omit<PaginationProps, 'variant'> & {
