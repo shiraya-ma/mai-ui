@@ -14,6 +14,7 @@ import {
   MaiModalFooter,
   MaiModalHeader,
   MaiLink,
+  MaiPagination,
   useDisclosure,
   useDraggable,
 } from './components';
@@ -47,6 +48,7 @@ export {
   MaiModalFooter,
   MaiModalHeader,
   MaiLink,
+  MaiPagination,
   MaiUIProvider,
 };
 
@@ -68,6 +70,7 @@ const MaiUI = {
   ModalFooter: MaiModalFooter,
   ModalHeader: MaiModalHeader,
   Link: MaiLink,
+  Pagination: MaiPagination,
   Provider: MaiUIProvider,
 };
 
