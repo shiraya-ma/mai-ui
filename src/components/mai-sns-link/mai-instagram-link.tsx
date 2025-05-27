@@ -49,7 +49,7 @@ const MaiInstagramLink: React.FC<MaiInstagramLink.Props> = (props) => {
 namespace MaiInstagramLink {
   export type Props = MaiLink.Props & ButtonProps &{
     /**
-     * Instagram　ID
+     * Instagram ID
      */
     instagramID?: string;
 
