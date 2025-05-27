@@ -1,10 +1,10 @@
 'use strict';
 import React from 'react';
+import { type ButtonProps } from '@heroui/button';
 
 import { Twitter, TwitterX } from '@/icons';
 import { MaiLink } from '../mai-link';
 import { MaiSNSLinkButton } from './mai-sns-link-button';
-import { ButtonProps } from '@heroui/button';
 
 /**
  * Twitter link component
