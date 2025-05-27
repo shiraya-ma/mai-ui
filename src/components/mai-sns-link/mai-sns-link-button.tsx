@@ -30,21 +30,19 @@ const MaiSNSLinkButton: React.FC<MaiSNSLinkButton.Props> = (props) => {
   return (
     <ExtendedButton
       as={MaiLink}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      color={color || 'default' as any}
+      color={color}
       radius={'full'}
       size={size || 'md'}
       variant={'bordered'}
       isExternal={isExternal}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      {...linkProps as any}
+      {...linkProps}
     />
   );
 };
 MaiSNSLinkButton.displayName = 'MaiSNSLinkButton';
 
 namespace MaiSNSLinkButton {
-  export type Props = MaiLink.Props & {};
+  export type Props = MaiLink.Props & ButtonProps & {};
 };
 
 export {
