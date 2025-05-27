@@ -16,7 +16,7 @@ const ExtendedButton = extendVariants(Button, {
       lg: '!h-16 !min-w-16 !px-3 !text-4xl [&>svg]:size-16',
     },
   },
-}) as React.FC<MaiLink.Props & ButtonProps>;
+}) as React.FC<MaiSNSLinkButton.Props>;
 
 /** @internal */
 const MaiSNSLinkButton: React.FC<MaiSNSLinkButton.Props> = (props) => {
@@ -30,7 +30,7 @@ const MaiSNSLinkButton: React.FC<MaiSNSLinkButton.Props> = (props) => {
   return (
     <ExtendedButton
       as={MaiLink}
-      color={color}
+      color={color || 'default'}
       radius={'full'}
       size={size || 'md'}
       variant={'bordered'}
@@ -42,7 +42,7 @@ const MaiSNSLinkButton: React.FC<MaiSNSLinkButton.Props> = (props) => {
 MaiSNSLinkButton.displayName = 'MaiSNSLinkButton';
 
 namespace MaiSNSLinkButton {
-  export type Props = MaiLink.Props & ButtonProps & {};
+  export type Props = Omit<MaiLink.Props, 'color'> & ButtonProps & {};
 };
 
 export {
