@@ -16,6 +16,7 @@ import {
   MaiLink,
   MaiPagination,
   MaiSkeleton,
+  MaiSNSLink,
   useDisclosure,
   useDraggable,
 } from './components';
@@ -51,6 +52,7 @@ export {
   MaiLink,
   MaiPagination,
   MaiSkeleton,
+  MaiSNSLink,
   MaiUIProvider,
 };
 
@@ -75,6 +77,7 @@ const MaiUI = {
   Pagination: MaiPagination,
   Provider: MaiUIProvider,
   Skeleton: MaiSkeleton,
+  SNSLink: MaiSNSLink,
 };
 
 export default MaiUI;
