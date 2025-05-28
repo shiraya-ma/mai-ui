@@ -5,9 +5,9 @@ import { MaiPixivLink } from "./mai-pixiv-link";
 import { MaiTwitterLink } from "./mai-twitter-link";
 
 /**
- * SNSリンクのコンポーネント
+ * SNS link components for Mai UI.
  * 
- * 個別のインポートも可能
+ * Can be imported individually or as a group.
  * 
  * @param props 
  * @returns 
@@ -16,19 +16,19 @@ import { MaiTwitterLink } from "./mai-twitter-link";
  * import { MaiSNSLink } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <p>
- *              <MaiSNSLink.Twitter/>
- *              <br/>
- *              <MaiSNSLink.Instagram/>
- *              <br/>
- *              <MaiSNSLink.Pixiv/>
- *          </p>
- *      );
+ *    return (
+ *      <p>
+ *        <MaiSNSLink.Twitter/>
+ *        <br/>
+ *        <MaiSNSLink.Instagram/>
+ *        <br/>
+ *        <MaiSNSLink.Pixiv/>
+ *      </p>
+ *    );
  * };
  */
 export const MaiSNSLink = {
-    Instagram: MaiInstagramLink,
-    Pixiv: MaiPixivLink,
-    Twitter: MaiTwitterLink
+  Instagram: MaiInstagramLink,
+  Pixiv: MaiPixivLink,
+  Twitter: MaiTwitterLink
 };
