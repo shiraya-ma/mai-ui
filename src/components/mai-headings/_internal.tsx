@@ -1,8 +1,50 @@
 'use client';
 import { type ReactNode, type HtmlHTMLAttributes, type PropsWithChildren, type ReactElement } from 'react';
+import { cn } from '@heroui/theme';
 import { isArray } from 'lodash';
 
+import { generateIDFromChildren } from '@/libs';
 import { MaiHeadingsInner } from './mai-headings-inner';
+
+/** @internal */
+export function useMaiHeadings (props: MaiHeadingsProps) {
+  const {
+    children: usedChildren,
+    className: userClassName,
+    classNames: userClassNames,
+    color: userColor,
+    id: userId,
+    ...headingsProps
+  } = props;
+
+  const children = _fixChildren(usedChildren);
+  const id = userId || children && generateIDFromChildren(children);
+
+  const classNames = {
+    base: userClassName || userClassNames?.base,
+    text: cn(
+      userColor === 'primary'   ? 'text-primary' :
+      userColor === 'secondary' ? 'text-secondary' :
+      userColor === 'success'   ? 'text-success' :
+      userColor === 'danger'    ? 'text-danger' :
+      userColor === 'warning'   ? 'text-warning' :
+                                  'text-foreground',
+      userClassNames?.text,
+    ),
+    link: userClassNames?.link,
+    icon: userClassNames?.icon,
+  };
+
+  const color = userColor || 'foreground';
+
+  return {
+    children,
+    classNames,
+    color,
+    id,
+    ...headingsProps
+  };
+}
 
 /** @internal */
 export function _fixChildren (children: ReactNode): string | undefined {

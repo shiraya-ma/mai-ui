@@ -1,7 +1,46 @@
 'use strict';
 import { describe, it, expect } from 'bun:test';
 
-import { _fixChildren } from './_internal';
+import { useMaiHeadings, _fixChildren } from './_internal';
+
+describe('useMaiHeadings', () => {
+  it('returns default values when no props are provided', () => {
+    const result = useMaiHeadings({});
+    expect(result.children).toBeUndefined();
+    expect(result.classNames).toEqual({
+      base: undefined,
+      text: 'text-foreground',
+      link: undefined,
+      icon: undefined,
+    });
+    expect(result.color).toBe('foreground');
+    expect(result.id).toBeUndefined();
+  });
+
+  it('should apply custom id if provided', () => {
+    const result = useMaiHeadings({ id: 'custom-id' });
+    expect(result.id).toBe('custom-id');
+  });
+
+  it('generates ID from children', () => {
+    const result = useMaiHeadings({ children: 'Test Heading' });
+    expect(result.id).toBe('Test-Heading');
+  });
+
+  it('uses provided className and classNames', () => {
+    const result = useMaiHeadings({
+      className: 'custom-class',
+      classNames: { base: 'base-class', text: 'text-class' },
+    });
+    expect(result.classNames.base).toBe('custom-class');
+    expect(result.classNames.text).toBe('text-class');
+  });
+
+  it('sets color based on user input', () => {
+    const result = useMaiHeadings({ color: 'primary' });
+    expect(result.color).toBe('primary');
+  });
+});
 
 describe('_fixChildren', () => {
   it('returns undefined for undefined or null', () => {
