@@ -4,6 +4,7 @@ import { cleanup, render, screen } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
 
 import { MaiH4 } from './mai-h4';
+import { MaiHeadingsStyleProvider } from './mai-headings-style-provider';
 
 describe('MaiH4', () => {
   beforeEach(() => {
@@ -40,5 +41,23 @@ describe('MaiH4', () => {
     render(<MaiH4 data-testid="h4">Test Heading</MaiH4>);
     const h4 = screen.getByTestId('h4');
     expect(h4).toHaveAttribute('id', 'Test-Heading');
+  });
+    
+  it('should render with provided context styles', () => {
+    render(
+      <MaiHeadingsStyleProvider context={{
+        4: {base: 'context-base', text: 'context-text'},
+      }}>
+        <MaiH4 data-testid="h4" classNames={{
+          base: 'custom-base',
+          text: 'custom-text',
+        }}>Test Heading</MaiH4>
+      </MaiHeadingsStyleProvider>
+    );
+
+    const h4 = screen.getByTestId('h4');
+    const text = h4.querySelector('[data-slot="text"]');
+    expect(h4).toHaveClass('context-base custom-base');
+    expect(text).toHaveClass('context-text custom-text');
   });
 });
