@@ -1,15 +1,16 @@
 'use strict';
 
 /**
- * childrenからIDを生成する関数
+ * Function to generate an ID from children.
  * 
- * H1のID作成やTOCのhrefを作成するために使用
+ * Used for creating H1 IDs and TOC hrefs.
  * 
- * @param children 
- * @returns 
+ * @internal 
  */
 export function generateIDFromChildren (children: string): string {
-    const id = children.replace(/\s\s/g, ' ').replace(/\s/g, '-');
+  const id = children.trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
 
-    return id;
+  return id;
 };
