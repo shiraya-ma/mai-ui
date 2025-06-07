@@ -1,10 +1,13 @@
 'use client';
-import { type ReactNode, type HtmlHTMLAttributes, type PropsWithChildren, type ReactElement } from 'react';
+import { type ReactNode, type HtmlHTMLAttributes, type PropsWithChildren, type ReactElement, createContext } from 'react';
 import { cn } from '@heroui/theme';
 import { isArray } from 'lodash';
 
 import { generateIDFromChildren } from '@/libs';
 import { MaiHeadingsInner } from './mai-headings-inner';
+
+/** @internal */
+export const MaiHeadingsStyleContext = createContext<MaiHeadingsStyleContextProps | undefined>(undefined);
 
 /** @internal */
 export function useMaiHeadings (props: MaiHeadingsProps) {
@@ -47,6 +50,44 @@ export function useMaiHeadings (props: MaiHeadingsProps) {
 }
 
 /** @internal */
+export function useMaiHeadingsStyleContext (props: PropsWithChildren<Partial<{context: MaiHeadingsStyleContextProps}>>) {
+  const {
+    context: userContext,
+    ...maiHeadingsStyleProps
+  } = props;
+
+  const topLayerContext = useContext(MaiHeadingsStyleContext) || {};
+
+  const LEVELS: MaiHeadingsLevel[] = [1, 2, 3, 4, 5, 6];
+
+  const context: MaiHeadingsStyleContextProps = {
+    1: undefined,
+    2: undefined,
+    3: undefined,
+    4: undefined,
+    5: undefined,
+    6: undefined,
+  };
+  
+  LEVELS.forEach(level => {
+    context[level] = {
+      base: cn(topLayerContext[level]?.base, userContext?.[level]?.base),
+      text: cn(topLayerContext[level]?.text, userContext?.[level]?.text),
+      link: cn(topLayerContext[level]?.link, userContext?.[level]?.link),
+      icon: {
+        base: cn(topLayerContext[level]?.icon?.base, userContext?.[level]?.icon?.base),
+        anchor: cn(topLayerContext[level]?.icon?.anchor, userContext?.[level]?.icon?.anchor),
+      },
+    }
+  });
+
+  return {
+    context,
+    ...maiHeadingsStyleProps
+  };
+};
+
+/** @internal */
 export function _fixChildren (children: ReactNode): string | undefined {
   if (isArray(children)) {
     return children.map(child => _fixChildren(child)).join(' ')
@@ -84,3 +125,10 @@ export type MaiHeadingsProps = HtmlHTMLAttributes<HTMLHeadingElement> & {
 export type MaiHeadingsClassNames = MaiHeadingsInner.ClassNames & Partial<{
   base: string;
 }>;
+
+/** @internal */
+export type MaiHeadingsLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
+export type MaiHeadingsStyleContextProps = {
+  [level in MaiHeadingsLevel]?: MaiHeadingsClassNames;
+};
