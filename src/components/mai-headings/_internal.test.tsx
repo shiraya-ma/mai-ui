@@ -1,7 +1,9 @@
 'use strict';
 import { describe, it, expect } from 'bun:test';
+import { renderHook } from '@testing-library/react';
+import { type PropsWithChildren } from 'react';
 
-import { useMaiHeadings, _fixChildren } from './_internal';
+import { useMaiHeadings, useMaiHeadingsStyleContext, _fixChildren } from './_internal';
 
 describe('useMaiHeadings', () => {
   it('returns default values when no props are provided', () => {
@@ -39,6 +41,59 @@ describe('useMaiHeadings', () => {
   it('sets color based on user input', () => {
     const result = useMaiHeadings({ color: 'primary' });
     expect(result.color).toBe('primary');
+  });
+});
+
+describe('useMaiHeadingsStyleContext', () => {
+  const withOutContextWrapper = ({children}: PropsWithChildren) => (<>{children}</>);
+
+  it('returns default context when no props are provided', () => {
+    const result = renderHook(() => useMaiHeadingsStyleContext({}), {wrapper: withOutContextWrapper}).result.current;
+    expect(result.context[1]).toStrictEqual({
+      base: '',
+      text: '',
+      link: '',
+      icon: { base: '', anchor: '' },
+    });
+  });
+
+  it('should apply custom context if provided', () => {
+    const result = renderHook(() => useMaiHeadingsStyleContext({
+      context: {
+        1: {base: 'custom-base'}
+      }
+    }), {wrapper: withOutContextWrapper}).result.current;
+    expect(result.context[1]).toStrictEqual({
+      base: 'custom-base',
+      text: '',
+      link: '',
+      icon: { base: '', anchor: '' },
+    });
+  });
+
+  it('returns children and other props', () => {
+    const children = <div>Test</div>;
+    const result = renderHook(() => useMaiHeadingsStyleContext({ children }), {wrapper: withOutContextWrapper}).result.current;
+    expect(result.children).toBe(children);
+  });
+
+  it('should provide context', () => {
+    const wrapper = ({ children }: PropsWithChildren) => (
+      <MaiHeadingsStyleContext.Provider value={{
+        1: { base: 'context-base', text: 'context-text' },
+      }}>
+        {children}
+      </MaiHeadingsStyleContext.Provider>
+    );
+    const result = renderHook(() => useMaiHeadingsStyleContext({ context: {
+      1: { base: 'user-base', text: 'user-text' },
+    } }), { wrapper }).result.current;
+    expect(result.context[1]).toStrictEqual({
+      base: 'context-base user-base',
+      text: 'context-text user-text',
+      link: '',
+      icon: {anchor: '', base: ''},
+    });
   });
 });
 
