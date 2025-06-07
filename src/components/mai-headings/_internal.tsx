@@ -1,5 +1,5 @@
 'use client';
-import { type ReactNode, type HtmlHTMLAttributes, type PropsWithChildren, type ReactElement, createContext } from 'react';
+import { type ReactNode, type HtmlHTMLAttributes, type PropsWithChildren, type ReactElement, createContext, useContext } from 'react';
 import { cn } from '@heroui/theme';
 import { isArray } from 'lodash';
 
@@ -10,7 +10,7 @@ import { MaiHeadingsInner } from './mai-headings-inner';
 export const MaiHeadingsStyleContext = createContext<MaiHeadingsStyleContextProps | undefined>(undefined);
 
 /** @internal */
-export function useMaiHeadings (props: MaiHeadingsProps) {
+export function useMaiHeadings (props: MaiHeadingsProps, level: MaiHeadingsLevel) {
   const {
     children: usedChildren,
     className: userClassName,
@@ -19,13 +19,16 @@ export function useMaiHeadings (props: MaiHeadingsProps) {
     id: userId,
     ...headingsProps
   } = props;
+  const context = useContext(MaiHeadingsStyleContext) || {};
+  const contextStyle = context[level] || {};
 
   const children = _fixChildren(usedChildren);
   const id = userId || children && generateIDFromChildren(children);
 
-  const classNames = {
-    base: userClassName || userClassNames?.base,
+  const classNames: MaiHeadingsClassNames = {
+    base: cn(contextStyle.base, userClassName || userClassNames?.base),
     text: cn(
+      contextStyle.text,
       userColor === 'primary'   ? 'text-primary' :
       userColor === 'secondary' ? 'text-secondary' :
       userColor === 'success'   ? 'text-success' :
@@ -34,8 +37,11 @@ export function useMaiHeadings (props: MaiHeadingsProps) {
                                   'text-foreground',
       userClassNames?.text,
     ),
-    link: userClassNames?.link,
-    icon: userClassNames?.icon,
+    link: cn(contextStyle.link, userClassNames?.link),
+    icon: {
+      base  : cn(contextStyle.icon?.base, userClassNames?.icon?.base),
+      anchor: cn(contextStyle.icon?.anchor, userClassNames?.icon?.anchor),
+    },
   };
 
   const color = userColor || 'foreground';

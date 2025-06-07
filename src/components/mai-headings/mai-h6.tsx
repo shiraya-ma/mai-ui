@@ -33,7 +33,7 @@ const MaiH6: React.FC<MaiH6.Props> = (props) => {
     startIcon,
     endIcon,
     ...headingsProps
-  } = useMaiHeadings(props);
+  } = useMaiHeadings(props, 6);
   
   return (
     <h6
