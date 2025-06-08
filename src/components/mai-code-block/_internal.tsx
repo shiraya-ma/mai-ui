@@ -1,5 +1,9 @@
 'use client';
-import { type CSSProperties } from "react";
+import { createContext, type PropsWithChildren, type CSSProperties } from "react";
+import NightOwl from 'react-syntax-highlighter/dist/esm/styles/prism/night-owl';
+
+/** @internal */
+export const MaiCodeBlockStyleContext = createContext<MaiCodeBlockStyle | undefined>(NightOwl);
 
 /** @internal */
 export function _isPrism (style: MaiCodeBlockStyle): boolean {
@@ -11,3 +15,7 @@ export function _isPrism (style: MaiCodeBlockStyle): boolean {
 export type MaiCodeBlockStyle = {
   [key: string]: CSSProperties;
 };
+
+export type MaiCodeBlockStyleProviderProps = PropsWithChildren<{
+  style?: MaiCodeBlockStyle;
+}>;
