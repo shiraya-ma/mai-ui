@@ -49,6 +49,7 @@
     "@types/lodash": "^4.17.16",
     "@types/react": ">=18 || >=19.0.0-rc.0",
     "@types/react-dom": ">=18 || >=19.0.0-rc.0",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "color": "^5.0.0",
@@ -76,6 +77,7 @@
     "@heroui/theme": "^2.4.12",
     "@shiraya-ma/mai-colors": "^0.0.0",
     "deepmerge": "^4.3.1",
+    "react-syntax-highlighter": "^15.6.1",
     "tailwindcss": "^3"
   },
   "peerDependencies": {
