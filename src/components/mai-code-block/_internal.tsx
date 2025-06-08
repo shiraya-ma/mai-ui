@@ -48,6 +48,8 @@ export type MaiCodeBlockProps = Partial<{
   style           : MaiCodeBlockStyle;
   showLineNumbers : boolean;
   startLineNumber : number;
+  /** @internal */
+  dataTestID      : string;
 }>;
 
 export type MaiCodeBlockStyle = {
