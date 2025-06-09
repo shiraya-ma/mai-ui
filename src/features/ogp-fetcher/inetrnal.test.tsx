@@ -37,7 +37,7 @@ describe('useOGPFetcherProvider', () => {
     expect(result.fetcher).toBe(fetcher);
   });
 
-  it('should provide undefined with context', () => {
+  it('should prioritize fetcher from props over context', () => {
     const contextFetcher = jest.fn();
     const userFetcher = jest.fn();
     const wrapper = ({children}: PropsWithChildren) => (<OGPFetcherContext.Provider value={contextFetcher} children={children} />); // Context is provided
