@@ -15,7 +15,7 @@ describe('useOGPFetcher', () => {
     expect(result.ogpFetcher).toBeUndefined();
   });
 
-  it('should set loading to true when fetchOGP is called', async () => {
+  it('should return the fetcher from the provider context', async () => {
     const mockFetcher = jest.fn();
     const wrapper = ({children}: PropsWithChildren) => (<OGPFetcherProvider fetcher={mockFetcher} children={children}/>);
     const result = renderHook(() => useOGPFetcher(), {wrapper}).result.current;
