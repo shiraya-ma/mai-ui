@@ -7,10 +7,10 @@ import { useMaiHeadings, useMaiHeadingsStyleContext, _fixChildren } from './_int
 import { MaiHeadingsStyleProvider } from './mai-headings-style-provider';
 
 describe('useMaiHeadings', () => {
-  const withOutContextWrapper = ({children}: PropsWithChildren) => (<>{children}</>);
+  const withoutContextWrapper = ({children}: PropsWithChildren) => (<>{children}</>);
 
   it('returns default values when no props are provided', () => {
-    const result = renderHook(() => useMaiHeadings({}, 1), {wrapper: withOutContextWrapper}).result.current;
+    const result = renderHook(() => useMaiHeadings({}, 1), {wrapper: withoutContextWrapper}).result.current;
     expect(result.children).toBeUndefined();
     expect(result.classNames).toEqual({
       base: '',
@@ -23,12 +23,12 @@ describe('useMaiHeadings', () => {
   });
 
   it('should apply custom id if provided', () => {
-    const result = renderHook(() => useMaiHeadings({ id: 'custom-id'}, 1), {wrapper: withOutContextWrapper}).result.current;
+    const result = renderHook(() => useMaiHeadings({ id: 'custom-id'}, 1), {wrapper: withoutContextWrapper}).result.current;
     expect(result.id).toBe('custom-id');
   });
 
   it('generates ID from children', () => {
-    const result = renderHook(() => useMaiHeadings({ children: 'Test Heading'}, 1), {wrapper: withOutContextWrapper}).result.current;
+    const result = renderHook(() => useMaiHeadings({ children: 'Test Heading'}, 1), {wrapper: withoutContextWrapper}).result.current;
     expect(result.id).toBe('Test-Heading');
   });
 
@@ -36,13 +36,13 @@ describe('useMaiHeadings', () => {
     const result = renderHook(() => useMaiHeadings({
       className: 'custom-class',
       classNames: { base: 'base-class', text: 'text-class' },
-    }, 1), {wrapper: withOutContextWrapper}).result.current;
+    }, 1), {wrapper: withoutContextWrapper}).result.current;
     expect(result.classNames.base).toBe('custom-class');
     expect(result.classNames.text).toBe('text-class');
   });
 
   it('sets color based on user input', () => {
-    const result = renderHook(() => useMaiHeadings({ color: 'primary' }, 1), {wrapper: withOutContextWrapper}).result.current;
+    const result = renderHook(() => useMaiHeadings({ color: 'primary' }, 1), {wrapper: withoutContextWrapper}).result.current;
     expect(result.color).toBe('primary');
   });
 
@@ -61,10 +61,10 @@ describe('useMaiHeadings', () => {
 });
 
 describe('useMaiHeadingsStyleContext', () => {
-  const withOutContextWrapper = ({children}: PropsWithChildren) => (<>{children}</>);
+  const withoutContextWrapper = ({children}: PropsWithChildren) => (<>{children}</>);
 
   it('returns default context when no props are provided', () => {
-    const result = renderHook(() => useMaiHeadingsStyleContext({}), {wrapper: withOutContextWrapper}).result.current;
+    const result = renderHook(() => useMaiHeadingsStyleContext({}), {wrapper: withoutContextWrapper}).result.current;
     expect(result.context[1]).toStrictEqual({
       base: '',
       text: '',
@@ -78,7 +78,7 @@ describe('useMaiHeadingsStyleContext', () => {
       context: {
         1: {base: 'custom-base'}
       }
-    }), {wrapper: withOutContextWrapper}).result.current;
+    }), {wrapper: withoutContextWrapper}).result.current;
     expect(result.context[1]).toStrictEqual({
       base: 'custom-base',
       text: '',
@@ -89,7 +89,7 @@ describe('useMaiHeadingsStyleContext', () => {
 
   it('returns children and other props', () => {
     const children = <div>Test</div>;
-    const result = renderHook(() => useMaiHeadingsStyleContext({ children }), {wrapper: withOutContextWrapper}).result.current;
+    const result = renderHook(() => useMaiHeadingsStyleContext({ children }), {wrapper: withoutContextWrapper}).result.current;
     expect(result.children).toBe(children);
   });
 

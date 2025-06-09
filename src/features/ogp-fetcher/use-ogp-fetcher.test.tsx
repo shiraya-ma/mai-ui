@@ -7,10 +7,10 @@ import { useOGPFetcher } from './use-ogp-fetcher';
 import { OGPFetcherProvider } from './ogp-fetcher-provider';
 
 describe('useOGPFetcher', () => {
-  const withOutContextWrapper = ({children}: PropsWithChildren) => (<>{children}</>);
+  const withoutContextWrapper = ({children}: PropsWithChildren) => (<>{children}</>);
 
   it('should return undefined without context', () => {
-    const result = renderHook(() => useOGPFetcher(), {wrapper: withOutContextWrapper}).result.current;
+    const result = renderHook(() => useOGPFetcher(), {wrapper: withoutContextWrapper}).result.current;
     
     expect(result.ogpFetcher).toBeUndefined();
   });
