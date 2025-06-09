@@ -9,10 +9,10 @@ import {
 } from './internal';
 
 describe('useOGPFetcherProvider', () => {
-  const withOutContextWrapper = ({children}: PropsWithChildren) => (<>{children}</>);
+  const withoutContextWrapper = ({children}: PropsWithChildren) => (<>{children}</>);
 
   it('should provide undefined without context', () => {
-    const result = renderHook(() => useOGPFetcherProvider({ children: undefined }), {wrapper: withOutContextWrapper}).result.current;
+    const result = renderHook(() => useOGPFetcherProvider({ children: undefined }), {wrapper: withoutContextWrapper}).result.current;
 
     expect(result.fetcher).toBeUndefined();
   });
