@@ -77,7 +77,11 @@
     "@heroui/theme": "^2.4.12",
     "@shiraya-ma/mai-colors": "^0.0.0",
     "deepmerge": "^4.3.1",
+    "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^15.6.1",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.1",
+    "swr": "^2.3.3",
     "tailwindcss": "^3"
   },
   "peerDependencies": {
