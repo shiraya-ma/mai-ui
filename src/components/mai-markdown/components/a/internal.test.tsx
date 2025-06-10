@@ -2,8 +2,10 @@
 import { describe, it, expect, jest } from 'bun:test';
 import { renderHook, waitFor } from '@testing-library/react';
 
+import { type OGPProps } from '@/features/ogp-fetcher';
 import {
   useAnchorIsOnlyChild,
+  useCardLinkProps,
   useOGP,
 } from './internal';
 
@@ -55,6 +57,117 @@ describe('useAnchorIsOnlyChild', () => {
     expect(result.current).toBe(false);
 
     document.body.removeChild(parent);
+  });
+});
+
+describe('useCardLinkProps', () => {
+  it('should return empty object if ogp is undefined', () => {
+    const result = useCardLinkProps(undefined);
+    expect(result).toEqual({});
+  });
+
+  it('should return empty object if ogp.data is missing', () => {
+    const ogp = { url: 'https://example.com', data: undefined };
+    const result = useCardLinkProps(ogp as OGPProps);
+    expect(result).toEqual({});
+  });
+
+  it('should return empty object if image is missing', () => {
+    const ogp = {
+      url: 'https://example.com',
+      data: {
+        title: 'Title',
+        og: {},
+        twitter: {},
+        fb: {},
+      },
+    };
+    const result = useCardLinkProps(ogp as OGPProps);
+    expect(result).toEqual({});
+  });
+
+  it('should return empty object if title is missing', () => {
+    const ogp = {
+      url: 'https://example.com',
+      data: {
+        og: { image: 'img.png' },
+        twitter: {},
+        fb: {},
+      },
+    };
+    const result = useCardLinkProps(ogp as OGPProps);
+    expect(result).toEqual({});
+  });
+
+  it('should use og.image and data.title if present', () => {
+    const ogp = {
+      url: 'https://example.com',
+      data: {
+        title: 'Main Title',
+        og: { image: 'og-image.png', title: 'OG Title' },
+        twitter: { image: 'twitter-image.png', title: 'Twitter Title' },
+        fb: { image: 'fb-image.png', title: 'FB Title' },
+      },
+    };
+    const result = useCardLinkProps(ogp as OGPProps);
+    expect(result).toEqual({
+      cardLinkProps: {
+        image: 'og-image.png',
+        href: 'https://example.com',
+        title: 'Main Title',
+      },
+    });
+  });
+
+  it('should fallback to twitter.image and twitter.title', () => {
+    const ogp = {
+      url: 'https://example.com',
+      data: {
+        twitter: { image: 'twitter-image.png', title: 'Twitter Title' },
+      },
+    };
+    const result = useCardLinkProps(ogp as OGPProps);
+    expect(result).toEqual({
+      cardLinkProps: {
+        image: 'twitter-image.png',
+        href: 'https://example.com',
+        title: 'Twitter Title',
+      },
+    });
+  });
+
+  it('should fallback to fb.image and fb.title', () => {
+    const ogp = {
+      url: 'https://example.com',
+      data: {
+        fb: { image: 'fb-image.png', title: 'FB Title' },
+      },
+    };
+    const result = useCardLinkProps(ogp as OGPProps);
+    expect(result).toEqual({
+      cardLinkProps: {
+        image: 'fb-image.png',
+        href: 'https://example.com',
+        title: 'FB Title',
+      },
+    });
+  });
+
+  it('should fallback to og.title if data.title is missing', () => {
+    const ogp = {
+      url: 'https://example.com',
+      data: {
+        og: { image: 'og-image.png', title: 'OG Title' },
+      },
+    };
+    const result = useCardLinkProps(ogp as OGPProps);
+    expect(result).toEqual({
+      cardLinkProps: {
+        image: 'og-image.png',
+        href: 'https://example.com',
+        title: 'OG Title',
+      },
+    });
   });
 });
 
