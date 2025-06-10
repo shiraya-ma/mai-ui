@@ -1,8 +1,11 @@
 'use client';
-import { type AnchorHTMLAttributes, type RefObject, useEffect, useState} from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import React, { type AnchorHTMLAttributes, type RefObject, useEffect, useState} from 'react';
+import { cn } from '@heroui/theme';
 import useSWR from 'swr';
 
 import { OGPProps, useOGPFetcher, type OGPFetcherFunction } from '@/features/ogp-fetcher';
+import { MaiLink } from '@/components/mai-link';
 
 /** @internal */
 export function useAnchor (props: AnchorProps & {refAnchor: RefObject<HTMLAnchorElement | null>}) {
@@ -80,6 +83,49 @@ export function useOGP (props: Partial<{href: string, isOnlyChild: boolean, fetc
     isLoaded,
     mutate,
   };
+};
+
+/** @internal */
+export const CardLink: React.FC<CardLinkProps & {ref: RefObject<HTMLAnchorElement | null>, dataLinkStyle: string}> = (props) => {
+  const { dataLinkStyle, image, href, ref, title } = props;
+
+  return (
+    <MaiLink
+      className={cn(
+        'flex w-full h-[128px] border border-gray-500/50 rounded-lg',
+        'items-center justify-between overflow-hidden break-all',
+      )}
+      color='foreground'
+      href={href}
+      ref={ref}
+      data-slot='base'
+      data-link-style={dataLinkStyle}
+    >
+      <i
+        className='flex flex-col w-[calc(100%-128px)] h-full p-4'
+        data-slot='text-wrapper'
+      >
+        <b
+          className='block overflow-hidden line-clamp-2 text-[hsl(var(--nextui-foreground))]'
+          style={{ boxOrient: 'vertical' }}
+          children={title}
+          data-slot='text-title'
+        />
+
+        <small
+          className='block h-fit'
+          children={href}
+          data-slot='text-link'
+        />
+      </i>
+      <i
+        className='flex flex-grow w-32 h-full border-l-gray-500'
+        data-slot='image-wrapper'
+      >
+        <img src={ image } data-slot='image'/>
+      </i>      
+    </MaiLink>
+  );
 };
 
 /** @internal */
