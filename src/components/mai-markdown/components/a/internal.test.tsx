@@ -1,13 +1,80 @@
 'use strict';
-import { describe, it, expect, jest } from 'bun:test';
+/* eslint-disable @typescript-eslint/no-require-imports */
+import { afterEach, describe, it, expect, jest, spyOn } from 'bun:test';
 import { renderHook, waitFor } from '@testing-library/react';
 
-import { type OGPProps } from '@/features/ogp-fetcher';
+import { useOGPFetcher, type OGPProps } from '@/features/ogp-fetcher';
 import {
+  useAnchor,
   useAnchorIsOnlyChild,
   useCardLinkProps,
   useOGP,
 } from './internal';
+
+describe('useAnchor', () => {
+  const originalUseAnchorIsOnlyChild = useAnchorIsOnlyChild;
+  const originalUseCardLinkProps = useCardLinkProps;
+  const originalUseOGP = useOGP;
+  const originalUseOGPFetcher = useOGPFetcher;
+
+  afterEach(() => {
+    spyOn(require('@/features/ogp-fetcher'), 'useOGPFetcher').mockImplementation(originalUseOGPFetcher);
+    spyOn(require('./internal'), 'useAnchorIsOnlyChild').mockImplementation(originalUseAnchorIsOnlyChild);
+    spyOn(require('./internal'), 'useCardLinkProps').mockImplementation(originalUseCardLinkProps);
+    spyOn(require('./internal'), 'useOGP').mockImplementation(originalUseOGP);
+  });
+
+  it('should return children and href as passed in props', () => {
+    const refAnchor = { current: null };
+    const children = 'Test Link';
+    const href = 'https://example.com?q=should return children and href as passed in props';
+    // Mock useOGPFetcher to return a dummy fetcher
+    spyOn(require('@/features/ogp-fetcher'), 'useOGPFetcher').mockReturnValue({ ogpFetcher: undefined });
+    // Mock useOGP to return empty ogp
+    spyOn(require('./internal'), 'useOGP').mockReturnValue({ ogp: undefined, isLoaded: false, mutate: jest.fn() });
+    // Mock useCardLinkProps to return empty object
+    spyOn(require('./internal'), 'useCardLinkProps').mockReturnValue({});
+
+    const { result } = renderHook(() =>
+      useAnchor({ children, href, refAnchor })
+    );
+    expect(result.current.children).toBe(children);
+    expect(result.current.href).toBe(href);
+    expect(result.current.cardLinkProps).toBeUndefined();
+  });
+
+  it('should return cardLinkProps if ogp is present', () => {
+    const refAnchor = { current: null };
+    const children = 'Test Link';
+    const href = 'https://example.com?q=should return cardLinkProps if ogp is present';
+    const cardLinkProps = { image: 'img.png', href, title: 'Title' };
+    spyOn(require('@/features/ogp-fetcher'), 'useOGPFetcher').mockReturnValue({ ogpFetcher: undefined });
+    spyOn(require('./internal'), 'useOGP').mockReturnValue({ ogp: { url: href, data: { title: 'Title', og: { image: 'img.png' } } }, isLoaded: true, mutate: jest.fn() });
+    spyOn(require('./internal'), 'useCardLinkProps').mockReturnValue({ cardLinkProps });
+
+    const { result } = renderHook(() =>
+      useAnchor({ children, href, refAnchor })
+    );
+    expect(result.current.cardLinkProps).toEqual(cardLinkProps);
+    expect(result.current.children).toBe(children);
+    expect(result.current.href).toBe(href);
+  });
+
+  it('should call useAnchorIsOnlyChild with refAnchor', () => {
+    const refAnchor = { current: null };
+    const children = 'Test Link';
+    const href = 'https://example.com?q=should call useAnchorIsOnlyChild with refAnchor';
+    const useAnchorIsOnlyChildMock = spyOn(require('./internal'), 'useAnchorIsOnlyChild').mockReturnValue(false);
+    spyOn(require('@/features/ogp-fetcher'), 'useOGPFetcher').mockReturnValue({ ogpFetcher: undefined });
+    spyOn(require('./internal'), 'useOGP').mockReturnValue({ ogp: undefined, isLoaded: false, mutate: jest.fn() });
+    spyOn(require('./internal'), 'useCardLinkProps').mockReturnValue({});
+
+    renderHook(() =>
+      useAnchor({ children, href, refAnchor })
+    );
+    expect(useAnchorIsOnlyChildMock).toHaveBeenCalledWith(refAnchor);
+  });
+});
 
 describe('useAnchorIsOnlyChild', () => {
   it('should return false when refAnchor.current is null', () => {

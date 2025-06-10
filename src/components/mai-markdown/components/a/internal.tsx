@@ -1,8 +1,27 @@
 'use client';
-import { type RefObject, useEffect, useState} from 'react';
+import { type AnchorHTMLAttributes, type RefObject, useEffect, useState} from 'react';
 import useSWR from 'swr';
 
-import { type OGPProps, type OGPFetcherFunction } from '@/features/ogp-fetcher';
+import { OGPProps, useOGPFetcher, type OGPFetcherFunction } from '@/features/ogp-fetcher';
+
+/** @internal */
+export function useAnchor (props: AnchorProps & {refAnchor: RefObject<HTMLAnchorElement | null>}) {
+  const {
+    children,
+    href,
+    refAnchor,
+  } = props;
+  const isOnlyChild = useAnchorIsOnlyChild(refAnchor);
+  const { ogpFetcher } = useOGPFetcher();
+  const { ogp } = useOGP({href, isOnlyChild, fetcher: ogpFetcher});
+  const { cardLinkProps } = useCardLinkProps(ogp);
+
+  return {
+    cardLinkProps,
+    children,
+    href,
+  };
+};
 
 /** @internal */
 export function useAnchorIsOnlyChild (refAnchor: RefObject<HTMLAnchorElement | null>) {
@@ -62,6 +81,9 @@ export function useOGP (props: Partial<{href: string, isOnlyChild: boolean, fetc
     mutate,
   };
 };
+
+/** @internal */
+export type AnchorProps = AnchorHTMLAttributes<HTMLAnchorElement> & {};
 
 /** @internal */
 export type CardLinkProps = {
