@@ -86,8 +86,8 @@ export function useOGP (props: Partial<{href: string, isOnlyChild: boolean, fetc
 };
 
 /** @internal */
-export const CardLink: React.FC<CardLinkProps & {ref: RefObject<HTMLAnchorElement | null>, dataLinkStyle: string}> = (props) => {
-  const { dataLinkStyle, image, href, ref, title } = props;
+export const CardLink: React.FC<AnchorHTMLAttributes<HTMLAnchorElement> & CardLinkProps & {ref: RefObject<HTMLAnchorElement | null>}> = (props) => {
+  const { image, href, ref, title, ...anchorProps } = props;
 
   return (
     <MaiLink
@@ -99,7 +99,7 @@ export const CardLink: React.FC<CardLinkProps & {ref: RefObject<HTMLAnchorElemen
       href={href}
       ref={ref}
       data-slot='base'
-      data-link-style={dataLinkStyle}
+      {...anchorProps as MaiLink.Props}
     >
       <i
         className='flex flex-col w-[calc(100%-128px)] h-full p-4'

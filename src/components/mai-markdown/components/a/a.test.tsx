@@ -27,8 +27,8 @@ describe('a', () => {
   });
 
   it('renders MaiLink when cardLinkProps is not present', () => {
-    render(<A href='/test' children='Test Link'/>);
-    const link = screen.getByRole('link');
+    render(<A href='/test' children='Test Link' data-testid='Test Link'/>);
+    const link = screen.getByTestId('Test Link');
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/test');
     expect(link).toHaveAttribute('data-link-style', 'text');
@@ -42,8 +42,8 @@ describe('a', () => {
       href: '/card',
     }));
     
-    render(<A href="/card" children='Card Link'/>);
-    const link = screen.getByRole('link');
+    render(<A href="/card" children='Card Link' data-testid='Card Link'/>);
+    const link = screen.getByTestId('Card Link');
     const textTitle = link.querySelector('[data-slot="text-title"]');
     const textLink  = link.querySelector<HTMLElement>('[data-slot="text-link"]');
     const image     = link.querySelector<HTMLImageElement>('img[data-slot="image"]');
@@ -58,8 +58,8 @@ describe('a', () => {
 
   it('forwards ref to anchor element', () => {
     const ref = createRef<HTMLAnchorElement>();
-    render(<A href="/ref" children='Ref Link' ref={ref}/>);
-    const link: HTMLAnchorElement = screen.getByRole('link');
+    render(<A href="/ref" children='Ref Link' ref={ref} data-testid='Ref Link'/>);
+    const link: HTMLAnchorElement = screen.getByTestId('Ref Link');
     expect(ref.current).toBe(link);
   });
 });

@@ -295,7 +295,7 @@ describe('CardLink', () => {
     href: 'https://example.com',
     title: 'Example Title',
     ref: { current: null },
-    dataLinkStyle: 'default',
+    'data-link-style': 'default',
   };
 
   it('renders MaiLink with correct props', () => {
@@ -345,9 +345,9 @@ describe('CardLink', () => {
     expect(true).toBe(true);
   });
 
-  it('renders with different dataLinkStyle', () => {
+  it('renders with different data-link-style', () => {
     const { container } = render( 
-      <CardLink {...baseProps} dataLinkStyle="custom-style" />
+      <CardLink {...baseProps} data-link-style="custom-style" />
     );
     expect(container.querySelector('[data-link-style="custom-style"]')).toBeTruthy();
   });
