@@ -122,7 +122,7 @@ export const CardLink: React.FC<CardLinkProps & {ref: RefObject<HTMLAnchorElemen
         className='flex flex-grow w-32 h-full border-l-gray-500'
         data-slot='image-wrapper'
       >
-        <img src={ image } data-slot='image'/>
+        <img src={ image } data-slot='image' alt={title}/>
       </i>      
     </MaiLink>
   );
