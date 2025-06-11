@@ -38,8 +38,7 @@ export function useAnchorIsOnlyChild (refAnchor: RefObject<HTMLAnchorElement | n
 
     const isOnlyChild = parent?.childElementCount === 1 && parent.firstElementChild === anchor;
     setIsOnlyChild(isOnlyChild);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ refAnchor ]);
 
   return isOnlyChild;
 };
@@ -68,24 +67,15 @@ export function useCardLinkProps (ogp: OGPProps | undefined): Partial<{ cardLink
 /** @internal */
 export function useOGP (props: Partial<{href: string, isOnlyChild: boolean, fetcher: OGPFetcherFunction}>) {
   const { href, isOnlyChild, fetcher} = props;
-  const { data: ogp, isLoading, mutate } = useSWR(JSON.stringify({href, isOnlyChild}), () => {
+  const { data: ogp, isLoading } = useSWR(JSON.stringify({href, isOnlyChild}), () => {
     if (href && isOnlyChild && fetcher) {
       return fetcher(href);
     }
-  }, {
-    refreshInterval: 100,
   });
-
-  useEffect(() => {
-    if (isOnlyChild && fetcher) {
-      mutate();
-    }
-  }, [isOnlyChild, fetcher, mutate]);
 
   return {
     ogp,
     isLoading,
-    mutate,
   };
 };
 
@@ -105,7 +95,7 @@ export const CardLink: React.FC<AnchorHTMLAttributes<HTMLAnchorElement> & CardLi
       data-slot='base'
       {...anchorProps as MaiLink.Props}
     >
-      <i
+      <div
         className='flex flex-col w-[calc(100%-128px)] h-full p-4'
         data-slot='text-wrapper'
       >
@@ -121,13 +111,13 @@ export const CardLink: React.FC<AnchorHTMLAttributes<HTMLAnchorElement> & CardLi
           children={href}
           data-slot='text-link'
         />
-      </i>
-      <i
+      </div>
+      <div
         className='flex flex-grow w-32 h-full border-l-gray-500'
         data-slot='image-wrapper'
       >
         <img src={ image } data-slot='image' alt={title}/>
-      </i>      
+      </div>      
     </MaiLink>
   );
 };
