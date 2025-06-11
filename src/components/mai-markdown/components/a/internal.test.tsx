@@ -1,12 +1,141 @@
 'use strict';
-import { describe, it, expect, jest } from 'bun:test';
+/* eslint-disable @typescript-eslint/no-require-imports */
+import { describe, it, expect, jest, spyOn } from 'bun:test';
 import { renderHook, waitFor } from '@testing-library/react';
 
-import { type OGPProps } from '@/features/ogp-fetcher';
+import { useOGPFetcher, type OGPProps } from '@/features/ogp-fetcher';
 import {
+  useAnchor,
   useCardLinkProps,
   useOGP,
 } from './internal';
+import { afterEach } from 'bun:test';
+
+describe('useAnchor', () => {
+  const originalUseOGPFetcher = useOGPFetcher;
+
+  afterEach(() => {
+    spyOn(require('@/features/ogp-fetcher'), 'useOGPFetcher').mockImplementation(originalUseOGPFetcher);
+  });
+
+  it('should return correct values from useAnchor when isOnlyChild is true and ogpFetcher returns ogp', async () => {
+    const url = 'https://example.com?q=should return correct values from useAnchor when isOnlyChild is true and ogpFetcher returns ogp';
+    // Mock useOGPFetcher to provide a mock fetcher
+    const mockOgp = {
+      url,
+      data: {
+        title: 'Test Title',
+        og: { image: 'og-image.png', title: 'OG Title' },
+      },
+    };
+    const mockFetcher = jest.fn().mockResolvedValue(mockOgp);
+
+    // Mock useOGPFetcher to return our mock fetcher
+    spyOn(require('@/features/ogp-fetcher'), 'useOGPFetcher').mockImplementation(() => ({ogpFetcher: mockFetcher}));
+
+    const props = {
+      href: url,
+      children: 'Example',
+      'data-is-only-child': 'true',
+    };
+
+    // Use renderHook to test the hook
+    const { result } = renderHook(() => useAnchor(props));
+
+    await waitFor(() => {
+      expect(result.current.cardLinkProps).toBeDefined();
+    });
+
+    expect(result.current.href).toBe(url);
+    expect(result.current.children).toBe('Example');
+    expect(result.current.cardLinkProps).toStrictEqual({
+      image: 'og-image.png',
+      href: url,
+      title: 'Test Title',
+      isLoading: false,
+      isError  : false,
+    });
+  });
+
+  it('should return empty cardLinkProps if isOnlyChild is false', () => {
+    const url = 'https://example.com?q=should return empty cardLinkProps if isOnlyChild is false';
+    // Mock useOGPFetcher to provide a mock fetcher
+    const mockFetcher = jest.fn();
+
+    spyOn(require('@/features/ogp-fetcher'), 'useOGPFetcher').mockImplementation(() => ({ogpFetcher: mockFetcher}));
+
+    const props = {
+      href: url,
+      children: 'Example',
+      'data-is-only-child': 'false',
+    };
+
+    const { result } = renderHook(() => useAnchor(props));
+
+    expect(result.current.cardLinkProps).toBeUndefined();
+    expect(result.current.href).toBe(url);
+    expect(result.current.children).toBe('Example');
+  });
+
+  it('should handle missing ogpFetcher gracefully', async () => {
+    const url = 'https://example?q=should handle missing ogpFetcher gracefully';
+    // Mock useOGPFetcher to return undefined fetcher
+    spyOn(require('@/features/ogp-fetcher'), 'useOGPFetcher').mockImplementation(() => ({ogpFetcher: undefined}));
+
+    const props = {
+      href: url,
+      children: 'Example',
+      'data-is-only-child': 'true',
+    };
+
+    const { result } = renderHook(() => useAnchor(props));
+
+    await waitFor(() => {
+      expect(result.current.cardLinkProps).toBeDefined();
+      expect(result.current.cardLinkProps?.isLoading).toBe(false);
+    });
+
+    expect(result.current.cardLinkProps).toStrictEqual({
+      image: undefined,
+      href: undefined,
+      title: undefined,
+      isLoading: false,
+      isError  : false,
+    })
+    expect(result.current.href).toBe(url);
+    expect(result.current.children).toBe('Example');
+  });
+
+  it('should handle ogpFetcher reject', async () => {
+    const url = 'https://example?q=should handle ogpFetcher reject';
+    const fetcher = jest.fn().mockRejectedValue(new Error('fail'));
+    // Mock useOGPFetcher to return undefined fetcher
+    spyOn(require('@/features/ogp-fetcher'), 'useOGPFetcher').mockImplementation(() => ({ogpFetcher: fetcher}));
+
+    const props = {
+      href: url,
+      children: 'Example',
+      'data-is-only-child': 'true',
+    };
+
+    const { result } = renderHook(() => useAnchor(props));
+
+    await waitFor(() => {
+      expect(result.current.cardLinkProps).toBeDefined();
+      expect(result.current.cardLinkProps?.isLoading).toBe(false);
+    });
+
+    expect(result.current.cardLinkProps).toStrictEqual({
+      image: undefined,
+      href: undefined,
+      title: undefined,
+      isLoading: false,
+      isError  : true,
+    })
+    expect(result.current.href).toBe(url);
+    expect(result.current.children).toBe('Example');
+  });
+});
 
 describe('useCardLinkProps', () => {
   it('should return empty object if isCardLink is false', () => {
