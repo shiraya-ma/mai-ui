@@ -77,12 +77,18 @@
     "@heroui/theme": "^2.4.12",
     "@shiraya-ma/mai-colors": "^0.0.0",
     "deepmerge": "^4.3.1",
+    "hast": "^1.0.0",
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^15.6.1",
+    "rehype-parse": "^9.0.1",
     "rehype-raw": "^7.0.0",
+    "rehype-stringify": "^10.0.1",
     "remark-gfm": "^4.0.1",
     "swr": "^2.3.3",
-    "tailwindcss": "^3"
+    "tailwindcss": "^3",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.0.0",
+    "unist-util-visit-parents": "^6.0.1"
   },
   "peerDependencies": {
     "framer-motion": ">=11.5.6 || >=12.0.0-alpha.1",
