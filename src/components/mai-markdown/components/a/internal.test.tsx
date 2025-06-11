@@ -338,7 +338,7 @@ describe('CardLink', () => {
 
   it('forwards ref to MaiLink', () => {
     const ref = { current: null };
-    renderHook(() => 
+    render(
       <CardLink {...baseProps} ref={ref} />
     );
     // Since ref is not attached in test env, just check no error
