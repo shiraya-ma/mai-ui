@@ -1,4 +1,5 @@
 'use client';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 import { type RefObject, forwardRef, useRef } from 'react';
 
