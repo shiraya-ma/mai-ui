@@ -68,6 +68,7 @@
     "@heroui/breadcrumbs": "^2.2.13",
     "@heroui/button": "^2.2.16",
     "@heroui/card": "^2.2.16",
+    "@heroui/code": "^2.2.16",
     "@heroui/divider": "^2.2.11",
     "@heroui/link": "^2.2.14",
     "@heroui/modal": "^2.2.14",
