@@ -1,35 +1,21 @@
-// Code
 'use strict';
+/* eslint-disable react-refresh/only-export-components */
 import React, { type HTMLAttributes } from 'react';
-// import {
-//     Code as NextCode
-// } from '@nextui-org/react';
+import { cn } from '@heroui/theme';
+import { Code as HeroCode, type CodeProps as HeroCodeProps } from '@heroui/code';
 
-// import { useMarkdownCode } from '../../hooks';
+const Code: React.FC<HTMLAttributes<HTMLElement>> = (props) => {
+  const {
+    className: userClassName,
+    node: _,  // eslint-disable-line @typescript-eslint/no-unused-vars
+    ...codeProps
+  } = props as HTMLAttributes<HTMLElement> & Partial<{node: undefined, 'data-inline': string}>
 
-const CodeFC: React.FC<Code.Props> = (props) => {
-    const {} = props;
-    // const { children } = props;
-
-    // const { inPre } = useMarkdownCode();
-
-    // return inPre? (
-    //     <>{ children }</>
-    // ): (
-    //     <NextCode className='font-code'>{ children }</NextCode>
-    // );
-
-    return <></>
-};
-
-const Code = (props: Code.Props) => (<CodeFC { ...props } />);
-
-
-
-namespace Code {
-    export type Props = HTMLAttributes<HTMLElement> & {};
+  return codeProps['data-inline'] === 'true'?
+    (<HeroCode className={cn('font-code', userClassName)} {...codeProps as HeroCodeProps}/>):
+    (<>{codeProps.children}</>);
 };
 
 export {
-    Code
+  Code as code,
 };
