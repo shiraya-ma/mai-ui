@@ -6,6 +6,7 @@ import rehypeParse from 'rehype-parse';
 
 import {
   rehypeOnlyChildAnchor,
+  rehypeRemoveParagraphForCardLink,
 } from './internal';
 
 function processHtml(html: string): Promise<Root> {
@@ -75,3 +76,91 @@ describe('rehypeOnlyChildAnchor', () => {
   });
 });
 
+describe('rehypeRemoveParagraphForCardLink', () => {
+  type _Content<T extends HTMLElement> = T & Partial<{properties: {[key: string]: string | undefined}}>;
+  type _RootContent<T extends HTMLElement> = RootContent & T;
+
+  it('removes <p> and unwraps <a> with data-is-only-child at root', async () => {
+    const html = '<p><a href="foo" data-is-only-child="true">bar</a></p>';
+    const tree = await unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeRemoveParagraphForCardLink)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+    
+    // After transformation, <a> should be at root, not wrapped in <p>
+    expect(tree.children.length).toBe(1);
+    const a = tree.children[0] as _Content<HTMLAnchorElement>;
+    expect(a.tagName).toBe('a');
+    expect(a.properties?.['dataIsOnlyChild']).toBe('true');
+    // Due to rehypeParse's behavior, property names become camelCase
+  });
+
+  it('does not remove <p> if <a> does not have data-is-only-child', async () => {
+    const html = '<p><a href="foo">bar</a></p>';
+    const tree = await unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeRemoveParagraphForCardLink)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+    expect(tree.children.length).toBe(1);
+    const p = tree.children[0] as _Content<HTMLAnchorElement>;
+    expect(p.tagName).toBe('p');
+    const a = p.children[0] as _Content<HTMLAnchorElement>;
+    expect(a.tagName).toBe('a');
+    expect(a.properties?.['dataIsOnlyChild']).toBeUndefined();
+    // Due to rehypeParse's behavior, property names become camelCase
+  });
+
+  it('does not remove <p> if <a> is not the only child', async () => {
+    const html = '<p><a href="foo" data-is-only-child="true">bar</a>baz</p>';
+    const tree = await unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeRemoveParagraphForCardLink)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+    expect(tree.children.length).toBe(1);
+    const p = tree.children[0] as _Content<HTMLAnchorElement>;
+    expect(p.tagName).toBe('p');
+    expect(p.children.length).toBe(2);
+  });
+
+  it('does not remove <p> if not at root', async () => {
+    const html = '<div><p><a href="foo" data-is-only-child="true">bar</a></p></div>';
+    const tree = await unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeRemoveParagraphForCardLink)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+    expect(tree.children.length).toBe(1);
+    const div = tree.children[0] as _RootContent<HTMLDivElement>;
+    expect(div.tagName).toBe('div');
+    const p = div.children[0] as _Content<HTMLParagraphElement>;
+    expect(p.tagName).toBe('p');
+    const a = p.children[0] as _Content<HTMLAnchorElement>;
+    expect(a.tagName).toBe('a');
+    expect(a.properties?.['dataIsOnlyChild']).toBe('true');
+  });
+
+  it('does nothing for <p> with no children', async () => {
+    const html = '<p></p>';
+    const tree = await unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeRemoveParagraphForCardLink)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+    expect(tree.children.length).toBe(1);
+    const p = tree.children[0] as _Content<HTMLAnchorElement>;
+    expect(p.tagName).toBe('p');
+    expect(p.children.length).toBe(0);
+  });
+
+  it('does nothing for <p> whose only child is not <a>', async () => {
+    const html = '<p><span data-is-only-child="true">bar</span></p>';
+    const tree = await unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeRemoveParagraphForCardLink)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+    expect(tree.children.length).toBe(1);
+    const p = tree.children[0] as _Content<HTMLAnchorElement>;;
+    expect(p.tagName).toBe('p');
+    const span = p.children[0] as _Content<HTMLSpanElement>;;
+    expect(span.tagName).toBe('span');
+    expect(span.properties?.['dataIsOnlyChild']).toBe('true');
+  });
+});
