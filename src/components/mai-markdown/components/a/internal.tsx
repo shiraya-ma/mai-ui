@@ -68,9 +68,13 @@ export function useCardLinkProps (ogp: OGPProps | undefined): Partial<{ cardLink
 /** @internal */
 export function useOGP (props: Partial<{href: string, isOnlyChild: boolean, fetcher: OGPFetcherFunction}>) {
   const { href, isOnlyChild, fetcher} = props;
-  const { data: ogp, isLoading, mutate } = useSWR(href, url => (isOnlyChild && fetcher? fetcher(url): undefined));
-
-  const isLoaded = isOnlyChild && fetcher !== undefined && !isLoading;
+  const { data: ogp, isLoading, mutate } = useSWR(JSON.stringify({href, isOnlyChild}), () => {
+    if (href && isOnlyChild && fetcher) {
+      return fetcher(href);
+    }
+  }, {
+    refreshInterval: 100,
+  });
 
   useEffect(() => {
     if (isOnlyChild && fetcher) {
@@ -80,7 +84,7 @@ export function useOGP (props: Partial<{href: string, isOnlyChild: boolean, fetc
 
   return {
     ogp,
-    isLoaded,
+    isLoading,
     mutate,
   };
 };

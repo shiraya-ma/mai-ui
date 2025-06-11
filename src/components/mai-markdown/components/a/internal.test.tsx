@@ -268,7 +268,7 @@ describe('useOGP', () => {
     );
 
     await waitFor(() => {
-      expect(result.current.isLoaded).toBe(true);
+      expect(result.current.isLoading).toBe(false);
     }, { timeout: 1000 });
 
     expect(fetcher).toHaveBeenCalledWith(href);
@@ -282,7 +282,7 @@ describe('useOGP', () => {
     );
 
     await waitFor(() => {
-      expect(result.current.isLoaded).toBe(true);
+      expect(result.current.isLoading).toBe(false);
     }, { timeout: 1000 });
     
     expect(result.current.ogp).toBeUndefined();
