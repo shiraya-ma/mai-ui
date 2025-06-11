@@ -1,6 +1,6 @@
 'use strict';
 
-// export * from './a';
+export * from './a';
 // export * from './block-quote';
 // export * from './code';
 export * from './h';

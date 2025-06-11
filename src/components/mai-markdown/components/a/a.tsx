@@ -1,55 +1,25 @@
-// A
-'use strict';
-import React, { type AnchorHTMLAttributes } from 'react';
+'use client';
+/* eslint-disable react-refresh/only-export-components */
+import React from 'react';
 
-// import { MaiLink } from '../../../mai-link';
+import { MaiLink } from '@/components/mai-link';
 
-// import { useAnchor } from './hooks';
+import {
+  useAnchor,
+  type AnchorProps,
+} from './internal';
+import { CardLink } from './card-link';
 
-const AFC: React.FC<A.Props> = (props) => {
-    const {} = props;
-    // const { children, ogp, ...linkProps } = useAnchor(props);
+/** @internal */  
+const A: React.FC<AnchorProps> = (props) => {
+  const { ...anchorProps } = props;
+  const { cardLinkProps, children, href } = useAnchor({...props});
 
-    // return !ogp? (
-    //     <>
-    //         <MaiLink
-    //         { ...linkProps }>
-    //             { children }
-    //         </MaiLink>
-    //     </>
-    // ): (
-    //     <MaiLink
-    //     { ...linkProps }
-    //     className='flex w-full h-[128px] border border-gray-500/50 rounded-lg items-center justify-between overflow-hidden break-all'>
-    //         <i className='flex flex-col w-[calc(100%-128px)] h-full p-4'>
-    //             <b
-    //             className='block overflow-hidden line-clamp-2 text-[hsl(var(--nextui-foreground))]'
-    //             style={{ boxOrient: 'vertical' }}
-    //             >
-    //                 { ogp.title  }
-    //             </b>
-
-    //             <small className='block h-fit'>
-    //                 { linkProps.href }
-    //             </small>
-    //         </i>
-    //         <i className='flex flex-grow w-32 h-full border-l-gray-500'>
-    //             <img
-    //             src={ ogp.image }
-    //             />
-    //         </i>
-    //     </MaiLink>
-    // );
-
-    return <></>
-};
-
-const A = (props: A.Props) => (<AFC { ...props } />);
-
-namespace A {
-    export type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {};
+  return cardLinkProps?
+    (<CardLink {...anchorProps as MaiLink.Props} {...cardLinkProps} data-link-style='card-link' data-href={href}/>):
+    (<MaiLink children={children} href={href} {...anchorProps as MaiLink.Props} data-link-style='text'/>)
 };
 
 export {
-    A
+  A as a,
 };
