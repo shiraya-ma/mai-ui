@@ -5,6 +5,25 @@ import { visitParents } from 'unist-util-visit-parents';
 import { Element, Root } from 'hast';
 
 /** @internal */
+export const rehypeMarkCodeInlineOrBlock: Plugin<[], Root> = () => {
+  return (tree) => {
+    visit(tree, 'element', (node, index, parent) => {
+      if (node.tagName !== 'code' || !parent) return;
+
+      // ブロックコードの典型パターン：<pre><code>
+      const isBlock =
+        parent.type === 'element' &&
+        parent.tagName === 'pre';
+
+      node.properties = {
+        ...node.properties,
+        'data-inline': (!isBlock).toString(), // "true" か "false"
+      };
+    });
+  };
+};
+
+/** @internal */
 export const rehypeOnlyChildAnchor: Plugin<[], Root> = () => {
   return (tree) => {
     visitParents(tree, 'element', (node: Element, ancestors) => {
