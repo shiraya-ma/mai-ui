@@ -72,3 +72,50 @@ export const rehypeRemoveParagraphForCardLink: Plugin<[], Root> = () => {
     });
   };
 };
+
+/** @internal */
+export const remarkCodeMetaToProperties: Plugin<[], Root> = () => {
+  type Node = Partial<{
+    data: Partial<{
+      hChildren: object;
+      hProperties: object;
+    }>;
+    lang: string;
+    value: string;
+    type: string;
+  }>;
+
+  return (tree) => {
+    visit(tree, 'code', (node: Node) => {
+      const lang   = node.lang;
+      if (!lang) return;
+
+      let filename = '';
+      let language = '';
+
+      if (lang.includes(':')) {
+        [language, filename] = lang.split(':');
+      } else if (lang.includes('.')) {
+        filename = lang;
+        language = lang.split('.').pop()!;
+      } else {
+        language = lang;
+      }
+
+      node.data = {
+        ...node.data,
+        hProperties: {
+          ...node.data?.hProperties,
+          ...(filename && { 'data-filename': filename }),
+          ...(language && { 'data-language': language }),
+        },
+        hChildren: [
+          {
+            type: 'text',
+            value: node.value,
+          },
+        ],
+      };
+    });
+  };
+};
