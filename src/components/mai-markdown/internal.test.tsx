@@ -8,6 +8,8 @@ import {
   rehypeMarkCodeInlineOrBlock,
   rehypeOnlyChildAnchor,
   rehypeRemoveParagraphForCardLink,
+  rehypeTransferDataAttributesToPre,
+  remarkCodeMetaToProperties,
 } from './internal';
 
 function processHtml(html: string): Promise<Root> {
@@ -235,5 +237,160 @@ describe('rehypeRemoveParagraphForCardLink', () => {
     const span = p.children[0] as _Content<HTMLSpanElement>;;
     expect(span.tagName).toBe('span');
     expect(span.properties?.['dataIsOnlyChild']).toBe('true');
+  });
+});
+
+describe('rehypeTransferDataAttributesToPre', () => {
+  type _HasProperties = {
+    properties: Partial<{
+      [key: string]: string;
+    }>;
+  };
+  type _Content<T extends HTMLElement> = T & Partial<{properties: {[key: string]: string | undefined}}>;
+  type _RootContent<T extends HTMLElement> = RootContent & T & _HasProperties;
+
+  async function processTransferDataAttrs(html: string): Promise<Root> {
+    return unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeTransferDataAttributesToPre)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+  }
+
+  it('transfers data-* attributes from <code> to <pre>', async () => {
+    const html = '<pre><code data-foo="bar" data-bar="baz">code</code></pre>';
+    const tree = await processTransferDataAttrs(html);
+    const pre = tree.children[0] as _RootContent<HTMLPreElement>;
+    expect(pre.tagName).toBe('pre');
+    expect(pre.properties?.['dataFoo']).toBe('bar');
+    expect(pre.properties?.['dataBar']).toBe('baz');
+    const code = pre.children[0] as _Content<HTMLElement>;
+    expect(code.tagName).toBe('code');
+    expect(code.properties?.['dataFoo']).toBe('bar');
+    expect(code.properties?.['dataBar']).toBe('baz');
+  });
+
+  it('does not transfer non-data attributes from <code> to <pre>', async () => {
+    const html = '<pre><code class="foo" id="bar" data-baz="qux">code</code></pre>';
+    const tree = await processTransferDataAttrs(html);
+    const pre = tree.children[0] as _RootContent<HTMLPreElement>;
+    expect(pre.properties?.['dataBaz']).toBe('qux');
+    expect(pre.properties?.['class']).toBeUndefined();
+    expect(pre.properties?.['id']).toBeUndefined();
+  });
+
+  it('does nothing if <pre> has no <code> child', async () => {
+    const html = '<pre><span data-foo="bar">not code</span></pre>';
+    const tree = await processTransferDataAttrs(html);
+    const pre = tree.children[0] as _RootContent<HTMLPreElement>;
+    expect(pre.tagName).toBe('pre');
+    expect(pre.properties?.['dataFoo']).toBeUndefined();
+  });
+
+  it('does nothing if <code> has no data-* attributes', async () => {
+    const html = '<pre><code class="foo">code</code></pre>';
+    const tree = await processTransferDataAttrs(html);
+    const pre = tree.children[0] as _RootContent<HTMLPreElement>;
+    expect(pre.tagName).toBe('pre');
+    expect(pre.properties?.['class']).toBeUndefined();
+    expect(pre.properties?.['dataFoo']).toBeUndefined();
+  });
+
+  it('merges data-* attributes with existing <pre> properties', async () => {
+    const html = '<pre class="preclass"><code data-foo="bar">code</code></pre>';
+    const tree = await processTransferDataAttrs(html);
+    const pre = tree.children[0] as _RootContent<HTMLPreElement>;
+    expect(pre.properties?.['className']).toContain('preclass');
+    expect(pre.properties?.['dataFoo']).toBe('bar');
+  });
+
+  it('does nothing if <pre> has no children', async () => {
+    const html = '<pre></pre>';
+    const tree = await processTransferDataAttrs(html);
+    const pre = tree.children[0] as _RootContent<HTMLPreElement>;
+    expect(pre.tagName).toBe('pre');
+    expect(pre.children.length).toBe(0);
+    expect(pre.properties?.['dataFoo']).toBeUndefined();
+  });
+
+  it('transfers only data-* attributes, not others, when <code> has multiple properties', async () => {
+    const html = '<pre><code data-foo="bar" aria-label="baz" lang="js">code</code></pre>';
+    const tree = await processTransferDataAttrs(html);
+    const pre = tree.children[0] as _RootContent<HTMLPreElement>;
+    expect(pre.properties?.['dataFoo']).toBe('bar');
+    expect(pre.properties?.['aria-label']).toBeUndefined();
+    expect(pre.properties?.['lang']).toBeUndefined();
+  });
+});
+
+describe('remarkCodeMetaToProperties', () => {
+  type CodeNode = Partial<{
+    data: Partial<{
+      hChildren: Array<{
+        [key: string]: string;
+      }>;
+      hProperties: Partial<{
+        [key: string]: string;
+      }>;
+    }>;
+    lang: string;
+    value: string;
+    type: string;
+  }>;
+
+  async function processRemarkCodeMeta(node: CodeNode) {
+    const tree = {
+      type: 'root',
+      children: [node],
+    };
+    const remark = remarkCodeMetaToProperties as () => (tree: CodeNode) => Promise<object>;
+    await remark()(tree);
+    return node;
+  }
+
+  it('adds data-language when lang is present', async () => {
+    const node: CodeNode = { type: 'code', lang: 'js', value: 'console.log(1);' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data).toBeDefined();
+    expect(result.data?.hProperties?.['data-language']).toBe('js');
+    expect(result.data?.hProperties?.['data-filename']).toBeUndefined();
+    expect(result.data?.hChildren?.[0].value).toBe('console.log(1);');
+  });
+
+  it('splits lang with colon into language and filename', async () => {
+    const node: CodeNode = { type: 'code', lang: 'js:foo.js', value: 'alert(1);' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data?.hProperties?.['data-language']).toBe('js');
+    expect(result.data?.hProperties?.['data-filename']).toBe('foo.js');
+  });
+
+  it('extracts filename and language when lang contains dot', async () => {
+    const node: CodeNode = { type: 'code', lang: 'foo.ts', value: 'let x;' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data?.hProperties?.['data-filename']).toBe('foo.ts');
+    expect(result.data?.hProperties?.['data-language']).toBe('ts');
+  });
+
+  it('does not add properties if lang is missing', async () => {
+    const node: CodeNode = { type: 'code', value: 'no lang' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data).toBeUndefined();
+  });
+
+  it('preserves existing data properties', async () => {
+    const node: CodeNode = {
+      type: 'code',
+      lang: 'js',
+      value: 'x',
+      data: { hProperties: { foo: 'bar' } },
+    };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data?.hProperties?.foo).toBe('bar');
+    expect(result.data?.hProperties?.['data-language']).toBe('js');
+  });
+
+  it('sets hChildren to code value', async () => {
+    const node: CodeNode = { type: 'code', lang: 'js', value: 'abc' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data?.hChildren).toEqual([{ type: 'text', value: 'abc' }]);
   });
 });

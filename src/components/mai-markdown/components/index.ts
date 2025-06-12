@@ -8,6 +8,6 @@ export * from './h';
 // export * from './input';
 // export * from './ol';
 // export * from './p';
-// export * from './pre';
+export * from './pre';
 // export * from './table';
 // export * from './ul';

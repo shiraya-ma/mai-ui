@@ -72,3 +72,73 @@ export const rehypeRemoveParagraphForCardLink: Plugin<[], Root> = () => {
     });
   };
 };
+
+/** @internal */
+export const rehypeTransferDataAttributesToPre: Plugin<[], Root> = () => {
+  return (tree) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName !== 'pre') return;
+
+      const code = node.children.find(
+        (child): child is Element => child.type === 'element' && child.tagName === 'code'
+      );
+
+      if (!code || !code.properties) return;
+
+      // codeのdata-属性だけ抽出してpreに付与
+      for (const [key, value] of Object.entries(code.properties)) {
+        if (key.startsWith('data')) {
+          if (!node.properties) node.properties = {};
+          node.properties[key] = value;
+        }
+      }
+    });
+  };
+};
+
+/** @internal */
+export const remarkCodeMetaToProperties: Plugin<[], Root> = () => {
+  type Node = Partial<{
+    data: Partial<{
+      hChildren: object;
+      hProperties: object;
+    }>;
+    lang: string;
+    value: string;
+    type: string;
+  }>;
+
+  return (tree) => {
+    visit(tree, 'code', (node: Node) => {
+      const lang   = node.lang;
+      if (!lang) return;
+
+      let filename = '';
+      let language = '';
+
+      if (lang.includes(':')) {
+        [language, filename] = lang.split(':');
+      } else if (lang.includes('.')) {
+        filename = lang;
+        language = lang.split('.').pop()!;
+      } else {
+        language = lang;
+      }
+
+      node.data = {
+        ...node.data,
+        hProperties: {
+          ...node.data?.hProperties,
+          ...(filename && { 'data-filename': filename }),
+          ...(language && { 'data-language': language }),
+        },
+        hChildren: [
+          {
+            type: 'text',
+            value: node.value,
+          },
+        ],
+      };
+    });
+  };
+};
