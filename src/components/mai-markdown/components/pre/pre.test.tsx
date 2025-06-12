@@ -21,7 +21,7 @@ describe('Pre', () => {
   });
 
   it('passes filename and language props to MaiCodeBlock', () => {
-    render(
+    const { container } = render(
       <Pre data-filename="test.ts" data-language="typescript">
         {'let x = 1;'}
       </Pre>
@@ -29,8 +29,7 @@ describe('Pre', () => {
     expect(screen.getByText('test.ts')).toBeInTheDocument();
     // filename and language are not rendered directly, but you can check for their presence in the DOM if MaiCodeBlock renders them
     // For demonstration, let's assume MaiCodeBlock renders filename somewhere
-    const base = document.querySelector('div[data-slot="base"]') as HTMLDivElement;
-    const code = base.querySelector('code') as HTMLElement;
+    const code = container.children[0].children[1] as HTMLElement;
     expect(code.textContent).toBe('let x = 1;');
   });
 
