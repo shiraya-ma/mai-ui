@@ -1,9 +1,8 @@
 'use client';
-import { type ReactNode, type HtmlHTMLAttributes, type PropsWithChildren, type ReactElement, createContext, useContext } from 'react';
+import { type ReactNode, type HtmlHTMLAttributes, type PropsWithChildren, createContext, useContext } from 'react';
 import { cn } from '@heroui/theme';
-import { isArray } from 'lodash';
 
-import { generateIDFromChildren } from '@/libs';
+import { generateIDFromChildren, reactNodeToString } from '@/libs';
 import { MaiHeadingsInner } from './mai-headings-inner';
 
 /** @internal */
@@ -22,7 +21,7 @@ export function useMaiHeadings (props: MaiHeadingsProps, level: MaiHeadingsLevel
   const context = useContext(MaiHeadingsStyleContext) || {};
   const contextStyle = context[level] || {};
 
-  const children = _fixChildren(usedChildren);
+  const children = reactNodeToString(usedChildren);
   const id = userId || children && generateIDFromChildren(children);
 
   const classNames: MaiHeadingsClassNames = {
@@ -91,34 +90,6 @@ export function useMaiHeadingsStyleContext (props: PropsWithChildren<Partial<{co
     context,
     ...maiHeadingsStyleProps
   };
-};
-
-/** @internal */
-export function _fixChildren (children: ReactNode): string | undefined {
-  if (isArray(children)) {
-    return children.map(child => _fixChildren(child)).join(' ')
-      .replace(/\s{2,}/g, ' ')
-      .trim();
-  }
-  else if (children === undefined || children === null) {
-    return undefined;
-  }
-  else if (typeof children === 'boolean') {
-    return String(children);
-  }
-
-  const simpleTypes = ['string', 'number', 'bigint', 'boolean'];
-  if (simpleTypes.includes(typeof children)) {
-    return String(children).trim();
-  }
-
-  const child = children as ReactElement & {props: PropsWithChildren<{}>}
-
-  if (typeof child === 'object' && 'props' in child && 'children' in child.props) {
-    return _fixChildren(child.props.children) || '';;
-  }
-
-  return '';
 };
 
 export type MaiHeadingsProps = HtmlHTMLAttributes<HTMLHeadingElement> & {
