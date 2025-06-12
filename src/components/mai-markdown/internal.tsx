@@ -74,6 +74,29 @@ export const rehypeRemoveParagraphForCardLink: Plugin<[], Root> = () => {
 };
 
 /** @internal */
+export const rehypeTransferDataAttributesToPre: Plugin<[], Root> = () => {
+  return (tree) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName !== 'pre') return;
+
+      const code = node.children.find(
+        (child): child is Element => child.type === 'element' && child.tagName === 'code'
+      );
+
+      if (!code || !code.properties) return;
+
+      // codeのdata-属性だけ抽出してpreに付与
+      for (const [key, value] of Object.entries(code.properties)) {
+        if (key.startsWith('data')) {
+          if (!node.properties) node.properties = {};
+          node.properties[key] = value;
+        }
+      }
+    });
+  };
+};
+
+/** @internal */
 export const remarkCodeMetaToProperties: Plugin<[], Root> = () => {
   type Node = Partial<{
     data: Partial<{
