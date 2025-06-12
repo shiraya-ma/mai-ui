@@ -8,6 +8,7 @@ import {
   rehypeMarkCodeInlineOrBlock,
   rehypeOnlyChildAnchor,
   rehypeRemoveParagraphForCardLink,
+  remarkCodeMetaToProperties,
 } from './internal';
 
 function processHtml(html: string): Promise<Root> {
@@ -235,5 +236,78 @@ describe('rehypeRemoveParagraphForCardLink', () => {
     const span = p.children[0] as _Content<HTMLSpanElement>;;
     expect(span.tagName).toBe('span');
     expect(span.properties?.['dataIsOnlyChild']).toBe('true');
+  });
+});
+
+describe('remarkCodeMetaToProperties', () => {
+  type CodeNode = Partial<{
+    data: Partial<{
+      hChildren: Array<{
+        [key: string]: string;
+      }>;
+      hProperties: Partial<{
+        [key: string]: string;
+      }>;
+    }>;
+    lang: string;
+    value: string;
+    type: string;
+  }>;
+
+  async function processRemarkCodeMeta(node: CodeNode) {
+    const tree = {
+      type: 'root',
+      children: [node],
+    };
+    const remark = remarkCodeMetaToProperties as () => (tree: CodeNode) => Promise<object>;
+    await remark()(tree);
+    return node;
+  }
+
+  it('adds data-language when lang is present', async () => {
+    const node: CodeNode = { type: 'code', lang: 'js', value: 'console.log(1);' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data).toBeDefined();
+    expect(result.data?.hProperties?.['data-language']).toBe('js');
+    expect(result.data?.hProperties?.['data-filename']).toBeUndefined();
+    expect(result.data?.hChildren?.[0].value).toBe('console.log(1);');
+  });
+
+  it('splits lang with colon into language and filename', async () => {
+    const node: CodeNode = { type: 'code', lang: 'js:foo.js', value: 'alert(1);' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data?.hProperties?.['data-language']).toBe('js');
+    expect(result.data?.hProperties?.['data-filename']).toBe('foo.js');
+  });
+
+  it('extracts filename and language when lang contains dot', async () => {
+    const node: CodeNode = { type: 'code', lang: 'foo.ts', value: 'let x;' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data?.hProperties?.['data-filename']).toBe('foo.ts');
+    expect(result.data?.hProperties?.['data-language']).toBe('ts');
+  });
+
+  it('does not add properties if lang is missing', async () => {
+    const node: CodeNode = { type: 'code', value: 'no lang' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data).toBeUndefined();
+  });
+
+  it('preserves existing data properties', async () => {
+    const node: CodeNode = {
+      type: 'code',
+      lang: 'js',
+      value: 'x',
+      data: { hProperties: { foo: 'bar' } },
+    };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data?.hProperties?.foo).toBe('bar');
+    expect(result.data?.hProperties?.['data-language']).toBe('js');
+  });
+
+  it('sets hChildren to code value', async () => {
+    const node: CodeNode = { type: 'code', lang: 'js', value: 'abc' };
+    const result = await processRemarkCodeMeta(node);
+    expect(result.data?.hChildren).toEqual([{ type: 'text', value: 'abc' }]);
   });
 });
