@@ -1,28 +1,26 @@
-// Ul
 'use strict';
+/* eslint-disable react-refresh/only-export-components */
 import React, { type OlHTMLAttributes } from 'react';
+import { cn } from '@heroui/theme';
 
-const Ul = (props: Ul.Props) => {
-    const { children } = props;
-    
-    return (
-        <ul
-        className='
-        pl-4
-        list-inside
-        list-disc
-        [&_ul]:list-[circle]
-        [&_ul_ul]:list-[square]
-        '>
-            { children}
-        </ul>
-    );
-};
+const Ul: React.FC<OlHTMLAttributes<{}>> = (props) => {
+  const {
+    node: _, // eslint-disable-line @typescript-eslint/no-unused-vars
+    ...listProps
+  } = props as OlHTMLAttributes<{}> & {node?: undefined};
 
-namespace Ul {
-    export type Props = OlHTMLAttributes<{}> & {};
+  return (
+    <ul
+      className={cn(
+        'pl-4 list-inside list-disc',
+        '[&_ul]:list-[circle]',
+        '[&_ul_ul]:list-[square]',
+      )}
+      {...listProps}
+    />
+  );
 };
 
 export {
-    Ul
+  Ul as ul,
 };
