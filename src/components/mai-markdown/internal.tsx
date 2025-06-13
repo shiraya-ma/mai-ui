@@ -2,7 +2,34 @@
 import { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 import { visitParents } from 'unist-util-visit-parents';
-import { Element, Root } from 'hast';
+import { Element, ElementContent, Root } from 'hast';
+
+/** @internal */
+export const rehypeCheckboxLabel: Plugin<[], Root> = () => {
+  return (tree) => {
+    visit(tree, 'element', (node) => {
+      if (node.tagName !== 'li') return;
+
+      const liCh = node.children;
+      const input: ElementContent | undefined = liCh[0];
+      const label: ElementContent | undefined = liCh[1];
+
+      if (
+        liCh.length >= 2 &&
+        input && input.type === 'element' && input.tagName === 'input' &&
+        input.properties.type === 'checkbox' &&
+        label && label.type === 'text'
+      ) {
+        const regex = /^(.*)(\n?)$/;
+        const checkbox = input;
+        const labelText = label.value.match(regex)?.[1] || '';
+
+        checkbox.properties['data-label'] = labelText;
+        label.value = label.value.replace(regex, '$2');
+      }
+    });
+  };
+};
 
 /** @internal */
 export const rehypeMarkCodeInlineOrBlock: Plugin<[], Root> = () => {
@@ -95,7 +122,6 @@ export const rehypeTransferDataAttributesToPre: Plugin<[], Root> = () => {
     });
   };
 };
-
 /** @internal */
 export const remarkCodeMetaToProperties: Plugin<[], Root> = () => {
   type Node = Partial<{
