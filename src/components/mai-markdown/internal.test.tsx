@@ -5,6 +5,7 @@ import { unified } from 'unified';
 import rehypeParse from 'rehype-parse';
 
 import {
+  rehypeCheckboxLabel,
   rehypeMarkCodeInlineOrBlock,
   rehypeOnlyChildAnchor,
   rehypeRemoveParagraphForCardLink,
@@ -18,6 +19,89 @@ function processHtml(html: string): Promise<Root> {
     .use(rehypeOnlyChildAnchor)
     .run(unified().use(rehypeParse, { fragment: true }).parse(html));
 }
+
+describe('rehypeCheckboxLabel', () => {
+  type _Content<T extends HTMLElement> = T & Partial<{properties: {[key: string]: string | undefined}}>;
+  type _RootContent<T extends HTMLElement> = RootContent & T;
+
+  async function processCheckboxLabel(html: string): Promise<Root> {
+    return unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeCheckboxLabel)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+  }
+
+  it('adds data-label to checkbox input and removes label text', async () => {
+    const html = '<li><input type="checkbox" checked>label text</li>';
+    const tree = await processCheckboxLabel(html);
+    const li = tree.children[0] as _RootContent<HTMLLIElement>;
+    expect(li.tagName).toBe('li');
+    const input = li.children[0] as _Content<HTMLInputElement>;
+    const label = li.children[1] as { type: string; value: string };
+    expect(input.tagName).toBe('input');
+    expect(input.properties?.['data-label']).toBe('label text');
+    expect(label.value).toBe('');
+  });
+
+  it('does not modify <li> if first child is not input[type=checkbox]', async () => {
+    const html = '<li><span>not checkbox</span>label text</li>';
+    const tree = await processCheckboxLabel(html);
+    const li = tree.children[0] as _RootContent<HTMLLIElement>;
+    const span = li.children[0] as _Content<HTMLSpanElement>;
+    expect(span.tagName).toBe('span');
+    expect(span.properties?.['data-label']).toBeUndefined();
+    const label = li.children[1] as { type: string; value: string };
+    expect(label.value).toBe('label text');
+  });
+
+  it('does nothing if <li> has less than 2 children', async () => {
+    const html = '<li><input type="checkbox"></li>';
+    const tree = await processCheckboxLabel(html);
+    const li = tree.children[0] as _RootContent<HTMLLIElement>;
+    const input = li.children[0] as _Content<HTMLInputElement>;
+    expect(input.tagName).toBe('input');
+    expect(input.properties?.['data-label']).toBeUndefined();
+  });
+
+  it('does nothing if second child is not text', async () => {
+    const html = '<li><input type="checkbox"><span>label</span></li>';
+    const tree = await processCheckboxLabel(html);
+    const li = tree.children[0] as _RootContent<HTMLLIElement>;
+    const input = li.children[0] as _Content<HTMLInputElement>;
+    expect(input.tagName).toBe('input');
+    expect(input.properties?.['data-label']).toBeUndefined();
+    const span = li.children[1] as _Content<HTMLSpanElement>;
+    expect(span.tagName).toBe('span');
+  });
+
+  it('handles label text with newline', async () => {
+    const html = '<li><input type="checkbox">label text\n</li>';
+    const tree = await processCheckboxLabel(html);
+    const li = tree.children[0] as _RootContent<HTMLLIElement>;
+    const input = li.children[0] as _Content<HTMLInputElement>;
+    const label = li.children[1] as { type: string; value: string };
+    expect(input.properties?.['data-label']).toBe('label text');
+    expect(label.value).toBe('\n');
+  });
+
+  it('handles empty label text', async () => {
+    const html = '<li><input type="checkbox"></li>';
+    const tree = await processCheckboxLabel(html);
+    const li = tree.children[0] as _RootContent<HTMLLIElement>;
+    const input = li.children[0] as _Content<HTMLInputElement>;
+    expect(input.properties?.['data-label']).toBeUndefined();
+  });
+
+  it('does not affect non-li elements', async () => {
+    const html = '<div><input type="checkbox">label</div>';
+    const tree = await processCheckboxLabel(html);
+    const div = tree.children[0] as _RootContent<HTMLDivElement>;
+    expect(div.tagName).toBe('div');
+    const input = div.children[0] as _Content<HTMLInputElement>;
+    expect(input.tagName).toBe('input');
+    expect(input.properties?.['data-label']).toBeUndefined();
+  });
+});
 
 describe('rehypeMarkCodeInlineOrBlock', () => {
   type _Content<T extends HTMLElement> = T & Partial<{properties: {[key: string]: string | undefined}}>;
