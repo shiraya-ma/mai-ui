@@ -4,6 +4,8 @@ import React, { type InputHTMLAttributes } from 'react';
 import { Checkbox as HeroCheckbox } from '@heroui/checkbox';
 import { Input as HeroInput } from '@heroui/input';
 
+import { reactNodeToString } from '@/libs';
+
 /** @internal */
 const Input: React.FC<InputHTMLAttributes<{}>> = (props) => {
   const {
@@ -19,7 +21,7 @@ const Input: React.FC<InputHTMLAttributes<{}>> = (props) => {
       {dataLabel}
     </HeroCheckbox>
   ): (
-    <HeroInput value={JSON.stringify(value)} label={dataLabel} data-testid={dataTestID}/>
+    <HeroInput value={reactNodeToString(value)} label={dataLabel} data-testid={dataTestID}/>
   );
 };
 
