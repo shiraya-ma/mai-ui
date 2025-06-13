@@ -105,7 +105,7 @@ export const rehypeUnwrapFootnoteParagraphs: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, 'element', (node) => {
       const attrs = ['data-footnotes', 'dataFootnotes'];
-      if (node.tagName !== 'section' || !attrs.some(attr => Object.keys(node.properties).includes(attr))) return;
+      if (node.tagName !== 'section' || !node.properties || !attrs.some(attr => attr in node.properties)) return;
 
       const list = node.children.find(node => node.type === 'element' && node.tagName === 'ol') as Element;
       if (!list) return;
