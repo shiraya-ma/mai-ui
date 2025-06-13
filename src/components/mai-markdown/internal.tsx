@@ -101,6 +101,33 @@ export const rehypeRemoveParagraphForCardLink: Plugin<[], Root> = () => {
 };
 
 /** @internal */
+export const rehypeUnwrapFootnoteParagraphs: Plugin<[], Root> = () => {
+  return (tree) => {
+    visit(tree, 'element', (node) => {
+      const attrs = ['data-footnotes', 'dataFootnotes'];
+      if (node.tagName !== 'section' || !attrs.some(attr => Object.keys(node.properties).includes(attr))) return;
+
+      const list = node.children.find(node => node.type === 'element' && node.tagName === 'ol') as Element;
+      if (!list) return;
+
+      const items = list.children.filter(node => node.type === 'element' && node.tagName === 'li') as Element[];
+      if (!items.length) return;
+
+      items.forEach(item => {
+        const paragraph = item.children.find(node => node.type === 'element' && node.tagName === 'p') as Element;
+        if (!paragraph) return;
+
+        const nodes = paragraph.children as Element[];
+
+        item.children = [
+          ...nodes,
+        ];
+      });
+    });
+  };
+};
+
+/** @internal */
 export const rehypeTransferDataAttributesToPre: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, 'element', (node) => {

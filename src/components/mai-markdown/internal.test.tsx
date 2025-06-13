@@ -1,6 +1,6 @@
 'use strict';
 import { describe, it, expect } from 'bun:test';
-import { Root, RootContent } from 'hast';
+import { Element as HElement, Root, RootContent } from 'hast';
 import { unified } from 'unified';
 import rehypeParse from 'rehype-parse';
 
@@ -10,6 +10,7 @@ import {
   rehypeOnlyChildAnchor,
   rehypeRemoveParagraphForCardLink,
   rehypeTransferDataAttributesToPre,
+  rehypeUnwrapFootnoteParagraphs,
   remarkCodeMetaToProperties,
 } from './internal';
 
@@ -403,6 +404,141 @@ describe('rehypeTransferDataAttributesToPre', () => {
     expect(pre.properties?.['dataFoo']).toBe('bar');
     expect(pre.properties?.['aria-label']).toBeUndefined();
     expect(pre.properties?.['lang']).toBeUndefined();
+  });
+});
+
+describe('rehypeUnwrapFootnoteParagraphs', () => {
+  type _Element<T extends HTMLElement> = HElement & T & Partial<{properties: {[key: string]: string | undefined}}>;
+
+  async function processUnwrapFootnotes(html: string): Promise<Root> {
+    return unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeUnwrapFootnoteParagraphs)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+  }
+
+  it('unwraps <p> inside <li> in footnote section with data-footnotes', async () => {
+    const html = `
+      <section data-footnotes>
+        <ol>
+          <li><p>Footnote <strong>one</strong></p></li>
+          <li><p>Footnote <em>two</em></p></li>
+        </ol>
+      </section>
+    `;
+    const tree = await processUnwrapFootnotes(html);
+    const section = tree.children.filter(child => child.type === 'element')[0] as _Element<HTMLElement>;
+    expect(section.tagName).toBe('section');
+
+    const ol = section.children.find(c => c.type === 'element' && c.tagName === 'ol') as _Element<HTMLOListElement>;
+    expect(ol.tagName).toBe('ol');
+    const [ li1, li2 ] = ol.children.filter(node => node.type === 'element') as _Element<HTMLLIElement>[];
+
+    // <p> should be unwrapped, so children are now [text, <strong>]
+    expect(li1.children[0].type).toBe('text');
+    expect((li1.children[1] as _Element<HTMLElement>).tagName).toBe('strong');
+    expect(li2.children[0].type).toBe('text');
+    expect((li2.children[1] as _Element<HTMLElement>).tagName).toBe('em');
+  });
+
+  it('does nothing if section does not have data-footnotes', async () => {
+    const html = `
+      <section>
+        <ol>
+          <li><p>Should not unwrap</p></li>
+        </ol>
+      </section>
+    `;
+    const tree = await processUnwrapFootnotes(html);
+    const section = tree.children.filter(child => child.type === 'element')[0] as _Element<HTMLElement>;
+    expect(section.tagName).toBe('section');
+
+    const ol = section.children.find(c => c.type === 'element' && c.tagName === 'ol') as _Element<HTMLOListElement>;
+    expect(ol.tagName).toBe('ol');
+    const [ li1 ] = ol.children.filter(node => node.type === 'element') as _Element<HTMLLIElement>[];
+
+    const childTagNames = li1.children.filter(child => child.type === 'element')
+      .map(child => child.tagName);
+
+    expect(childTagNames).toContain('p');
+  });
+
+  it('does nothing if <ol> is missing in section', async () => {
+    const html = `
+      <section data-footnotes>
+        <div>No ol here</div>
+      </section>
+    `;
+    const tree = await processUnwrapFootnotes(html);
+    const section = tree.children.filter(child => child.type === 'element')[0] as _Element<HTMLElement>;
+    expect(section.tagName).toBe('section');
+
+    const sectionChildrenTagNames = section.children.filter(child => child.type === 'element')
+      .map(child => child.tagName);
+
+    expect(sectionChildrenTagNames).not.toContain('ol');
+  });
+
+  it('does nothing if <li> is missing in <ol>', async () => {
+    const html = `
+      <section data-footnotes>
+        <ol>
+          <div>not li</div>
+        </ol>
+      </section>
+    `;
+    const tree = await processUnwrapFootnotes(html);
+    const section = tree.children.filter(child => child.type === 'element')[0] as _Element<HTMLElement>;
+    expect(section.tagName).toBe('section');
+
+    const ol = section.children.find(c => c.type === 'element' && c.tagName === 'ol') as _Element<HTMLOListElement>;
+    expect(ol.tagName).toBe('ol');
+
+    const childOLTagNames = ol.children.filter(child => child.type === 'element')
+      .map(child => child.tagName);
+
+    expect(childOLTagNames[0]).toBe('div');
+    expect(childOLTagNames).not.toContain('li');
+  });
+
+  it('does nothing if <li> does not have <p> child', async () => {
+    const html = `
+      <section data-footnotes>
+        <ol>
+          <li><span>No paragraph</span></li>
+        </ol>
+      </section>
+    `;
+    const tree = await processUnwrapFootnotes(html);
+    const section = tree.children.filter(child => child.type === 'element')[0] as _Element<HTMLElement>;
+    expect(section.tagName).toBe('section');
+
+    const ol = section.children.find(c => c.type === 'element' && c.tagName === 'ol') as _Element<HTMLOListElement>;
+    expect(ol.tagName).toBe('ol');
+    const [ li1 ] = ol.children.filter(node => node.type === 'element') as _Element<HTMLLIElement>[];
+
+    const childLITagNames = li1.children.filter(child => child.type === 'element')
+      .map(child => child.tagName);
+
+    expect(childLITagNames[0]).toBe('span');
+  });
+
+  it('does nothing if <p> inside <li> has no children', async () => {
+    const html = `
+      <section data-footnotes>
+        <ol>
+          <li><p></p></li>
+        </ol>
+      </section>
+    `;
+    const tree = await processUnwrapFootnotes(html);
+    const section = tree.children.filter(child => child.type === 'element')[0] as _Element<HTMLElement>;
+    expect(section.tagName).toBe('section');
+
+    const ol = section.children.find(c => c.type === 'element' && c.tagName === 'ol') as _Element<HTMLOListElement>;
+    expect(ol.tagName).toBe('ol');
+    const [ li1 ] = ol.children.filter(node => node.type === 'element') as _Element<HTMLLIElement>[];
+    expect(li1.children.length).toBe(0);
   });
 });
 
