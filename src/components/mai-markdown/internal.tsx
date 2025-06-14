@@ -5,6 +5,58 @@ import { visitParents } from 'unist-util-visit-parents';
 import { Element, ElementContent, Root } from 'hast';
 
 /** @internal */
+export const rehypeAlertBlockquote: Plugin<[], Root> = () => {
+  return (tree) => {
+    visitParents(tree, 'element', (node, ancestors) => {
+      if (node.type !== 'element' || node.tagName !== 'blockquote') return;
+
+      const parent = ancestors[ancestors.length - 1];
+      if (!parent || parent.type !== 'root') return;
+
+      const quote = node;
+
+      const bqChildren = quote.children.filter(child => child.type === 'element');
+      if (!bqChildren.length) return;
+
+      const firstChildElement = bqChildren.find(child => child.type === 'element');
+      if (!firstChildElement || firstChildElement.tagName !== 'p') return;
+
+      const pFirstText = firstChildElement.children.find(child => child.type === 'text');
+      if (!pFirstText) return;
+
+      const alertTagRegex = /^(\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\n?)((.|\n)*)/;
+      const matches = pFirstText.value.match(alertTagRegex);
+      if (!matches || matches.length < 3 ) return;
+
+      const [
+        _,    // eslint-disable-line @typescript-eslint/no-unused-vars
+        __,   // eslint-disable-line @typescript-eslint/no-unused-vars
+        quoteLevel,
+        alertText = undefined,
+      ] = matches;
+
+      const alertLevel = quoteLevel === 'NOTE'? 'primary':
+                         quoteLevel === 'TIP'? 'secondary':
+                         quoteLevel === 'IMPORTANT'? 'success':
+                         quoteLevel === 'WARNING'? 'warning':
+                         quoteLevel === 'CAUTION'? 'danger':
+                         undefined;
+
+      if (!alertLevel) return;
+
+      quote.properties['dataAlertLevel'] = alertLevel;
+
+      if (alertText) {
+        pFirstText.value = alertText;
+      }
+      else {
+        quote.children = quote.children.filter(child => child !== firstChildElement);
+      }
+    });
+  };
+};
+
+/** @internal */
 export const rehypeCheckboxLabel: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, 'element', (node) => {
