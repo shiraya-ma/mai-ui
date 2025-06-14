@@ -5,6 +5,7 @@ import { unified } from 'unified';
 import rehypeParse from 'rehype-parse';
 
 import {
+  rehypeAlertBlockquote,
   rehypeCheckboxLabel,
   rehypeMarkCodeInlineOrBlock,
   rehypeOnlyChildAnchor,
@@ -20,6 +21,159 @@ function processHtml(html: string): Promise<Root> {
     .use(rehypeOnlyChildAnchor)
     .run(unified().use(rehypeParse, { fragment: true }).parse(html));
 }
+
+describe('rehypeAlertBlockquote', () => {
+  type _RootContent<T extends HTMLElement> = RootContent & T;
+
+  async function processAlertBlockquote(html: string): Promise<Root> {
+    return unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeAlertBlockquote)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+  }
+
+  it('adds dataAlertLevel to blockquote with [!NOTE]', async () => {
+    const html = '<blockquote><p>[!NOTE]\nThis is a note.</p></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.tagName).toBe('blockquote');
+    expect(bq.properties?.['dataAlertLevel']).toBe('primary');
+    const p = bq.children[0] as _RootContent<HTMLParagraphElement>;
+    expect(p.tagName).toBe('p');
+    // The [!NOTE] should be removed, only "This is a note." remains
+    const text = p.children[0] as { type: string; value: string };
+    expect(text.value).toBe('This is a note.');
+  });
+
+  it('adds dataAlertLevel to blockquote with [!TIP] and trims label', async () => {
+    const html = '<blockquote><p>[!TIP]\nSome tip here.</p></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBe('secondary');
+    const p = bq.children[0] as _RootContent<HTMLParagraphElement>;
+    const text = p.children[0] as { type: string; value: string };
+    expect(text.value).toBe('Some tip here.');
+  });
+
+  it('adds dataAlertLevel to blockquote with [!IMPORTANT] and trims label', async () => {
+    const html = '<blockquote><p>[!IMPORTANT]\nImportant!</p></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBe('success');
+    const p = bq.children[0] as _RootContent<HTMLParagraphElement>;
+    const text = p.children[0] as { type: string; value: string };
+    expect(text.value).toBe('Important!');
+  });
+
+  it('adds dataAlertLevel to blockquote with [!WARNING] and trims label', async () => {
+    const html = '<blockquote><p>[!WARNING]\nCareful!</p></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBe('warning');
+    const p = bq.children[0] as _RootContent<HTMLParagraphElement>;
+    const text = p.children[0] as { type: string; value: string };
+    expect(text.value).toBe('Careful!');
+  });
+
+  it('adds dataAlertLevel to blockquote with [!CAUTION] and trims label', async () => {
+    const html = '<blockquote><p>[!CAUTION]\nDanger!</p></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBe('danger');
+    const p = bq.children[0] as _RootContent<HTMLParagraphElement>;
+    const text = p.children[0] as { type: string; value: string };
+    expect(text.value).toBe('Danger!');
+  });
+
+  it('removes <p> if [!NOTE] is present but no text after', async () => {
+    const html = '<blockquote><p>[!NOTE]</p></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBe('primary');
+    // <p> should be removed
+    expect(bq.children.length).toBe(0);
+  });
+
+  it('does nothing if blockquote is not at root', async () => {
+    const html = '<div><blockquote><p>[!NOTE]\nText</p></blockquote></div>';
+    const tree = await processAlertBlockquote(html);
+    const div = tree.children[0] as _RootContent<HTMLDivElement>;
+    const bq = div.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBeUndefined();
+  });
+
+  it('does nothing if blockquote does not start with alert tag', async () => {
+    const html = '<blockquote><p>Just a quote</p></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBeUndefined();
+    const p = bq.children[0] as _RootContent<HTMLParagraphElement>;
+    const text = p.children[0] as { type: string; value: string };
+    expect(text.value).toBe('Just a quote');
+  });
+
+  it('does nothing if blockquote has no <p> as first element child', async () => {
+    const html = '<blockquote><div>[!NOTE]\nText</div></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBeUndefined();
+  });
+
+  it('does nothing if <p> has no text child', async () => {
+    const html = '<blockquote><p><span>[!NOTE]</span></p></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBeUndefined();
+  });
+
+  it('does nothing if blockquote is not at root (nested in <section>)', async () => {
+    const html = '<section><blockquote><p>[!NOTE]\nText</p></blockquote></section>';
+    const tree = await processAlertBlockquote(html);
+    const section = tree.children[0] as _RootContent<HTMLElement>;
+    const bq = section.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBeUndefined();
+  });
+
+  it('does nothing if blockquote has no element children', async () => {
+    const html = '<blockquote>Just text</blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children[0] as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBeUndefined();
+  });
+
+  it('does nothing if blockquote is not an element', async () => {
+    const html = '<!-- comment --><blockquote><p>[!NOTE]\nText</p></blockquote>';
+    const tree = await processAlertBlockquote(html);
+    const bq = tree.children.find(c => c.type === 'element' && c.tagName === 'blockquote') as _RootContent<HTMLQuoteElement>;
+    expect(bq.type).toBe('element');
+    if (bq.type !== 'element') return;
+    expect(bq.properties?.['dataAlertLevel']).toBe('primary');
+  });
+});
 
 describe('rehypeCheckboxLabel', () => {
   type _Content<T extends HTMLElement> = T & Partial<{properties: {[key: string]: string | undefined}}>;
