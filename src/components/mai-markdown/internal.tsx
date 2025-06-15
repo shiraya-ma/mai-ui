@@ -18,8 +18,8 @@ export const rehypeAlertBlockquote: Plugin<[], Root> = () => {
       const bqChildren = quote.children.filter(child => child.type === 'element');
       if (!bqChildren.length) return;
 
-      const firstChildElement = bqChildren.find(child => child.type === 'element');
-      if (!firstChildElement || firstChildElement.tagName !== 'p') return;
+const firstChildElement = bqChildren[0]; // bqChildren is guaranteed to have at least one element here
+if (firstChildElement.tagName !== 'p') return;
 
       const pFirstText = firstChildElement.children.find(child => child.type === 'text');
       if (!pFirstText) return;
