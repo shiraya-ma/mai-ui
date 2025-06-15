@@ -201,6 +201,42 @@ export const rehypeTransferDataAttributesToPre: Plugin<[], Root> = () => {
     });
   };
 };
+
+/** @internal */
+export const rehypeTemp: Plugin<[], Root> = () => {
+  return (tree) => {
+    console.clear();
+    visitParents(tree, 'element', (node: Element, ancestors) => {
+      const parent = ancestors[ancestors.length - 1];
+      if (!parent || parent.type !== 'root') return;
+
+      // if (node.type !== 'element' || node.tagName !== 'div') return;
+
+      console.debug(node);
+
+      // // <p> 以外は無視  
+      // if (node.tagName !== 'p') return;
+
+      // // 親が root（トップレベル）じゃなければスキップ
+      // const parent = ancestors[ancestors.length - 1];
+      // if (!parent || parent.type !== 'root') return;
+
+      // const children = node.children;
+
+      // if (
+      //   children.length === 1 &&
+      //   children[0].type === 'element' &&
+      //   (children[0] as Element).tagName === 'a'
+      // ) {
+      //   const aElement = children[0] as Element;
+
+      //   if (!aElement.properties) aElement.properties = {};
+      //   aElement.properties['data-is-only-child'] = 'true';
+      // }
+    });
+  };
+};
+
 /** @internal */
 export const remarkCodeMetaToProperties: Plugin<[], Root> = () => {
   type Node = Partial<{

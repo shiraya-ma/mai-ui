@@ -1,31 +1,29 @@
-// Img
 'use strict';
-import React from 'react';
-// import { Image } from '@nextui-org/react';
+import React, { HTMLAttributes, useRef } from 'react';
+import { Image } from '@heroui/image';
 
-const Img = (props: Img.Props) => {
-    const {} = props;    
-    
-    // return (
-    //     <Image
-    //     { ...props }
-    //     radius='sm'
-    //     isZoomed
-    //     />
-    // );
+const Img: React.FC<HTMLAttributes<HTMLImageElement>> = (props) => {
+  const {
+    node: _,    // eslint-disable-line @typescript-eslint/no-unused-vars
+    ...imgProps
+  } = props as Partial<{
+    node: undefined;
+  }>;
 
-    return <></>
-};
+  const imageRef = useRef<HTMLImageElement>(null);
 
-namespace Img {
-    export type Props = {
-        src?: string;
-        srcSet?: string;
-        sizes?: string;
-        alt?: string;
-    };
+  return (
+    <Image
+      fallbackSrc='/image-placeholder.png'
+      {...imgProps}
+      isZoomed
+      removeWrapper
+      ref={imageRef}
+      onError={() => imageRef.current?.setAttribute('src', '/image-placeholder.png')}
+    />
+  );
 };
 
 export {
-    Img
+  Img as img,
 };
