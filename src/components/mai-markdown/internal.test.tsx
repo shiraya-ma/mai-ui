@@ -165,7 +165,7 @@ describe('rehypeAlertBlockquote', () => {
     expect(bq.properties?.['dataAlertLevel']).toBeUndefined();
   });
 
-  it('does nothing if blockquote is not an element', async () => {
+  it('does not include to blockquote', async () => {
     const html = '<!-- comment --><blockquote><p>[!NOTE]\nText</p></blockquote>';
     const tree = await processAlertBlockquote(html);
     const bq = tree.children.find(c => c.type === 'element' && c.tagName === 'blockquote') as _RootContent<HTMLQuoteElement>;
