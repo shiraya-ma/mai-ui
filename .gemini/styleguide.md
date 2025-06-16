@@ -7,6 +7,8 @@
 
 ## References
 
+以下のライブラリを参照すること
+
 - [HeroUI](https://www.heroui.com/docs/guide/introduction)
 
 - [Bun Testing](https://bun.sh/docs/cli/test)
