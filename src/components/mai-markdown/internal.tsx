@@ -201,6 +201,33 @@ export const rehypeTransferDataAttributesToPre: Plugin<[], Root> = () => {
     });
   };
 };
+
+/** @internal */
+export const rehypeUnwrapImages: Plugin<[], Root> = () => {
+  return (tree) => {
+    visitParents(tree, 'element', (node: Element, ancestors) => {
+      const parent = ancestors[ancestors.length - 1];
+      if (!parent || parent.type !== 'root') return;
+
+      if (node.type !== 'element' || node.tagName !== 'p') return;
+
+      const p = node;
+      if (p.children.length === 1) {
+        const img = p.children.find(child => child.type === 'element' && child.tagName === 'img');
+        if (!img) return;
+        parent.children = parent.children.map(node => node !== p? node: img);
+        return;
+      }
+      
+      if (p.children.length > 1 && p.children.filter(child => child.type === 'element').some(child => child.tagName === 'img')) {
+        const div = p;
+        div.tagName= 'div';
+        div.properties.className = 'flex gap-4';
+      }
+    });
+  };
+};
+
 /** @internal */
 export const remarkCodeMetaToProperties: Plugin<[], Root> = () => {
   type Node = Partial<{
