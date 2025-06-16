@@ -4,17 +4,18 @@ import React, { type QuoteHTMLAttributes } from 'react';
 import { cn } from '@heroui/theme';
 import { Alert, AlertProps } from '@heroui/alert';
 
+import { trimNodeFromProps } from '../../internal';
+
 /** @internal */
 const BlockQuote: React.FC<QuoteHTMLAttributes<HTMLQuoteElement>> = (props) => {
   const {
     className: userClassName,
     'data-alert-level': alertLevel,
-    node: _,    // eslint-disable-line @typescript-eslint/no-unused-vars
     ...quoteProps
-  } = props as QuoteHTMLAttributes<HTMLQuoteElement> & Partial<{
-    node: undefined;
-    'data-alert-level': 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
-  }>;
+  } = trimNodeFromProps<
+    QuoteHTMLAttributes<HTMLQuoteElement> & 
+    Partial<{'data-alert-level': 'primary' | 'secondary' | 'success' | 'warning' | 'danger'}>
+  >(props);
 
   return alertLevel? (
     <Alert
