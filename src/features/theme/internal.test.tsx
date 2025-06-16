@@ -1,5 +1,5 @@
 'use strict';
-import { afterEach,  beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
 import React, { createElement, PropsWithChildren } from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 

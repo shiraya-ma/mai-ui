@@ -1,17 +1,11 @@
 'use strict';
-import { afterEach, beforeEach, describe, it, expect } from 'bun:test';
+import { afterEach, describe, it, expect } from 'bun:test';
 import { cleanup, render, screen } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
 
 import { MaiH3 } from './mai-h3';
 import { MaiHeadingsStyleProvider } from './mai-headings-style-provider';
 
 describe('MaiH3', () => {
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect.extend(matchers as any);
-  });
-
   afterEach(() => {
     cleanup();
   });
