@@ -3,14 +3,14 @@ import { type AnchorHTMLAttributes } from 'react';
 import useSWR from 'swr';
 
 import { OGPProps, useOGPFetcher, type OGPFetcherFunction } from '@/features/ogp-fetcher';
+import { trimNodeFromProps } from '../../internal';
 
 /** @internal */
 export function useAnchor (props: AnchorProps & {node?: undefined}) {
   const {
     children,
     href,
-    node: _,  //eslint-disable-line @typescript-eslint/no-unused-vars
-  } = props;
+  } = trimNodeFromProps(props)
   const isOnlyChild = props['data-is-only-child'] === 'true';
   const { ogpFetcher } = useOGPFetcher();
   const { ogp, isLoading, isError } = useOGP({href, isOnlyChild, fetcher: ogpFetcher});
