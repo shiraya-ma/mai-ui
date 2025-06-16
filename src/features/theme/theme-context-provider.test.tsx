@@ -1,8 +1,7 @@
 'use strict';
-import { afterEach,  beforeEach, describe, expect, it, spyOn } from 'bun:test';
+import { afterEach, beforeEach, describe, expect, it, spyOn } from 'bun:test';
 import { useContext } from 'react';
 import { cleanup, render } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
 
 import { ThemeContext } from './internal';
 import { ThemeContextProvider } from './theme-context-provider';
@@ -11,9 +10,6 @@ describe('ThemeContextProvider', () => {
   const originalDebug = window.console.debug;
 
   beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect.extend(matchers as any);
-
     // Mock console.debug
     spyOn(console, 'debug').mockImplementation(() => {});
   });

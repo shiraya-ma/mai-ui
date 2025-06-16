@@ -1,14 +1,10 @@
 'use strict';
 import { afterEach,  describe, expect, it, } from 'bun:test';
 import { cleanup, render, screen } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
 
 import {
   MaiModal,
 } from './mai-modal';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-expect.extend(matchers as any);
 
 describe('MaiModal Component', () => {
   afterEach(() => {
