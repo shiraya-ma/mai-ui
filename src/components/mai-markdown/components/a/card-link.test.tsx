@@ -1,16 +1,10 @@
 'use strict';
-import { afterEach, beforeEach, describe, it, expect } from 'bun:test';
+import { afterEach, describe, it, expect } from 'bun:test';
 import { cleanup, render } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
 
 import { CardLink } from './card-link';
 
 describe('CardLink', () => {  
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect.extend(matchers as any);
-  });
-
   afterEach(() => {
     cleanup();
   });

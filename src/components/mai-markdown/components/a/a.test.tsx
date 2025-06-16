@@ -1,8 +1,7 @@
 'use strict';
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { afterEach, beforeEach, describe, it, expect, spyOn } from 'bun:test';
+import { afterEach, describe, it, expect, spyOn } from 'bun:test';
 import { cleanup, render, screen } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
 
 import {
   a as A,
@@ -14,11 +13,6 @@ import {
 
 describe('a', () => {
   const originalUseAnchor = useAnchor;
-
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect.extend(matchers as any);
-  });
 
   afterEach(() => {
     cleanup();

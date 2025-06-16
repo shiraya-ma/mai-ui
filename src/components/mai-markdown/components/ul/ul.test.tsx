@@ -1,18 +1,12 @@
 'use strict';
-import { afterEach, beforeEach, describe, it, expect } from 'bun:test';
+import { afterEach, describe, it, expect } from 'bun:test';
 import { cleanup, render, screen } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
 
 import {
   ul as Ul,
 } from './ul';
 
 describe('Ul', () => {
-  beforeEach(() => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expect.extend(matchers as any);
-  });
-
   afterEach(() => {
     cleanup();
   });
