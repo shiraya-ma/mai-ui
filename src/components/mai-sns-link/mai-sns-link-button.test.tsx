@@ -1,16 +1,10 @@
 'use client';
-import { afterEach, beforeEach, describe, expect, it, mock } from "bun:test";
+import { afterEach, describe, expect, it, mock } from "bun:test";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
-import * as matchers from "@testing-library/jest-dom/matchers";
 
 import { MaiSNSLinkButton } from "./mai-sns-link-button";
 
 describe("MaiSNSLinkButton", () => {  
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect.extend(matchers as any);
-  });
-
   afterEach(() => {
     cleanup();
   });

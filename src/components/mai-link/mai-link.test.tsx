@@ -1,16 +1,10 @@
 'use client';
-import { afterEach,  beforeEach, describe, expect, it, mock } from 'bun:test';
+import { afterEach, describe, expect, it, mock } from 'bun:test';
 import { cleanup, render, screen, fireEvent } from '@testing-library/react';
-import * as matchers from '@testing-library/jest-dom/matchers';
 
 import { MaiLink } from './mai-link';
 
 describe('MaiLink Component', () => {  
-  beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect.extend(matchers as any);
-  });
-
   afterEach(() => {
     cleanup();
   });

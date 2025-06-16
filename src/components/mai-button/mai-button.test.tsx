@@ -1,12 +1,8 @@
 'use strict';
-import { afterEach,  describe, expect, it, mock } from 'bun:test';
+import { afterEach, describe, expect, it, mock } from 'bun:test';
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-import * as matchers from '@testing-library/jest-dom/matchers';
 
 import { MaiButton } from "./mai-button";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-expect.extend(matchers as any);
 
 describe("MaiButton", () => {
   afterEach(() => {
