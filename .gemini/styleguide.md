@@ -1,6 +1,13 @@
-日本語で回答してください
+## Language
+
+すべての出力を日本語で行ってください。
+- 要約
+- レビュー
+- 返答
 
 ## References
+
+以下のライブラリを参照すること
 
 - [HeroUI](https://www.heroui.com/docs/guide/introduction)
 
