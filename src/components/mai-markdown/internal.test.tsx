@@ -12,7 +12,9 @@ import {
   rehypeRemoveParagraphForCardLink,
   rehypeTransferDataAttributesToPre,
   rehypeUnwrapFootnoteParagraphs,
+  rehypeUnwrapImages,
   remarkCodeMetaToProperties,
+  trimNodeFromProps,
 } from './internal';
 
 function processHtml(html: string): Promise<Root> {
@@ -696,6 +698,109 @@ describe('rehypeUnwrapFootnoteParagraphs', () => {
   });
 });
 
+describe('rehypeUnwrapImages', () => {
+  type _Element<T extends HTMLElement> = HElement & T;
+
+  async function processUnwrapImages(html: string): Promise<Root> {
+    return unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeUnwrapImages)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+  };
+
+  it('unwraps <img> from <p> at root', async () => {
+    const html = '<p><img src="foo.png" alt="foo"></p>';
+    const tree = await processUnwrapImages(html);
+    expect(tree.children.length).toBe(1);
+    const img = tree.children[0] as _Element<HTMLImageElement>;
+    expect(img.tagName).toBe('img');
+    expect(img.properties?.['src']).toBe('foo.png');
+    expect(img.properties?.['alt']).toBe('foo');
+  });
+
+  it('does not unwrap <img> if <p> is not at root', async () => {
+    const html = '<div><p><img src="foo.png" alt="foo"></p></div>';
+    const tree = await processUnwrapImages(html);
+    expect(tree.children.length).toBe(1);
+    const div = tree.children[0] as _Element<HTMLDivElement>;
+    expect(div.tagName).toBe('div');
+    const p = div.children[0] as _Element<HTMLParagraphElement>;
+    expect(p.tagName).toBe('p');
+    const img = p.children[0] as _Element<HTMLImageElement>;
+    expect(img.tagName).toBe('img');
+  });
+
+  it('does not unwrap <p> if it does not contain <img>', async () => {
+    const html = '<p>no image here</p>';
+    const tree = await processUnwrapImages(html);
+    expect(tree.children.length).toBe(1);
+    const p = tree.children[0] as _Element<HTMLParagraphElement>;
+    expect(p.tagName).toBe('p');
+    expect(p.children[0].type).toBe('text');
+  });
+
+  it('wraps multiple <img> elements in <div> with class \\"flex gap-4\\" if all children are <img>', async () => {
+    const html = '<p><img src="foo.png"><img src="bar.png"><img src="baz.png"></p>';
+    const tree = await processUnwrapImages(html);
+    expect(tree.children.length).toBe(1);
+    const div = tree.children[0] as _Element<HTMLDivElement>;
+    expect(div.tagName).toBe('div');
+    expect(div.properties?.className).toBe('flex gap-4');
+    const imgs = div.children.filter(child => child.type === 'element' && child.tagName === 'img');
+    expect(imgs.length).toBe(3);
+    expect((imgs[0] as _Element<HTMLImageElement>).properties?.['src']).toBe('foo.png');
+    expect((imgs[1] as _Element<HTMLImageElement>).properties?.['src']).toBe('bar.png');
+    expect((imgs[2] as _Element<HTMLImageElement>).properties?.['src']).toBe('baz.png');
+  });
+
+  it('wrap <p> in <div> if not all element children are <img>', async () => {
+    const html = '<p><img src="foo.png"><span>not img</span><img src="bar.png"></p>';
+    const tree = await processUnwrapImages(html);
+    expect(tree.children.length).toBe(1);
+    const div = tree.children[0] as _Element<HTMLParagraphElement>;
+    expect(div.tagName).toBe('div');
+    expect(div.children.length).toBe(3);
+    expect((div.children[0] as _Element<HTMLImageElement>).tagName).toBe('img');
+    expect((div.children[1] as _Element<HTMLSpanElement>).tagName).toBe('span');
+    expect((div.children[2] as _Element<HTMLImageElement>).tagName).toBe('img');
+    expect(div.properties.className).toMatch('flex')
+    expect(div.properties.className).toMatch('gap-4')
+  });
+
+  it('unwrap <img> if <p> has both text and <img> children', async () => {
+    const html = '<p>text<img src="foo.png"></p>';
+    const tree = await processUnwrapImages(html);
+    expect(tree.children.length).toBe(1);
+    const div = tree.children[0] as _Element<HTMLDivElement>;
+    expect(div.tagName).toBe('div');
+    expect(div.children.length).toBe(2);
+    expect(div.children[0].type).toBe('text');
+    expect((div.children[1] as _Element<HTMLImageElement>).tagName).toBe('img');
+  });
+
+  it('does nothing if <p> has no children', async () => {
+    const html = '<p></p>';
+    const tree = await processUnwrapImages(html);
+    expect(tree.children.length).toBe(1);
+    const p = tree.children[0] as _Element<HTMLParagraphElement>;
+    expect(p.tagName).toBe('p');
+    expect(p.children.length).toBe(0);
+  });
+
+  it('does not unwrap <img> if <p> is not at root (nested in <section>)', async () => {
+    const html = '<section><p><img src="foo.png"></p></section>';
+    const tree = await processUnwrapImages(html);
+    expect(tree.children.length).toBe(1);
+    const section = tree.children[0] as _Element<HTMLElement>;
+    expect(section.tagName).toBe('section');
+    const p = section.children[0] as _Element<HTMLParagraphElement>;
+    expect(p.tagName).toBe('p');
+    const img = p.children[0] as _Element<HTMLImageElement>;
+    expect(img.tagName).toBe('img');
+    expect(img.properties?.['src']).toBe('foo.png');
+  });
+});
+
 describe('remarkCodeMetaToProperties', () => {
   type CodeNode = Partial<{
     data: Partial<{
@@ -766,5 +871,46 @@ describe('remarkCodeMetaToProperties', () => {
     const node: CodeNode = { type: 'code', lang: 'js', value: 'abc' };
     const result = await processRemarkCodeMeta(node);
     expect(result.data?.hChildren).toEqual([{ type: 'text', value: 'abc' }]);
+  });
+});
+
+describe('trimNodeFromProps', () => {
+  it('removes node property from props', () => {
+    const props = { foo: 'bar', node: { some: 'node' } };
+    const result = trimNodeFromProps<{foo: string}>(props);
+    expect(result).toStrictEqual({ foo: 'bar' });
+    expect('node' in result).toBe(false);
+  });
+
+  it('returns a new object without node even if node is undefined', () => {
+    const props = { foo: 1, node: undefined };
+    const result = trimNodeFromProps<{foo: number}>(props);
+    expect(result).toStrictEqual({ foo: 1 });
+    expect('node' in result).toBe(false);
+  });
+
+  it('does not modify props if node property is missing', () => {
+    const props = { foo: 'baz', bar: 2 };
+    const result = trimNodeFromProps<{foo: string, bar: number}>(props);
+    expect(result).toStrictEqual({ foo: 'baz', bar: 2 });
+  });
+
+  it('works with empty object', () => {
+    const props = {};
+    const result = trimNodeFromProps<{}>(props);
+    expect(result).toStrictEqual({});
+  });
+
+  it('does not remove properties named nodeX', () => {
+    const props = { nodeX: 123, foo: 'bar' };
+    const result = trimNodeFromProps<{nodeX: number, foo: string}>(props);
+    expect(result).toStrictEqual({ nodeX: 123, foo: 'bar' });
+  });
+
+  it('does not mutate the original object', () => {
+    const props = { foo: 'bar', node: 1 };
+    const copy = { ...props };
+    trimNodeFromProps<{foo: string}>(props);
+    expect(props).toStrictEqual(copy);
   });
 });
