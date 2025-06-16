@@ -14,6 +14,7 @@ import {
   rehypeUnwrapFootnoteParagraphs,
   rehypeUnwrapImages,
   remarkCodeMetaToProperties,
+  trimNodeFromProps,
 } from './internal';
 
 function processHtml(html: string): Promise<Root> {
@@ -870,5 +871,46 @@ describe('remarkCodeMetaToProperties', () => {
     const node: CodeNode = { type: 'code', lang: 'js', value: 'abc' };
     const result = await processRemarkCodeMeta(node);
     expect(result.data?.hChildren).toEqual([{ type: 'text', value: 'abc' }]);
+  });
+});
+
+describe('trimNodeFromProps', () => {
+  it('removes node property from props', () => {
+    const props = { foo: 'bar', node: { some: 'node' } };
+    const result = trimNodeFromProps<{foo: string}>(props);
+    expect(result).toStrictEqual({ foo: 'bar' });
+    expect('node' in result).toBe(false);
+  });
+
+  it('returns a new object without node even if node is undefined', () => {
+    const props = { foo: 1, node: undefined };
+    const result = trimNodeFromProps<{foo: number}>(props);
+    expect(result).toStrictEqual({ foo: 1 });
+    expect('node' in result).toBe(false);
+  });
+
+  it('does not modify props if node property is missing', () => {
+    const props = { foo: 'baz', bar: 2 };
+    const result = trimNodeFromProps<{foo: string, bar: number}>(props);
+    expect(result).toStrictEqual({ foo: 'baz', bar: 2 });
+  });
+
+  it('works with empty object', () => {
+    const props = {};
+    const result = trimNodeFromProps<{}>(props);
+    expect(result).toStrictEqual({});
+  });
+
+  it('does not remove properties named nodeX', () => {
+    const props = { nodeX: 123, foo: 'bar' };
+    const result = trimNodeFromProps<{nodeX: number, foo: string}>(props);
+    expect(result).toStrictEqual({ nodeX: 123, foo: 'bar' });
+  });
+
+  it('does not mutate the original object', () => {
+    const props = { foo: 'bar', node: 1 };
+    const copy = { ...props };
+    trimNodeFromProps<{foo: string}>(props);
+    expect(props).toStrictEqual(copy);
   });
 });

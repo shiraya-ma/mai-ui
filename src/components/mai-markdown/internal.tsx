@@ -274,3 +274,18 @@ export const remarkCodeMetaToProperties: Plugin<[], Root> = () => {
     });
   };
 };
+
+/** @internal */
+export function trimNodeFromProps<T> (props: T): T {
+  const {
+    node: _,    // eslint-disable-line @typescript-eslint/no-unused-vars
+    ...userProps
+  } = props as PropsWithNode<T>;
+
+  return {
+    ...userProps as T
+  };
+};
+
+/** @internal */
+export type PropsWithNode<T> = T & { node?: undefined };
