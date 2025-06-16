@@ -3,11 +3,12 @@
 import React, { type OlHTMLAttributes } from 'react';
 import { cn } from '@heroui/theme';
 
+import { trimNodeFromProps } from '../../internal';
+
 const Ol: React.FC<OlHTMLAttributes<{}>> = (props) => {
   const {
-    node: _, // eslint-disable-line @typescript-eslint/no-unused-vars
     ...listProps
-  } = props as OlHTMLAttributes<{}> & {node?: undefined};
+  } = trimNodeFromProps(props);
   
   return (
     <ol
