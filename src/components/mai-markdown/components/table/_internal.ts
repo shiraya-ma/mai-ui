@@ -1,7 +1,8 @@
 'use string';
-import { Children, type PropsWithChildren, type ReactElement, type ReactNode } from "react";
+import { Children, type PropsWithChildren, type ReactElement, type ReactNode, type TableHTMLAttributes } from "react";
 
 import { reactNodeToString } from "@/libs";
+import { trimNodeFromProps } from "../../internal";
 
 /** @internal */
 export function parseChildren (children?: ReactNode) {
@@ -37,7 +38,26 @@ export function parseChildren (children?: ReactNode) {
 };
 
 /** @internal */
+export function parseProps (props: TableProps) {
+  const {
+    children,
+    ...tableProps
+  } = trimNodeFromProps(props);
+
+  const { columns, rows } = parseChildren(children) || { columns: [], rows: []};
+
+  return {
+    columns,
+    rows,
+    ...tableProps
+  };
+};
+
+/** @internal */
 export type Element = ReactElement<PropsWithChildren>;
+
+/** @internal */
+export type TableProps = TableHTMLAttributes<HTMLTableElement>;
 
 /** @internal */
 export type TableColumnKey = string;
