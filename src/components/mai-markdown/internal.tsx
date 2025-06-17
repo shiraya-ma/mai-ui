@@ -57,6 +57,24 @@ export const rehypeAlertBlockquote: Plugin<[], Root> = () => {
 };
 
 /** @internal */
+export const rehypeAutoAriaLabelForTable: Plugin<[], Root> = () => {
+  return (tree) => {
+    visitParents(tree, 'element', (node: Element, ancestors) => {
+      const parent = ancestors.at(-1);
+      if (!parent || parent.type !== 'root') return;
+
+      if (node.type !== 'element' || node.tagName !== 'table') return;
+
+      const table = node;
+
+      if (table.properties.ariaLabel || table.properties['aria-label']) return;
+
+      table.properties['aria-label'] = 'generated table';
+    });
+  };
+};
+
+/** @internal */
 export const rehypeCheckboxLabel: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, 'element', (node) => {

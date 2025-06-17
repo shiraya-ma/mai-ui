@@ -1,79 +1,41 @@
-/* eslint-disable */
-// Table
 'use strict';
-import React, { ReactNode } from 'react';
-// import {
-//     Table as NextTable,
-//     TableBody,
-//     TableCell,
-//     TableColumn,
-//     TableHeader,
-//     TableRow
-// } from '@nextui-org/react';
+/* eslint-disable react-refresh/only-export-components */
+import React from 'react';
 
-import { useTable } from './hooks';
+import {
+  getKeyValue,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Table as TableWrapper,
+  type TableProps as TableWrapperProsp,
+} from '@heroui/table';
 
-const TableFC: React.FC<Table.Props> = (props) => {
-    // const { children } = props;
+import { parseProps, type TableProps } from './_internal';
 
-    // const { columns, rows, tableIndex } = useTable(children as any);
+/** @internal */
+const Table: React.FC<TableProps> = (props) => {
+  const { columns, rows, ...tableProps } = parseProps(props);
 
-    // return (
-    //     <NextTable
-    //     aria-label={`auto generated table${ tableIndex }`}
-    //     isStriped>
-    //         <TableHeader>
-    //             {columns.map((c, i) => (
-    //                 <TableColumn
-    //                 align={ c.align }
-    //                 key={`table-column-${ tableIndex }-${ i }`}
-    //                 >
-    //                     { c.children }
-    //                 </TableColumn>
-    //             ))}
-    //         </TableHeader>
+  return (
+    <TableWrapper {...tableProps as TableWrapperProsp}>
+      <TableHeader>
+        {columns.map(column=> (<TableColumn key={column} children={column}/>))}
+      </TableHeader>
 
-    //         <TableBody items={ rows }>
-    //             {(row) => (
-    //                 <TableRow
-    //                 key={ row.key }
-    //                 >
-    //                     {row.children.map((c, i) => (
-    //                         <TableCell
-    //                         key={`table-cell-${ tableIndex }-${ i }`}
-    //                         >
-    //                             { c }
-    //                         </TableCell>
-    //                     ))}
-    //                 </TableRow>
-    //             )}
-    //         </TableBody>
-    //     </NextTable>
-    // );
-
-    return <></>
-};
-
-const Table = (props: Table.Props) => (<TableFC { ...props } />);
-
-namespace Table {
-    export type Props = {
-        children?: ReactNode;
-    };
-
-    export type Align = 'center' | 'end' | 'start';
-
-    export type ColumnProps = {
-        align: Align;
-        children: ReactNode;
-    };
-
-    export type Row = {
-        key: string;
-        children: ReactNode[];
-    };
+      <TableBody>
+        {rows.map((row, index) => (
+          <TableRow key={index}>
+            {column => (<TableCell>{getKeyValue(row, column)}</TableCell>)}
+          </TableRow>
+        ))}
+      </TableBody>
+    </TableWrapper>
+  );
 };
 
 export {
-    Table
+  Table as table,
 };

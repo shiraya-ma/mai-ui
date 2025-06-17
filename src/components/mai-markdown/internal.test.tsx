@@ -6,6 +6,7 @@ import rehypeParse from 'rehype-parse';
 
 import {
   rehypeAlertBlockquote,
+  rehypeAutoAriaLabelForTable,
   rehypeCheckboxLabel,
   rehypeMarkCodeInlineOrBlock,
   rehypeOnlyChildAnchor,
@@ -174,6 +175,85 @@ describe('rehypeAlertBlockquote', () => {
     expect(bq.type).toBe('element');
     if (bq.type !== 'element') return;
     expect(bq.properties?.['dataAlertLevel']).toBe('primary');
+  });
+});
+
+describe('rehypeAutoAriaLabelForTable', () => {
+  type _Element<T extends HTMLElement> = HElement & T;
+
+  async function processAutoAriaLabel(html: string): Promise<Root> {
+    return unified()
+      .use(rehypeParse, { fragment: true })
+      .use(rehypeAutoAriaLabelForTable)
+      .run(unified().use(rehypeParse, { fragment: true }).parse(html));
+  }
+
+  it('adds aria-label to <table> at root if missing', async () => {
+    const html = '<table><tr><td>foo</td></tr></table>';
+    const tree = await processAutoAriaLabel(html);
+    const table = tree.children[0] as _Element<HTMLTableElement>;
+    expect(table.tagName).toBe('table');
+    expect(table.properties?.['aria-label']).toBe('generated table');
+  });
+
+  it('does not overwrite existing aria-label', async () => {
+    const html = '<table aria-label="custom label"><tr><td>foo</td></tr></table>';
+    const tree = await processAutoAriaLabel(html);
+    const table = tree.children[0] as _Element<HTMLTableElement>;
+    expect(table.tagName).toBe('table');
+    expect(table.properties?.['ariaLabel']).toBe('custom label');
+  });
+
+  it('does not overwrite existing ariaLabel', async () => {
+    const html = '<table ariaLabel="custom label"><tr><td>foo</td></tr></table>';
+    const tree = await processAutoAriaLabel(html);
+    const table = tree.children[0] as _Element<HTMLTableElement>;
+    expect(table.properties?.['ariaLabel']).toBe('custom label');
+    expect(table.properties?.['aria-label']).toBeUndefined();
+  });
+
+  it('does nothing if <table> is not at root', async () => {
+    const html = '<div><table><tr><td>foo</td></tr></table></div>';
+    const tree = await processAutoAriaLabel(html);
+    const div = tree.children[0] as _Element<HTMLDivElement>;
+    const table = div.children[0] as _Element<HTMLTableElement>;
+    expect(table.tagName).toBe('table');
+    expect(table.properties?.['aria-label']).toBeUndefined();
+  });
+
+  it('does nothing for non-table elements', async () => {
+    const html = '<div><span>not a table</span></div>';
+    const tree = await processAutoAriaLabel(html);
+    const div = tree.children[0] as _Element<HTMLDivElement>;
+    const span = div.children[0] as _Element<HTMLSpanElement>;
+    expect(span.tagName).toBe('span');
+    expect(span.properties?.['aria-label']).toBeUndefined();
+  });
+
+  it('adds aria-label to multiple <table> at root', async () => {
+    const html = '<table><tr><td>1</td></tr></table><table><tr><td>2</td></tr></table>';
+    const tree = await processAutoAriaLabel(html);
+    const table1 = tree.children[0] as _Element<HTMLTableElement>;
+    const table2 = tree.children[1] as _Element<HTMLTableElement>;
+    expect(table1.properties?.['aria-label']).toBe('generated table');
+    expect(table2.properties?.['aria-label']).toBe('generated table');
+  });
+
+  it('does not add aria-label to <table> with aria-label already present (mixed)', async () => {
+    const html = '<table><tr><td>1</td></tr></table><table aria-label="foo"><tr><td>2</td></tr></table>';
+    const tree = await processAutoAriaLabel(html);
+    const table1 = tree.children[0] as _Element<HTMLTableElement>;
+    const table2 = tree.children[1] as _Element<HTMLTableElement>;
+    expect(table1.properties?.['aria-label']).toBe('generated table');
+    expect(table2.properties?.['ariaLabel']).toBe('foo');
+  });
+
+  it('does nothing if there are no <table> elements', async () => {
+    const html = '<div>no table here</div>';
+    const tree = await processAutoAriaLabel(html);
+    const div = tree.children[0] as _Element<HTMLDivElement>;
+    expect(div.tagName).toBe('div');
+    expect(div.properties?.['aria-label']).toBeUndefined();
   });
 });
 
