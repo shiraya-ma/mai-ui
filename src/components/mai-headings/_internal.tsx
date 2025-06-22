@@ -33,7 +33,8 @@ export function useMaiHeadings (props: MaiHeadingsProps, level: MaiHeadingsLevel
       userColor === 'success'   ? 'text-success' :
       userColor === 'danger'    ? 'text-danger' :
       userColor === 'warning'   ? 'text-warning' :
-                                  'text-foreground',
+      userColor === 'foreground'? 'text-foreground':
+                                  undefined,
       userClassNames?.text,
     ),
     link: cn(contextStyle.link, userClassNames?.link),

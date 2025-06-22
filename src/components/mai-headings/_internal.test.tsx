@@ -14,7 +14,7 @@ describe('useMaiHeadings', () => {
     expect(result.children).toBeUndefined();
     expect(result.classNames).toEqual({
       base: '',
-      text: 'text-foreground',
+      text: '',
       link: '',
       icon: { anchor: '', base: '' },
     });
@@ -56,7 +56,7 @@ describe('useMaiHeadings', () => {
     );
     const result = renderHook(() => useMaiHeadings({}, 1), {wrapper}).result.current;
     expect(result.classNames.base).toBe('custom-base');
-    expect(result.classNames.text).toBe('custom-text text-foreground');
+    expect(result.classNames.text).toBe('custom-text');
   });
 });
 
