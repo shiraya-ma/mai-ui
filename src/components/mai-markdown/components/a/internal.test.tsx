@@ -1,6 +1,6 @@
 'use strict';
 /* eslint-disable @typescript-eslint/no-require-imports */
-import { describe, it, expect, jest, spyOn } from 'bun:test';
+import { afterEach, describe, it, expect, jest, spyOn } from 'bun:test';
 import { renderHook, waitFor } from '@testing-library/react';
 
 import { useOGPFetcher, type OGPProps } from '@/features/ogp-fetcher';
@@ -9,7 +9,6 @@ import {
   useCardLinkProps,
   useOGP,
 } from './internal';
-import { afterEach } from 'bun:test';
 
 describe('useAnchor', () => {
   const originalUseOGPFetcher = useOGPFetcher;
