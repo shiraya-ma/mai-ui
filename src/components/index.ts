@@ -1,6 +1,5 @@
 'use strict';
 
-export * from './mai-article';
 export * from './mai-breadcrumbs';
 export * from './mai-button';
 export * from './mai-card';
