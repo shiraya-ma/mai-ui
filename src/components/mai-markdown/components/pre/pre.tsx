@@ -1,30 +1,30 @@
-// Pre
 'use strict';
+/* eslint-disable react-refresh/only-export-components */
 import React, { type HTMLAttributes } from 'react';
 
-import { MaiCodeBlock } from '../../../mai-code-block';
-import { MarkdownCodeContextProvider } from '../../hooks';
+import { MaiCodeBlock } from '@/components';
+import { reactNodeToString } from '@/libs';
 
-import { usePre } from './hooks';
+/** @internal */  
+const Pre: React.FC<HTMLAttributes<HTMLPreElement>> = (props) => {
+  const preProps = props as HTMLAttributes<HTMLPreElement> & Partial<{
+    'data-filename': string;
+    'data-language': string;
+  }>;
 
-const PreFC: React.FC<Pre.Props> = (props) => {
-    const { children, filename, language } = usePre(props);
+  const children = preProps.children;
+  const filename = preProps['data-filename'];
+  const language = preProps['data-language'];
 
-    return (
-        <MarkdownCodeContextProvider>
-            <MaiCodeBlock filename={ filename } language={ language }>
-                { children }
-            </MaiCodeBlock>
-        </MarkdownCodeContextProvider>
-    );
-};
-
-const Pre = (props: Pre.Props) => (<PreFC { ...props } />);
-
-namespace Pre {
-    export type Props = HTMLAttributes<HTMLPreElement> & {};
+  return (
+    <MaiCodeBlock
+      children={reactNodeToString(children)}
+      filename={filename}
+      language={language}
+    />
+  );
 };
 
 export {
-    Pre
+  Pre as pre,
 };
