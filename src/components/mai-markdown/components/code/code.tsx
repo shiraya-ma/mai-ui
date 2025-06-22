@@ -6,6 +6,7 @@ import { Code as HeroCode, type CodeProps as HeroCodeProps } from '@heroui/code'
 
 import { trimNodeFromProps } from '../../internal';
 
+/** @internal */  
 const Code: React.FC<HTMLAttributes<HTMLElement>> = (props) => {
   const {
     className: userClassName,

@@ -5,6 +5,7 @@ import { Image } from '@heroui/image';
 
 import { useImg, type ImageProps } from './_internal';
 
+/** @internal */  
 const Img: React.FC<ImageProps> = (props) => {
   const {
     fallbackSrc,
