@@ -38,6 +38,14 @@ import {
 } from './core';
 
 import {
+  MaiArticleContainer,
+  MaiArticleDateInfo,
+  MaiArticleDivider,
+  MaiArticleLayout,
+  MaiArticleThumbnail,
+} from './layouts';
+
+import {
   useTheme,
 } from './features/theme';
 
@@ -48,6 +56,11 @@ export {
   useDisclosure,
   useDraggable,
   useTheme,
+  MaiArticleContainer,
+  MaiArticleDateInfo,
+  MaiArticleDivider,
+  MaiArticleLayout,
+  MaiArticleThumbnail,
   MaiBreadcrumbItem,
   MaiBreadcrumbs,
   MaiButton,
@@ -83,6 +96,11 @@ const MaiUI = {
   useDisclosure,
   useDraggable,
   useTheme,
+  ArticleContainer: MaiArticleContainer,
+  ArticleDateInfo: MaiArticleDateInfo,
+  ArticleDivider: MaiArticleDivider,
+  ArticleLayout: MaiArticleLayout,
+  ArticleThumbnail: MaiArticleThumbnail,
   BreadcrumbItem: MaiBreadcrumbItem,
   Breadcrumbs: MaiBreadcrumbs,
   Button: MaiButton,
