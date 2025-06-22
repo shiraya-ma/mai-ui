@@ -14,7 +14,7 @@ const Ul: React.FC<OlHTMLAttributes<{}>> = (props) => {
   return (
     <ul
       className={cn(
-        'pl-4 list-inside list-disc',
+        'pl-4 list-disc',
         '[&_ul]:list-[circle]',
         '[&_ul_ul]:list-[square]',
       )}

@@ -21,7 +21,7 @@ describe('Ul', () => {
     render(<Ul />);
     const ol = screen.getByRole('list');
     expect(ol).toHaveClass(
-      'pl-4 list-inside list-disc',
+      'pl-4 list-disc',
       '[&_ul]:list-[circle]',
       '[&_ul_ul]:list-[square]',
     );
