@@ -1,4 +1,4 @@
-'use string';
+'use strict';
 import { Children, type PropsWithChildren, type ReactElement, type ReactNode, type TableHTMLAttributes } from "react";
 
 import { reactNodeToString } from "@/libs";
