@@ -1,6 +1,23 @@
 'use strict';
 
 /** @internal */
+export function getDateInfoProps (options: DateInfoOptions) {
+  const {
+    createdAt,
+    updatedAt,
+  } = options;
+
+  const dates = [
+    _parseDateInfo('Created at', createdAt)!,
+    _parseDateInfo('Updated at', updatedAt)
+  ].filter(date => date) as DateInfo[];
+
+  return {
+    dates,
+  };
+};
+
+/** @internal */
 export function _parseDateInfo (label: string, date: string | number | Date | undefined): DateInfo | undefined {
   if (!date) return undefined;
 
@@ -25,4 +42,9 @@ export function _parseDateInfo (label: string, date: string | number | Date | un
 export type DateInfo = {
   label: string;
   date: string;
+};
+
+export type DateInfoOptions = {
+  createdAt : string | number | Date;
+  updatedAt?: string | number | Date;
 };
