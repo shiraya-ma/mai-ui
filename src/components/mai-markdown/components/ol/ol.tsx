@@ -5,6 +5,7 @@ import { cn } from '@heroui/theme';
 
 import { trimNodeFromProps } from '../../internal';
 
+/** @internal */  
 const Ol: React.FC<OlHTMLAttributes<{}>> = (props) => {
   const {
     ...listProps

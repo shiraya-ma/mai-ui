@@ -5,6 +5,7 @@ import React, { type HTMLAttributes } from 'react';
 import { MaiCodeBlock } from '@/components';
 import { reactNodeToString } from '@/libs';
 
+/** @internal */  
 const Pre: React.FC<HTMLAttributes<HTMLPreElement>> = (props) => {
   const preProps = props as HTMLAttributes<HTMLPreElement> & Partial<{
     'data-filename': string;
