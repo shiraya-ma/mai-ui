@@ -22,7 +22,6 @@ describe('Ol', () => {
     const ol = screen.getByRole('list');
     expect(ol).toHaveClass(
       'pl-4',
-      'list-inside',
       'list-decimal',
       '[&_ol]:list-[upper-roman]',
       '[&_ol_ol]:list-[lower-roman]',

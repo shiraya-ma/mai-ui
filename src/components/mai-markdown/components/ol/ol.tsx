@@ -14,7 +14,7 @@ const Ol: React.FC<OlHTMLAttributes<{}>> = (props) => {
   return (
     <ol
       className={cn(
-        'pl-4 list-inside list-decimal',
+        'pl-4 list-decimal',
         '[&_ol]:list-[upper-roman]',
         '[&_ol_ol]:list-[lower-roman]',
         '[&_ol_ol_ol]:list-[upper-alpha]',
