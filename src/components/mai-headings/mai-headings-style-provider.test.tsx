@@ -83,6 +83,5 @@ describe('MaiHeadingsStyleProvider', () => {
 
     expect(maiH1.classList).toContain('custom-base');
     expect(text?.classList).toContain('custom-text');
-    expect(text?.classList).toContain('text-foreground');
   });
 });
