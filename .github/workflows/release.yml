@@ -42,17 +42,15 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Setup .npmrc
+      - name: Setup bunfig.toml
         run: |
-          echo "@shraya-ma:registry=https://npm.pkg.github.com/" >> ~/.npmrc
-          echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> ~/.npmrc
+          echo "[install.scope]" > ~/bunfig.toml
+          echo "\"@shiraya-ma\" = { token = \"${GITHUB_TOKEN}\", url = \"https://npm.pkg.github.com\" }" >> ~/bunfig.toml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bun Publish
         run: bun publish --access public --registry https://npm.pkg.github.com
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # ────────────────────────────────────────────────
   publish-to-npm:
@@ -71,14 +69,12 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Setup .npmrc
+      - name: Setup bunfig.toml
         run: |
-          echo "@shraya-ma:registry=https://registry.npmjs.org" >> ~/.npmrc
-          echo "//registry.npmjs.org/:_authToken=${GITHUB_TOKEN}" >> ~/.npmrc
+          echo "[install.scope]" > ~/bunfig.toml
+          echo "\"@shiraya-ma\" = { token = \"${NPM_TOKEN}\", url = \"https://registry.npmjs.org\" }" >> ~/bunfig.toml
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Bun Publish
         run: bun publish --access public --registry https://registry.npmjs.org
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
