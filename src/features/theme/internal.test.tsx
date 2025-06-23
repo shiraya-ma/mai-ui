@@ -1,7 +1,7 @@
 'use strict';
 import { afterEach, beforeEach, describe, expect, it, mock, spyOn } from 'bun:test';
+import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
 import React, { createElement, PropsWithChildren } from 'react';
-import { act, renderHook, waitFor } from '@testing-library/react';
 
 import {
   isPreferThemeDark,
@@ -149,6 +149,8 @@ describe('usePreferThemeObserver', () => {
     window.matchMedia = originalMatchMedia;
 
     spyOn(console, 'debug').mockImplementation(originalDebug);
+
+    cleanup();
   });
 
   it('should initialize with the correct theme based on system preference', () => {
