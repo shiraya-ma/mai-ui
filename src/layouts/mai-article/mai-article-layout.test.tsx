@@ -5,6 +5,7 @@ import { render, cleanup } from "@testing-library/react";
 import {
   MaiArticleLayout,
 } from './mai-article-layout';
+import { MaiArticleContainer } from './components';
 
 describe('MaiArticleLayout', () => {
   afterEach(() => {
@@ -46,7 +47,7 @@ describe('MaiArticleLayout', () => {
   });
 
   it('passes container props to MaiArticleContainer', () => {
-    const containerProps = {'data-testid': 'mai-article-container'} as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    const containerProps = {'data-testid': 'mai-article-container'} as MaiArticleContainer.Props;
     const { getByTestId } = render(<MaiArticleLayout container={containerProps} />);
     expect(getByTestId('mai-article-container')).toBeInTheDocument();
   });

@@ -10,7 +10,7 @@ export function getDateInfoProps (options: DateInfoOptions) {
   const dates = [
     _parseDateInfo('Created at', createdAt)!,
     _parseDateInfo('Updated at', updatedAt)
-  ].filter(date => date) as DateInfo[];
+  ].filter((date): date is DateInfo => date !== undefined);
 
   return {
     dates,
