@@ -29,8 +29,22 @@ const MaiArticleDateInfo: React.FC<MaiArticleDateInfo.Props> = (props) => {
     >
       { dates.map((date) => (
         <p className='flex gap-2 font-code' key={`data-info-${date.label}`}>
-          <span className='text-secondary-700/70 dark:text-white/70'>{date.label}</span>
-          <span className='text-secondary-700 dark:text-white'>{date.date}</span>
+          <span 
+            className={cn(
+              'text-secondary-700/70 dark:text-white/70',
+              classNames?.label,
+            )}
+            children={date.label}
+            data-slot='label'
+            />
+          <span
+            className={cn(
+              'text-secondary-700 dark:text-white',
+              classNames?.date,
+            )}
+            children={date.date}
+            data-slot='date'
+          />
         </p>
       ))}
     </div>

@@ -2,7 +2,6 @@
 import React from 'react';
 
 import { MaiH1, MaiMarkdown } from '@/components';
-import { type MaiHeadingsStyleContextProps } from '@/components/mai-headings/_internal';
 import {
   MaiArticleContainer,
   MaiArticleDateInfo,
@@ -54,8 +53,6 @@ namespace MaiArticleLayout {
     thumbnail: MaiArticleThumbnail.Props;
     title: string;
     body: string;
-
-    headingStyle: MaiHeadingsStyleContextProps;
   }>;
 };
 
