@@ -1,6 +1,6 @@
 {
   "name": "@shiraya-ma/mai-ui",
-  "version": "2.0.0-rc12",
+  "version": "2.0.0-rc13",
   "description": "Component library for React and Next.js",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -10,6 +10,16 @@
       "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs"
+    },
+    "./components": {
+      "types": "./dist/components.d.ts",
+      "require": "./dist/components.cjs",
+      "import": "./dist/components.mjs"
+    },
+    "./layouts": {
+      "types": "./dist/layouts.d.ts",
+      "require": "./dist/layouts.cjs",
+      "import": "./dist/layouts.mjs"
     },
     "./setup": {
       "types": "./dist/setup.d.ts",
@@ -108,6 +118,6 @@
   },
   "files": [
     "dist",
-    "font.css"
+    "fonts.css"
   ]
 }

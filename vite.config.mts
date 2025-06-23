@@ -11,6 +11,8 @@ export default defineConfig({
     lib: {
       entry: {
         index: resolve(__dirname, 'src', 'index.ts'),
+        components: resolve(__dirname, 'src', 'components', 'index.ts'),
+        layouts: resolve(__dirname, 'src', 'layouts', 'index.ts'),
         setup: resolve(__dirname, 'src', 'setup', 'index.ts'),
       },
       fileName: (format, name) => `${name}.${format.replace(/^es$/, 'mjs')}`,
@@ -20,6 +22,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: './src/index.ts',
+        components: './src/components/index.ts',
+        layouts: './src/layouts/index.ts',
         setup: './src/setup/index.ts',
       },
       external: [
