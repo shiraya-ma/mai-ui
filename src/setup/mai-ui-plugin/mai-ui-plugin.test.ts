@@ -35,6 +35,7 @@ describe('maiui', () => {
     const light = css.match(/\.light,\[data-theme="light"\] \{[^}]*\}/s)![0];
     expect(light).not.toBeUndefined();
     expect(light).toMatch(genRegExp('background', '#fff'));
+    expect(light).toMatch(genRegExp('foreground', '#000'));
 
     expect(light).toMatch(genRegExp('primary-50',  Mai.colors.mint[50]));
     expect(light).toMatch(genRegExp('primary-100', Mai.colors.mint[100]));
@@ -105,6 +106,7 @@ describe('maiui', () => {
     const dark = css.match(/\.dark,\[data-theme="dark"\] \{[^}]*\}/s)![0];
     expect(dark).not.toBeUndefined();
     expect(dark).toMatch(genRegExp('background', '#1F2937'));
+    expect(dark).toMatch(genRegExp('foreground', '#fff'));
 
     expect(dark).toMatch(genRegExp('primary-50',  Mai.colors.mint[50]));
     expect(dark).toMatch(genRegExp('primary-100', Mai.colors.mint[100]));
