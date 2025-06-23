@@ -1,4 +1,4 @@
-'use strict;'
+'use strict';
 import { type PropsWithChildren, type ReactElement, type ReactNode } from "react";
 import { isArray } from "lodash";
 

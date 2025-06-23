@@ -19,10 +19,10 @@ export const rehypeAlertBlockquote: Plugin<[], Root> = () => {
       if (!bqChildren.length) return;
 
       const firstChildElement = bqChildren[0]; // bqChildren is guaranteed to have at least one element here
-      if (firstChildElement.tagName !== 'p') return;
+      if (firstChildElement.type !== 'element' || firstChildElement.tagName !== 'p') return;
 
       const pFirstText = firstChildElement.children.find(child => child.type === 'text');
-      if (!pFirstText) return;
+      if (!pFirstText || pFirstText.type !== 'text') return;
 
       const alertTagRegex = /^(\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\n?)((.|\n)*)/;
       const matches = pFirstText.value.match(alertTagRegex);
@@ -237,7 +237,7 @@ export const rehypeUnwrapImages: Plugin<[], Root> = () => {
         return;
       }
       
-      if (p.children.length > 1 && p.children.filter(child => child.type === 'element').some(child => child.tagName === 'img')) {
+      if (p.children.length > 1 && p.children.filter(child => child.type === 'element').some(child => child.type === 'element' && child.tagName === 'img')) {
         const div = p;
         div.tagName= 'div';
         div.properties.className = 'flex gap-4';
