@@ -1,6 +1,6 @@
 {
   "name": "@shiraya-ma/mai-ui",
-  "version": "2.0.0-rc11",
+  "version": "2.0.0-rc12",
   "description": "Component library for React and Next.js",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -105,5 +105,9 @@
     "extends": [
       "plugin:storybook/recommended"
     ]
-  }
+  },
+  "files": [
+    "dist",
+    "font.css"
+  ]
 }
