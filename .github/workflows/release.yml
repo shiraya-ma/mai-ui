@@ -44,8 +44,8 @@ jobs:
 
       - name: Setup bunfig.toml
         run: |
-          echo "[install.scope]" > ~/bunfig.toml
-          echo "\"@shiraya-ma\" = { token = \"${GITHUB_TOKEN}\", url = \"https://npm.pkg.github.com\" }" >> ~/bunfig.toml
+          echo "[install.scope]" > ./bunfig.toml
+          echo "\"@shiraya-ma\" = { token = \"${GITHUB_TOKEN}\", url = \"https://npm.pkg.github.com\" }" >> ./bunfig.toml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -71,8 +71,8 @@ jobs:
 
       - name: Setup bunfig.toml
         run: |
-          echo "[install.scope]" > ~/bunfig.toml
-          echo "\"@shiraya-ma\" = { token = \"${NPM_TOKEN}\", url = \"https://registry.npmjs.org\" }" >> ~/bunfig.toml
+          echo "[install.scope]" > ./bunfig.toml
+          echo "\"@shiraya-ma\" = { token = \"${NPM_TOKEN}\", url = \"https://registry.npmjs.org\" }" >> ./bunfig.toml
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
