@@ -25,39 +25,7 @@ jobs:
       - name: Run tests
         run: bun test
 
-  # ────────────────────────────────────────────────
-  publish-to-gpr:
-    if: github.event.release.prerelease == true
-    needs: auto_linting_and_test
-    name: Publish to GitHub Packages
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: oven-sh/setup-bun@v2
-        with: 
-          bun-version: latest
-
-      - name: Install dependencies
-        run: bun install
-
-      - name: Build as library
-        run: bun run build
-
-      - name: Setup bunfig.toml
-        run: |
-          echo "[install.scopes]" > ./bunfig.toml
-          echo "\"@shiraya-ma\" = { token = \"${GITHUB_TOKEN}\", url = \"https://npm.pkg.github.com\" }" >> ./bunfig.toml
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Bun Publish
-        run: bun publish --access public --registry https://npm.pkg.github.com
-
-  # ────────────────────────────────────────────────
   publish-to-npm:
-    if: github.event.release.prerelease == false
     needs: auto_linting_and_test
     name: Publish to npm
     runs-on: ubuntu-latest
