@@ -1,0 +1,64 @@
+name: Publish
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  auto_linting_and_test:
+    name: Auto linting and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies # (assuming your project has dependencies)
+        run: bun install # You can use npm/yarn/pnpm instead if you prefer
+
+      - name: Run linting
+        run: bun lint
+
+      - name: Run tests
+        run: bun test
+
+  # ────────────────────────────────────────────────
+  publish-to-gpr:
+    if: github.event.release.prerelease == true
+    needs: auto_linting_and_test
+    name: Publish to GitHub Packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install
+      - name: Configure npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{secrets.GITHUB_TOKEN}}" > ~/.npmrc
+
+      - name: Publish
+        run: bun publish --registry https://npm.pkg.github.com
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  # ────────────────────────────────────────────────
+  publish-to-npm:
+    if: github.event.release.prerelease == false
+    needs: auto_linting_and_test
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - run: bun install
+      - name: Configure npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
+
+      - name: Publish
+        run: bun publish --registry https://registry.npmjs.org
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
