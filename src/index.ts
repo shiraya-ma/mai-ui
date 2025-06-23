@@ -47,6 +47,24 @@ import {
 } from './layouts';
 
 import {
+  FallbackImageProps,
+  FallbackImageProvider,
+  FallbackImageProviderProps,
+  useFallbackImage,
+} from './features/fallback-image';
+
+import {
+  OGPCommonProps,
+  OGPFacebookProps,
+  OGPFetcherFunction,
+  OGPFetcherProvider,
+  OGPFetcherProviderProps,
+  OGPProps,
+  OGPTwitterProps,
+  useOGPFetcher,
+} from './features/ogp-fetcher';
+
+import {
   useTheme,
 } from './features/theme';
 
@@ -56,6 +74,8 @@ export {
   maiFonts,
   useDisclosure,
   useDraggable,
+  useFallbackImage,
+  useOGPFetcher,
   useTheme,
   MaiArticleContainer,
   MaiArticleDateInfo,
@@ -91,12 +111,23 @@ export {
   MaiSkeleton,
   MaiSNSLink,
   MaiUIProvider,
+  type FallbackImageProps as MaiFallbackImageProps,
+  FallbackImageProvider as MaiFallbackImageProvider,
+  type FallbackImageProviderProps as MaiFallbackImageProviderProps,
+  type OGPCommonProps,
+  type OGPFacebookProps,
+  type OGPFetcherFunction,
+  OGPFetcherProvider,
+  type OGPFetcherProviderProps,
+  type OGPProps,
+  type OGPTwitterProps,
 };
 
 const MaiUI = {
   fonts: maiFonts,
   useDisclosure,
   useDraggable,
+  useFallbackImage,
   useTheme,
   ArticleContainer: MaiArticleContainer,
   ArticleDateInfo: MaiArticleDateInfo,
@@ -131,6 +162,8 @@ const MaiUI = {
   Provider: MaiUIProvider,
   Skeleton: MaiSkeleton,
   SNSLink: MaiSNSLink,
+  FallbackImageProvider,
+  OGPFetcherProvider,
 };
 
 export default MaiUI;
