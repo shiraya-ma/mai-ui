@@ -66,12 +66,14 @@ export function maiui (config: HeroUIPluginConfig = {}) {
         colors: {
           ...colors,
           background: '#1f2937',
+          foreground: '#fff',
         }
       },
       light: {
         colors: {
           ...colors,
           background: '#fff',
+          foreground: '#000',
         }
       }
     }
