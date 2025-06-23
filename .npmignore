@@ -1,9 +1,8 @@
 
 **/*
 
-!dist/cj/**/*
-!dist/es/**/*
-dist/**/dev/**/*
+dist/**.png
+!dist/**/*
 
 !fonts.css
 
