@@ -4,7 +4,7 @@ import * as matchers from '@testing-library/jest-dom/matchers';
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 
 /*
-* テスト用のglobalな設定を行う
+* Setting for global test
 */
 
 // happy-domを登録
