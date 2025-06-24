@@ -10,6 +10,6 @@ import { GlobalRegistrator } from "@happy-dom/global-registrator";
 // register happy-dom
 GlobalRegistrator.register();
 
-// expectを拡張する
-//  expect(received).toBeInTheDocument()等
+// extend expect
+//  expect(received).toBeInTheDocument() etc
 expect.extend(matchers);
