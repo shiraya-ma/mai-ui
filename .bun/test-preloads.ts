@@ -7,7 +7,7 @@ import { GlobalRegistrator } from "@happy-dom/global-registrator";
 * Setting for global test
 */
 
-// happy-domを登録
+// register happy-dom
 GlobalRegistrator.register();
 
 // expectを拡張する
