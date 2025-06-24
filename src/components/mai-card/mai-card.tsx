@@ -14,9 +14,9 @@ const ExtendedCard = extendVariants(Card, {
 });
 
 /**
- * カードのコンポーネント
- * 
- * グラスモーフィズム用のスタイルを追加している。
+ * Card component
+ *
+ * Adds a glassmorphism variant.
  * 
  * @example
  * 'use strict'

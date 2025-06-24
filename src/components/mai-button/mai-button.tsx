@@ -48,8 +48,7 @@ const MaiButton: React.FC<MaiButton.Props> = (props) => {
           'bg-white border-white text-white' // default or undefined
         : undefined,
       )}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      {...btnBrops as any}
+      {...btnBrops as ButtonProps}
     />
   );
 }
