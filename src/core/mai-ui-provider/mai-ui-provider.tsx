@@ -65,10 +65,30 @@ const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
 MaiUIProvider.displayName = 'MaiUIProvider';
 
 namespace MaiUIProvider {
+  /**
+   * Props for the MaiUIProvider component.
+   * 
+   * Inherits all properties from {@link HeroUIProviderProps}.
+   */
   export type Props = HeroUIProviderProps & Partial<{
+    /**
+     * If true, disables the theme functionality for the provider
+     */
     disabledTheme: boolean;
+
+    /**
+     * Configuration for the fallback image to use when an image fails to load
+     */
     fallbackImage: FallbackImageProps;
+
+    /**
+     * Custom styles or configuration for heading elements within the provider
+     */
     headingStyle: MaiHeadingsStyleContextProps;
+
+    /**
+     * Function to fetch Open Graph Protocol (OGP) data for URLs
+     */
     ogpFetcher: OGPFetcherFunction;
   }>;
 };
