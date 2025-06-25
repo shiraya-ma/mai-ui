@@ -1,7 +1,16 @@
 'use strict';
+/* eslint-disable react-refresh/only-export-components */
 import { PropsWithChildren, useEffect, useState } from 'react';
+import { DocsContainer } from '@storybook/addon-docs';
 import { themes } from '@storybook/theming';
 import type { DocsContainerProps } from '@storybook/addon-docs';
+
+/** @internal */
+export const CustomDocsContainer = (props: DocsContainerProps) => {
+  const { theme, ...userProps } = useCustomDocsContainer(props);
+
+  return <DocsContainer {...userProps} theme={theme} />;
+};
 
 /** @internal */
 export function configQuery () {

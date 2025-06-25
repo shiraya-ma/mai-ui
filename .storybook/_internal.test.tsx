@@ -2,14 +2,15 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import { type PropsWithChildren, type ReactNode } from 'react';
 import { afterEach, beforeEach, describe, it, expect, jest, spyOn } from 'bun:test';
-import { renderHook, waitFor } from '@testing-library/react';
-import { themes } from 'storybook/internal/theming';
+import { render, renderHook, waitFor } from '@testing-library/react';
+import { themes, ThemeVars } from 'storybook/internal/theming';
 import * as StorybookBlocks from '@storybook/blocks';
 import { Renderer } from 'storybook/internal/types';
 
 import {
   configQuery,
   useCustomDocsContainer,
+  CustomDocsContainer,
 } from './_internal';
 
 describe('configQuery', () => {
@@ -178,5 +179,73 @@ describe('useCustomDocsContainer', () => {
     expect(current.context).toEqual({ foo: 'bar' });
     expect(current.children).toBe(props.children!);
     expect(current.extra).toBe(123);
+  });
+});
+
+describe('CustomDocsContainer', () => {
+  const originalConfigQuery = configQuery;
+  const originalDocsContainer = StorybookBlocks.DocsContainer;
+
+  type MockDocsContainerProps = PropsWithChildren<StorybookBlocks.DocsContainerProps<any>>; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  const MockDocsContainerConstructor = (themeLitsner: (theme: ThemeVars | undefined) => void): React.FC<MockDocsContainerProps> => (props) => {
+    const { children, theme } = props;
+
+    themeLitsner(theme);
+
+    return (
+      <>{children}</>
+    );
+  };
+
+  afterEach(() => {
+    spyOn(StorybookBlocks, 'DocsContainer').mockImplementation(originalDocsContainer);
+    spyOn(require('./_internal'), 'configQuery').mockImplementation(originalConfigQuery);
+  });
+
+  it('renders with light theme by default', () => {
+    let recievedTheme: ThemeVars | undefined;
+    const themeListener = jest.fn((theme: ThemeVars | undefined) => {
+      recievedTheme = theme;
+    });
+
+    const MockDocsContainer = MockDocsContainerConstructor(themeListener);
+    spyOn(StorybookBlocks, 'DocsContainer').mockImplementation(MockDocsContainer);
+
+    spyOn(require('./_internal'), 'configQuery').mockImplementation(() => ({
+      mediaQuery: { matches: false } as MediaQueryList,
+      onChangeQuery: jest.fn(),
+    }));
+
+    const props = { context: {}, children: <div>Docs</div> } as MockDocsContainerProps;
+    const { container } = render(<CustomDocsContainer {...props} />);
+
+    // The theme prop is passed to BaseContainer, but we can't access it directly.
+    // Instead, check that it renders children.
+    expect(container.textContent).toContain('Docs');
+    expect(recievedTheme).toStrictEqual(themes.light);
+  });
+
+  it('renders with dark theme if prefers-color-scheme: dark', () => {
+    let recievedTheme: ThemeVars | undefined;
+    const themeListener = jest.fn((theme: ThemeVars | undefined) => {
+      recievedTheme = theme;
+    });
+
+    const MockDocsContainer = MockDocsContainerConstructor(themeListener);
+    spyOn(StorybookBlocks, 'DocsContainer').mockImplementation(MockDocsContainer);
+
+    spyOn(require('./_internal'), 'configQuery').mockImplementation(() => ({
+      mediaQuery: { matches: true } as MediaQueryList,
+      onChangeQuery: jest.fn(),
+    }));
+
+    const props = { context: {}, children: <div>Dark Docs</div> } as MockDocsContainerProps;
+    const { container } = render(<CustomDocsContainer {...props} />);
+
+    // The theme prop is passed to BaseContainer, but we can't access it directly.
+    // Instead, check that it renders children.
+    expect(container.textContent).toContain('Dark Docs');
+    expect(recievedTheme).toStrictEqual(themes.dark);
   });
 });
