@@ -2,7 +2,10 @@
 import React from 'react';
 import { HeroUIProvider, type HeroUIProviderProps } from '@heroui/system';
 
-import { type MaiHeadingsStyleContextProps, MaiHeadingsStyleProvider } from '@/components';
+import {
+  type MaiHeadingsStyleContextProps, MaiHeadingsStyleProvider,
+  type MaiCodeBlockStyle, MaiCodeBlockStyleProvider,
+} from '@/components';
 import { type FallbackImageProps, FallbackImageProvider } from '@/features/fallback-image';
 import { type OGPFetcherFunction ,OGPFetcherProvider } from '@/features/ogp-fetcher';
 import { PreferThemeObserver, ThemeContextProvider } from '@/features/theme';
@@ -37,6 +40,7 @@ import { PreferThemeObserver, ThemeContextProvider } from '@/features/theme';
 const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
   const {
     children,
+    codeBlockStyle,
     disabledTheme,
     fallbackImage,
     headingStyle,
@@ -51,9 +55,11 @@ const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
         <ThemeContextProvider disabledTheme={disabledTheme}>
           <HeroUIProvider navigate={navigate} {...heroUIProviderProps}>
             <MaiHeadingsStyleProvider context={headingStyle}>
-              {children}
-              
-              {!disabledTheme && (<PreferThemeObserver />)}
+              <MaiCodeBlockStyleProvider style={codeBlockStyle}>
+                {children}
+                
+                {!disabledTheme && (<PreferThemeObserver />)}
+              </MaiCodeBlockStyleProvider>
             </MaiHeadingsStyleProvider>
           </HeroUIProvider>
         </ThemeContextProvider>
@@ -75,6 +81,11 @@ namespace MaiUIProvider {
      * If true, disables the theme functionality for the provider
      */
     disabledTheme: boolean;
+
+    /**
+     * Custom styles or configuration for codeblock within the provider
+     */
+    codeBlockStyle: MaiCodeBlockStyle;
 
     /**
      * Configuration for the fallback image to use when an image fails to load
