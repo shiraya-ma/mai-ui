@@ -3,7 +3,7 @@ import { createContext, type PropsWithChildren, type CSSProperties, useContext }
 import NightOwl from 'react-syntax-highlighter/dist/esm/styles/prism/night-owl';
 
 /** @internal */
-export const MaiCodeBlockStyleContext = createContext<MaiCodeBlockStyle | undefined>(NightOwl);
+export const MaiCodeBlockStyleContext = createContext<MaiCodeBlockStyle | undefined>(undefined);
 
 /** @internal */
 export function useMaiCodeBlock (props: MaiCodeBlockProps) {
@@ -13,7 +13,7 @@ export function useMaiCodeBlock (props: MaiCodeBlockProps) {
   } = props;
   const contextStyle = useContext(MaiCodeBlockStyleContext)!;
 
-  const style: MaiCodeBlockStyle = userStyle || contextStyle;
+  const style: MaiCodeBlockStyle = userStyle || contextStyle || NightOwl;
 
   const isPrism = _isPrism(style);
 
