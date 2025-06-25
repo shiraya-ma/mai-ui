@@ -1,8 +1,15 @@
 'use strict';
+/* eslint-disable @typescript-eslint/no-require-imports */
+import { type PropsWithChildren, type ReactNode } from 'react';
 import { afterEach, beforeEach, describe, it, expect, jest, spyOn } from 'bun:test';
+import { renderHook, waitFor } from '@testing-library/react';
+import { themes } from 'storybook/internal/theming';
+import * as StorybookBlocks from '@storybook/blocks';
+import { Renderer } from 'storybook/internal/types';
 
 import {
   configQuery,
+  useCustomDocsContainer,
 } from './_internal';
 
 describe('configQuery', () => {
@@ -74,5 +81,102 @@ describe('configQuery', () => {
       const { onChangeQuery } = configQuery();
       expect(() => onChangeQuery(() => {})).not.toThrow();
     });
+  });
+});
+
+describe('useCustomDocsContainer', () => {
+  const originalConfigQuery = configQuery;
+  type CustomDocsContainerProps<T extends Renderer = Renderer> = PropsWithChildren<StorybookBlocks.DocsContainerProps<T>>;
+
+  afterEach(() => {
+    spyOn(require('./_internal'), 'configQuery').mockImplementation(originalConfigQuery);
+  });
+
+  it('returns light theme when mediaQuery.matches is false', () => {
+    const mockOnChangeQuery = jest.fn();
+    spyOn(require('./_internal'), 'configQuery').mockImplementation(() => ({
+      mediaQuery: { matches: false } as MediaQueryList,
+      onChangeQuery: mockOnChangeQuery,
+    }));
+
+    const props: CustomDocsContainerProps = { context: {}, children: <div>Docs</div> } as never;
+    const { result } = renderHook(() => useCustomDocsContainer(props));
+    expect(result.current.theme).toStrictEqual(themes.light);
+  });
+
+  it('returns dark theme when mediaQuery.matches is true', () => {
+    const mockOnChangeQuery = jest.fn();
+    spyOn(require('./_internal'), 'configQuery').mockImplementation(() => ({
+      mediaQuery: { matches: true } as MediaQueryList,
+      onChangeQuery: mockOnChangeQuery,
+    }));
+
+    const props: CustomDocsContainerProps = { context: {}, children: <div>Docs</div> } as never;
+    const { result } = renderHook(() => useCustomDocsContainer(props));
+    expect(result.current.theme).toStrictEqual(themes.dark);
+  });
+
+  it('calls onChangeQuery on mount and cleanup', () => {
+    const mockOnChangeQuery = jest.fn();
+    spyOn(require('./_internal'), 'configQuery').mockImplementation(() => ({
+      mediaQuery: { matches: false } as MediaQueryList,
+      onChangeQuery: mockOnChangeQuery,
+    }));
+
+    const props: CustomDocsContainerProps = { context: {}, children: <div>Docs</div> } as never;
+    const { unmount } = renderHook(() => useCustomDocsContainer(props));
+    expect(mockOnChangeQuery).toHaveBeenCalledTimes(1);
+    unmount();
+    expect(mockOnChangeQuery).toHaveBeenCalledTimes(2);
+  });
+
+  it('updates theme when media query changes', async () => {
+    let handler: ((e: MediaQueryListEvent) => void) | undefined;
+    const mockOnChangeQuery = jest.fn((cb) => { handler = cb; });
+    spyOn(require('./_internal'), 'configQuery').mockImplementation(() => ({
+      mediaQuery: { matches: false } as MediaQueryList,
+      onChangeQuery: mockOnChangeQuery,
+    }));
+
+    const props: CustomDocsContainerProps = { context: {}, children: <div>Docs</div> } as never;
+    const { result } = renderHook(() => useCustomDocsContainer(props));
+    await waitFor(() => {
+      expect(result.current.theme.base).toBe('light');
+    });
+    expect(result.current.theme).toStrictEqual(themes.light);
+
+    // Simulate media query change to dark
+    handler!({ matches: true } as MediaQueryListEvent);
+    await waitFor(() => {
+      expect(result.current.theme.base).toBe('dark');
+    });
+    expect(result.current.theme).toStrictEqual(themes.dark);
+
+    // Simulate media query change to light
+    handler!({ matches: false } as MediaQueryListEvent);
+    await waitFor(() => {
+      expect(result.current.theme.base).toBe('light');
+    });
+    expect(result.current.theme).toStrictEqual(themes.light);
+  });
+
+  it('returns all user props', () => {
+    const mockOnChangeQuery = jest.fn();
+    spyOn(require('./_internal'), 'configQuery').mockImplementation(() => ({
+      mediaQuery: { matches: false } as MediaQueryList,
+      onChangeQuery: mockOnChangeQuery,
+    }));
+
+    const props: CustomDocsContainerProps = { context: { foo: 'bar' }, children: <div>Docs</div> as ReactNode, extra: 123 } as never;
+    const { result } = renderHook(() => useCustomDocsContainer(props));
+    const current = result.current as unknown as {
+      context: Record<string, string>;
+      children?: ReactNode;
+      extra: number;
+    };
+
+    expect(current.context).toEqual({ foo: 'bar' });
+    expect(current.children).toBe(props.children!);
+    expect(current.extra).toBe(123);
   });
 });
