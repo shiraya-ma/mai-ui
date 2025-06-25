@@ -9,7 +9,7 @@ import {
 } from './components';
 
 const meta: Meta<typeof MaiArticleLayout> = {
-  title: 'Layoutsk/MaiArticle',
+  title: 'Layouts/MaiArticle',
   component: MaiArticleLayout,
   argTypes: {
     container: {
