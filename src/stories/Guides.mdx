@@ -1,0 +1,202 @@
+
+# Guides
+
+Welcome to the Mai UI Guides!
+
+Mai UI is a customizable React component library built on top of Tailwind CSS and HeroUI, designed to help you build modern, accessible UIs quickly. This guide will walk you through the requirements, installation, and configuration steps to get started with Mai UI in your project.
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Dependencies](#dependencies)
+  - [DevDependencies](#devdependencies)
+  - [Optional](#optional)
+- [Configuration](#configuration)
+  - [1. Initialize Tailwind CSS](#1-initialize-tailwind-css)
+  - [2. Configure Tailwind](#2-configure-tailwind)
+  - [3. Setup Provider](#3-setup-provider)
+    - [React Router DOM](#react-router-dom)
+    - [Next.js](#nextjs)
+      - [Pages Router](#pages-router)
+      - [App Router](#app-router)
+
+---
+
+## Requirements
+
+- [React 18+](https://react.dev/)
+- [Tailwind CSS 3.4+](https://v3.tailwindcss.com)
+- [Framer Motion 11+](https://www.framer.com/motion/)
+- [HeroUI v2.6+](https://www.heroui.com)
+
+---
+
+## Installation
+
+### Dependencies
+
+```bash
+npm install @heroui/react framer-motion @shiraya-ma/mai-ui
+```
+
+### DevDependencies
+
+```bash
+npm install -D tailwindcss@^3 autoprefixer postcss
+```
+
+### Optional
+
+To customize the MaiMarkdown theme, install:
+
+```bash
+npm install react-syntax-highlighter
+npm install -D @types/react-syntax-highlighter
+```
+
+---
+
+## Configuration
+
+### 1. Initialize Tailwind CSS
+
+```bash
+npx tailwindcss init -p
+```
+
+### 2. Configure Tailwind
+
+Update your `tailwind.config.js`:
+
+```js
+'use strict';
+const { maiUIConfig } = require('@shiraya-ma/mai-ui/setup');
+
+module.exports = maiUIConfig();
+```
+
+> **Note:**  
+> `maiUIConfig` automatically includes the following content paths, so you don't need to add them manually:
+> - `./index.html`
+> - `./src/**/*.{js,ts,jsx,tsx,css,scss,sass}`
+> - `./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}`
+> - `./node_modules/@shiraya-ma/mai-ui/**/*.{js,ts,jsx,tsx}`
+
+---
+
+### 3. Setup Provider
+
+Wrap your app with `MaiUIProvider` at the root.
+
+```tsx
+// main.tsx
+'use strict';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+import App from './app';
+
+createRoot(document.querySelector('#root')).render(
+  <MaiUIProvider>
+    <App />
+  </MaiUIProvider>
+);
+```
+
+#### React Router DOM
+
+Wrap your routes with `MaiUIProvider` inside your router.
+
+```tsx
+// layout.tsx
+'use strict';
+import React, { PropsWithChildren } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+import 'tailwindcss/tailwind.css';
+import '@shiraya-ma/mai-ui/fonts.css';
+
+const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  const navigate = useNavigate();
+  return (
+    <MaiUIProvider navigate={navigate}>
+      {children}
+    </MaiUIProvider>
+  );
+};
+
+export default Layout;
+```
+
+```tsx
+// index.tsx
+'use strict';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './layout';
+import Home from './home';
+
+createRoot(document.querySelector('#root')).render(
+  <BrowserRouter>
+    <Layout>
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
+    </Layout>
+  </BrowserRouter>
+);
+```
+
+#### Next.js
+
+##### Pages Router
+
+```tsx
+// _app.tsx
+'use strict';
+import React, { PropsWithChildren } from 'react';
+import { useRouter } from 'next/router';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+
+const App: React.FC<PropsWithChildren> = ({ children }) => {
+  const router = useRouter();
+  const navigate = (path: string) => router.push(path);
+
+  return (
+    <MaiUIProvider navigate={navigate}>
+      {children}
+    </MaiUIProvider>
+  );
+};
+
+export default App;
+```
+
+##### App Router
+
+```tsx
+// layout.tsx
+'use client';
+import React, { PropsWithChildren } from 'react';
+import { useRouter } from 'next/navigation';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+
+const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  const router = useRouter();
+  const navigate = (path: string) => router.push(path);
+
+  return (
+    <html lang="en">
+      <body>
+        <MaiUIProvider navigate={navigate}>
+          {children}
+        </MaiUIProvider>
+      </body>
+    </html>
+  );
+};
+
+export default Layout;
+```
