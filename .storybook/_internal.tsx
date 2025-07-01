@@ -2,7 +2,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { DocsContainer } from '@storybook/addon-docs';
-import { themes } from '@storybook/theming';
+import { themes, type ThemeVars } from '@storybook/theming';
 import type { DocsContainerProps } from '@storybook/addon-docs';
 
 /** @internal */
@@ -17,15 +17,28 @@ export function configQuery () {
   const mediaQuery = typeof window !== 'undefined' ? window.matchMedia('(prefers-color-scheme: dark)') : null;
 
   const onChangeQuery = (mediaQueryChangeHandler: (ev: MediaQueryListEvent) => void) => {
-    if (!mediaQuery) return;
+    if (!mediaQuery) return { removeEventListener: () => {} };
 
     mediaQuery.addEventListener('change', mediaQueryChangeHandler);
+
+    return {
+      removeEventListener: () => {
+        mediaQuery.removeEventListener('change', mediaQueryChangeHandler);
+      }
+    };
   };
 
   return {
     mediaQuery,
     onChangeQuery,
   };
+};
+
+/** @internal */
+export function initThemeState (mediaQuery: MediaQueryList | null): ThemeVars {
+  if (!mediaQuery) return themes.light;
+
+  return mediaQuery.matches ? themes.dark : themes.light;
 };
 
 /** @internal */
@@ -36,16 +49,15 @@ export function useCustomDocsContainer<T extends DocsContainerProps> (props: Pro
 
   const { mediaQuery, onChangeQuery } = configQuery();
 
-  const [theme, setTheme] = useState(
-    mediaQuery?.matches ? themes.dark : themes.light
-  );
+  const [theme, setTheme] = useState(initThemeState(mediaQuery));
   
   useEffect(() => {
     const handler = (e: MediaQueryListEvent) => {
       setTheme(e.matches ? themes.dark : themes.light);
     };
-    onChangeQuery(handler);
-    return () => onChangeQuery(handler);
+
+    const { removeEventListener} = onChangeQuery(handler);
+    return () => removeEventListener();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
