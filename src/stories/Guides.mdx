@@ -28,6 +28,9 @@ Mai UI is a customizable React component library built on top of Tailwind CSS an
     - [Mai Colors](#mai-colors)
     - [How to configure colros](#how-to-configure-colros)
     - [Apply to HeroUI`s semantic colors](#apply-to-herouis-semantic-colors)
+  - [Fonts](#fonts)
+    - [Mai Fonts](#mai-fonts)
+    - [How to add fonts](#how-to-add-fonts)
 ---
 
 ## Requirements
@@ -499,4 +502,92 @@ module.exports = maiUIConfig({
     }
   }
 });
+```
+
+### Fonts
+
+#### Mai Fonts
+
+MaiUI has added the following fonts to Tailwind's font sets.
+
+<table>
+<thead>
+  <tr>
+    <th>Tailwind variable name</th>
+    <th>Font name</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th>font-heading</th>
+    <td>Sawarabi Gothic</td>
+  </tr>
+  <tr>
+    <th>font-main</th>
+    <td>Sawarabi Mincho</td>
+  </tr>
+  <tr>
+    <th>font-dode</th>
+    <td>JetBrains Mono</td>
+  </tr>
+</tbody>
+</table> 
+
+#### How to add fonts
+
+To add fonts, edit tailwind.config.js as follows:
+
+```js
+// tailwind.config.js
+'use strict';
+const { maiUIConfig } = require('@shiraya-ma/mai-ui/setup');
+
+module.exports = maiUIConfig({
+    content: [],
+    theme: {
+        fontFamily: {
+            robot: [ 'Robot Flex', 'sans-serif' ]
+        }
+    }
+});
+
+```
+
+Create css to import the specified font.
+
+```css
+/* fonts.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+```
+
+Import the created css
+
+```tsx
+// layout.tsx
+'use strict';
+import React, { PropsWithChildren }  from 'react';
+import { useNavigate } from 'react-router';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+import 'tailwindcss/tailwind.css';
+
+// If you want to use the following default fonts in MaiUI, import this css.
+// - Sawarabi Gothic
+// - Sawarabi Mincho
+// - JetBrains Mono
+// If there are some that you do not use, import the ones you use in your fonts.css.
+import '@shiraya-ma/mai-ui/fonts.css';
+
+import './fonts.css';
+
+const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  const navigate = useNavigate();
+
+  return (
+    <MaiUIProvider navigate={ navigate }>
+      { children }
+    </MaiUIProvider>
+  );
+};
+
+export default Layout;
 ```
