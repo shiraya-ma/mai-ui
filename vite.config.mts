@@ -30,6 +30,7 @@ export default defineConfig({
         const externals = [
           'react',
           'react-dom',
+          'react/jsx-runtime',
         ];
 
         const externalNamespaces = [
