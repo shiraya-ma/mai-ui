@@ -28,17 +28,33 @@ export default defineConfig({
       },
       external: (id) => {
         const externals = [
+          'deepmerge',
+          'hast',
           'react',
           'react-dom',
+          'react-markdown',
           'react/jsx-runtime',
-          'react-syntax-highlighter',
+          'rehype-parse',
+          'rehype-raw',
+          'rehype-stringify',
+          'remark-gfm',
+          'swr',
+          'tailwindcss',
+          'unified',
+          'unist-util-visit',
+          'unist-util-visit-parents',
         ];
 
         const externalNamespaces = [
+          '@emotion/',
           '@heroui/',
+          'react-syntax-highlighter',
         ];
 
-        return externals.includes(id) || externalNamespaces.some(ns => id.startsWith(ns));
+        return (
+          externals.some(pkg => id.startsWith(pkg)) ||
+          externalNamespaces.some(ns => id.startsWith(ns))
+        );
       },
       output: {
         exports: 'named',
