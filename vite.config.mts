@@ -20,6 +20,12 @@ export default defineConfig({
       name: 'MaiUI',
     },
     rollupOptions: {
+      input: {
+        index: './src/index.ts',
+        components: './src/components/index.ts',
+        layouts: './src/layouts/index.ts',
+        setup: './src/setup/index.ts',
+      },
       external: (id) => {
         const externals = [
           'react',
@@ -47,7 +53,6 @@ export default defineConfig({
       insertTypesEntry: true,  // Automatically generate a types entry file
       outDir: 'dist',  // Output directory
       copyDtsFiles: true, // Copy other type files
-      rollupTypes: true, // Use Rollup for type generation
     })
   ],
   resolve: {
