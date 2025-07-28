@@ -34,7 +34,8 @@
     "lint": "eslint .",
     "test": "bun test",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o docs"
+    "build-storybook": "storybook build -o docs",
+    "license-check": "license-checker --production --summary --out=LICENSES.md"
   },
   "keywords": [
     "components"
@@ -67,6 +68,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "eslint-plugin-storybook": "^0.12.0",
+    "license-checker": "^25.0.1",
     "postcss": "^8.5.3",
     "storybook": "^8.6.12",
     "typescript-eslint": "^8.26.1",
