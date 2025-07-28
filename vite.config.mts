@@ -20,16 +20,18 @@ export default defineConfig({
       name: 'MaiUI',
     },
     rollupOptions: {
-      input: {
-        index: './src/index.ts',
-        components: './src/components/index.ts',
-        layouts: './src/layouts/index.ts',
-        setup: './src/setup/index.ts',
+      external: (id) => {
+        const externals = [
+          'react',
+          'react-dom',
+        ];
+
+        const externalNamespaces = [
+          '@heroui/',
+        ];
+
+        return externals.includes(id) || externalNamespaces.some(ns => id.startsWith(ns));
       },
-      external: [
-        'react',
-        'react-dom',
-      ],
       output: {
         exports: 'named',
         globals: {
@@ -45,21 +47,7 @@ export default defineConfig({
       insertTypesEntry: true,  // Automatically generate a types entry file
       outDir: 'dist',  // Output directory
       copyDtsFiles: true, // Copy other type files
-      beforeWriteFile: (filePath, content) => {
-        // Output different type files for main.ts and secondary.ts
-        if (filePath.includes('main')) {
-          return {
-            filePath: filePath.replace('main', 'dist/main.d.ts'),
-            content,
-          }
-        } else if (filePath.includes('secondary')) {
-          return {
-            filePath: filePath.replace('secondary', 'dist/secondary.d.ts'),
-            content,
-          }
-        }
-        return { filePath, content }
-      }
+      rollupTypes: true, // Use Rollup for type generation
     })
   ],
   resolve: {
