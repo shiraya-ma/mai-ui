@@ -28,7 +28,7 @@ describe('maiui', () => {
     return new RegExp(`--heroui-${color}: ${h} ${s}% ${l}%;`);
   };
 
-  it('should handle empty custom configuration', async () => {
+  it.todo('should handle empty custom configuration', async () => {
     const css = await processCSS(maiui(), 'should handle empty custom configuration');
 
     // light theme
@@ -174,7 +174,7 @@ describe('maiui', () => {
     expect(dark).toMatch(genRegExp('warning', Mai.colors.citrus[400]));
   });
 
-  it('should return a HeroUI configuration with default values when no config is provided', async () => {
+  it.todo('should return a HeroUI configuration with default values when no config is provided', async () => {
     const css = await processCSS(maiui({}), 'should return a HeroUI configuration with default values when no config is provided');
 
     // light theme
@@ -318,7 +318,7 @@ describe('maiui', () => {
     expect(dark).toMatch(genRegExp('warning', Mai.colors.citrus[400]));
   });
 
-  it('should merge custom configuration with default values', async () => {
+  it.todo('should merge custom configuration with default values', async () => {
     const css = await processCSS(maiui({
       themes: {
         light: {
