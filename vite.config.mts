@@ -11,6 +11,8 @@ export default defineConfig({
     lib: {
       entry: {
         index: resolve(__dirname, 'src', 'index.ts'),
+        components: resolve(__dirname, 'src', 'components', 'index.ts'),
+        layouts: resolve(__dirname, 'src', 'layouts', 'index.ts'),
         setup: resolve(__dirname, 'src', 'setup', 'index.ts'),
       },
       fileName: (format, name) => `${name}.${format.replace(/^es$/, 'mjs')}`,
@@ -20,12 +22,40 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: './src/index.ts',
+        components: './src/components/index.ts',
+        layouts: './src/layouts/index.ts',
         setup: './src/setup/index.ts',
       },
-      external: [
-        'react',
-        'react-dom',
-      ],
+      external: (id) => {
+        const externals = [
+          'deepmerge',
+          'hast',
+          'react',
+          'react-dom',
+          'react-markdown',
+          'react/jsx-runtime',
+          'rehype-parse',
+          'rehype-raw',
+          'rehype-stringify',
+          'remark-gfm',
+          'swr',
+          'tailwindcss',
+          'unified',
+          'unist-util-visit',
+          'unist-util-visit-parents',
+        ];
+
+        const externalNamespaces = [
+          '@emotion/',
+          '@heroui/',
+          'react-syntax-highlighter',
+        ];
+
+        return (
+          externals.some(pkg => id.startsWith(pkg)) ||
+          externalNamespaces.some(ns => id.startsWith(ns))
+        );
+      },
       output: {
         exports: 'named',
         globals: {
@@ -41,21 +71,6 @@ export default defineConfig({
       insertTypesEntry: true,  // Automatically generate a types entry file
       outDir: 'dist',  // Output directory
       copyDtsFiles: true, // Copy other type files
-      beforeWriteFile: (filePath, content) => {
-        // Output different type files for main.ts and secondary.ts
-        if (filePath.includes('main')) {
-          return {
-            filePath: filePath.replace('main', 'dist/main.d.ts'),
-            content,
-          }
-        } else if (filePath.includes('secondary')) {
-          return {
-            filePath: filePath.replace('secondary', 'dist/secondary.d.ts'),
-            content,
-          }
-        }
-        return { filePath, content }
-      }
     })
   ],
   resolve: {
