@@ -9,7 +9,7 @@ import {
 const baseTheme = {
   brandTitle: 'Mai UI',
   brandUrl: '/',
-  brandImage: '/temp-logo.png',
+  brandImage: '/MaiUI_LogoType.svg',
 };
 
 // custom theme (dark)
