@@ -72,6 +72,8 @@ describe('configQuery', () => {
     });
 
     it('should not call the handler if mediaQuery is null', () => {
+      globalThis.window = undefined as never; // Simulate no window object
+
       const { onChangeQuery } = configQuery();
       const handler = jest.fn();
       onChangeQuery(handler);
