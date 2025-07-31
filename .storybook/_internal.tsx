@@ -49,7 +49,7 @@ export function useCustomDocsContainer<T extends DocsContainerProps> (props: Pro
 
   const { mediaQuery, onChangeQuery } = useMemo(configQuery, []);
 
-  const [theme, setTheme] = useState(initThemeState(mediaQuery));
+  const [theme, setTheme] = useState(() => initThemeState(mediaQuery));
   
   useEffect(() => {
     const handler = (e: MediaQueryListEvent) => {
