@@ -1,6 +1,6 @@
 'use strict';
 /* eslint-disable react-refresh/only-export-components */
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { DocsContainer } from '@storybook/addon-docs';
 import { themes, type ThemeVars } from '@storybook/theming';
 import type { DocsContainerProps } from '@storybook/addon-docs';
@@ -47,7 +47,7 @@ export function useCustomDocsContainer<T extends DocsContainerProps> (props: Pro
     ...userProps
   } = props;
 
-  const { mediaQuery, onChangeQuery } = configQuery();
+  const { mediaQuery, onChangeQuery } = useMemo(configQuery, []);
 
   const [theme, setTheme] = useState(initThemeState(mediaQuery));
   
