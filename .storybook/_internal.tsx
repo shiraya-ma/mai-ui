@@ -58,7 +58,7 @@ export function useCustomDocsContainer<T extends DocsContainerProps> (props: Pro
 
     const { removeEventListener} = onChangeQuery(handler);
     return () => removeEventListener();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [ onChangeQuery ]);
 
   return {
     ...userProps,
