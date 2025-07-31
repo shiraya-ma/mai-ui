@@ -36,7 +36,7 @@ const config: StorybookConfig = {
   },
   managerHead: (head) => (`
     ${head}
-    <link rel="icon" href="/MaiUI_Icon.svg" type="image/svg+xml"/ >
+    <link rel="icon" href="/MaiUI_Icon.svg" type="image/svg+xml"/>
   `),
 };
 
