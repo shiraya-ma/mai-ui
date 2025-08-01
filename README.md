@@ -5,7 +5,7 @@
 
 <div align="center">
   <a href="https://docs.shiraya.ma/mai-ui" target="_blank">
-    <img src="./public/MaiUI_LogoType.svg" alt="Mai UI" height="48">
+    <img src="https://docs.shiraya.ma/mai-ui/MaiUI_LogoType.svg" alt="Mai UI" height="48">
   </a>
 </div>
 
@@ -22,7 +22,7 @@ It provides accessible, themeable UI components designed to help you build moder
 
 - Fully typed components with TypeScript
 - Built with [Tailwind CSS](https://tailwindcss.com/)
-- Compatible with [HeroUI](https://headlessui.com/)
+- Compatible with [HeroUI](https://www.heroui.com/docs/guide/introduction)
 - Easily customizable tokens
 - Accessible & theme-friendly
 
@@ -53,7 +53,7 @@ export function MyComponent() {
   return <MaiButton variant="primary">Click me</MaiButton>;
 }
 ```
-See all components and usage examples in the [Storybook Docs](docs/shiraya.ma/mai-ui).
+See all components and usage examples in the [Storybook Docs](https://docs.shiraya.ma/mai-ui).
 
 📄 License
 
