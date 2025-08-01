@@ -4,9 +4,11 @@ import potcss from 'postcss';
 
 const config: StorybookConfig = {
   stories: [
-    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+    "../src/**/*.mdx",
+    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx|mdx)"
   ],
   addons: [
+    "@storybook/addon-docs",
     "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
@@ -32,6 +34,10 @@ const config: StorybookConfig = {
   typescript: {
     reactDocgen: 'react-docgen-typescript'
   },
+  managerHead: (head) => (`
+    ${head}
+    <link rel="icon" href="/MaiUI_Icon.svg" type="image/svg+xml"/>
+  `),
 };
 
 export default config;
