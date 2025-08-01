@@ -3,6 +3,8 @@ import { resolve } from 'path';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import packageJson from '../package.json';
 
+const UNKNOWN = 'unknown';
+
 const rootdir = resolve(__dirname, '..');
 const nodeModulesDir = resolve(rootdir, 'node_modules');
 
@@ -58,9 +60,9 @@ function getDependenciesData (name: string): Deps.Data {
     .map((f) => resolve(moduleDir, f))
     .find((p) => existsSync(p));
 
-  const version = packageData.version || 'unknown';
+  const version = packageData.version || UNKNOWN;
 
-  const licenseType = packageData.license || packageData.licenses?.[0]?.type || 'unknown';
+  const licenseType = packageData.license || packageData.licenses?.[0]?.type || UNKNOWN;
 
   const licenseContent = licensePath && existsSync(licensePath)
     ? readFileSync(licensePath, 'utf8')
@@ -87,11 +89,11 @@ function processDependencies (resultRows: string[]) {
 
     resultRows.push(`### ${name}`, '');
 
-    const versionBadge = version === 'unkown'
+    const versionBadge = version === UNKNOWN
       ? `<img src="https://img.shields.io/badge/version-unknown-lightgrey" alt="version unknown">`
       : `<img src="https://img.shields.io/badge/version-${version}-blue" alt="version ${version}">`;
 
-    const licenseBadge = licenseType === 'unknown'
+    const licenseBadge = licenseType === UNKNOWN
       ? `<img src="https://img.shields.io/badge/license-unknown-lightgrey" alt="license unknown">`
       : `<img src="https://img.shields.io/badge/license-${fixLicenseTypeForURL(licenseType)}-blue" alt="license ${licenseType}">`;
 
