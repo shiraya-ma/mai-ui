@@ -34,10 +34,6 @@ const config: StorybookConfig = {
   typescript: {
     reactDocgen: 'react-docgen-typescript'
   },
-  managerHead: (head) => (`
-    ${head}
-    <link rel="icon" href="/MaiUI_Icon.svg" type="image/svg+xml"/>
-  `),
 };
 
 export default config;
