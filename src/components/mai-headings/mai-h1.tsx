@@ -1,14 +1,14 @@
-// MaiH1
-'use strict';
+'use client';
 import React from 'react';
+import { cn } from '@heroui/theme';
 
-import { MaiHedingProps } from './props-types';
-import { MaiHeadings } from './mai-headings';
+import { useMaiHeadings, type MaiHeadingsProps } from './_internal';
+import { MaiHeadingsInner } from './mai-headings-inner';
 
 /**
- * 見出しのコンポーネント
+ * Heading component
  * 
- * h1に相当する見出しを追加する
+ * Adds a heading equivalent to h1.
  * 
  * @param props 
  * @returns 
@@ -17,23 +17,55 @@ import { MaiHeadings } from './mai-headings';
  * import { MaiH1 } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <MaiH1>
- *              hello world
- *          </MaiH1>
- *      );
+ *    return (
+ *      <MaiH1>
+ *        hello world
+ *      </MaiH1>
+ *    );
  * };
  */
-const MaiH1: React.FC<MaiH1.Props> = (props) => (
-    <MaiHeadings
-    level={ 1 }
-    { ...props }/>
-);
+const MaiH1: React.FC<MaiH1.Props> = (props) => {
+  const {
+    children,
+    classNames,
+    color,
+    id,
+    startIcon,
+    endIcon,
+    ...headingsProps
+  } = useMaiHeadings(props, 1);
+  
+  return (
+    <h1
+      { ...headingsProps }
+      className={cn(
+        'my-8 font-heading group/headings',
+        '[&>span[data-slot="text"]]:text-4xl [&_svg[data-slot="icon"]]:size-9',
+        classNames?.base,
+      )}
+      id={id}
+      data-slot='base'
+    >
+      <MaiHeadingsInner
+        classNames={{
+          text: classNames?.text,
+          link: classNames?.link,
+          icon: classNames?.icon,
+        }}
+        children={children}
+        color={color}
+        id={id}
+        startIcon={startIcon}
+        endIcon={endIcon}
+      />
+    </h1>
+  );
+};
 
 namespace MaiH1 {
-    export type Props = MaiHedingProps;
+  export type Props = MaiHeadingsProps;
 };
 
 export {
-    MaiH1
+  MaiH1
 };

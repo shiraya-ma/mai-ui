@@ -1,51 +1,51 @@
-// MaiLink
 'use strict';
-import { forwardRef } from 'react';
-import { Link, type LinkProps} from '@nextui-org/react';
+import React from 'react';
+import { cn } from '@heroui/theme';
+import { Link, type LinkProps } from '@heroui/link';
 
-import { classNames } from '../../libs';
-
-import { useMaiLink } from './hooks';
+import { useMaiLink } from './use-mai-link';
 
 /**
- * リンクのコンポーネント
+ * Link component
  * 
- * 別オリジンのhrefでクリックした場合は確認のモーダルを出す。
+ * If isExternal is not specified, it will be automatically determined based on the href value.
  * 
- * @param props 
- * @returns 
  * @example
  * 'use strict'
  * import { MaiLink } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <p>
- *              <MaiLink href="/">home</MaiLink>
- *              <br/>
- *              <MaiLink href="https://www.google.com">Google</MaiLink>
- *          </p>
- *      );
+ *   return (
+ *     <p>
+ *       <MaiLink href="/">home</MaiLink>
+ *       <br/>
+ *       <MaiLink href="https://www.google.com">Google</MaiLink>
+ *     </p>
+ *   );
  * };
  */
-const MaiLink = forwardRef<HTMLAnchorElement, MaiLink.Props>((props, ref) => {
-    const { className, ...linkProps } = useMaiLink(props);
-    
-    return (
-        <Link
-        className={classNames(
-            'cursor-pointer',
-            className
-        )}
-        { ...linkProps }
-        ref={ ref }/>
-    );
-});
+const MaiLink: React.FC<MaiLink.Props> = (props) => {
+  const {
+    className,
+    ...linkProps
+  } = useMaiLink(props);
+  
+  return (
+    <Link
+      className={cn(
+        'cursor-pointer',
+        className,
+      )}
+      {...linkProps}
+      data-is-external={props.isExternal}
+    />
+  );
+};
 
 namespace MaiLink {
-    export type Props = LinkProps & {};
+  export type Props = LinkProps & {};
 };
 
 export {
-    MaiLink
+  MaiLink
 };

@@ -1,3 +1,3 @@
-'use strict';
+'use client';
 
 export * from './mai-ui-provider';

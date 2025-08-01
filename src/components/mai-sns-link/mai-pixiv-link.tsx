@@ -1,30 +1,13 @@
-// MaiPixivLink
 'use strict';
-import { forwardRef } from 'react';
-import { type ButtonProps } from '@nextui-org/react';
+import React from 'react';
+import { type ButtonProps } from '@heroui/button';
 
-import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
-
-const Pixiv = () => (
-    <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 16 16"
-    width='1rem'
-    height='1rem'
-    fill='currentColor'
-    >
-        <path
-        d='M14,2.5c-1.2-1.1-3-1.8-5.1-1.8C3.7.8,0,4.9,0,4.9l1,1.6s.5,0,
-            .2-.9c.2-.5.8-1.2,1.8-1.9v10.8c-.5.1-1,.4-.6.8h3c.4-.4-.2-.6-.6-.8v-2.6s2,
-            .8,4.2.8,3.6-.6,4.9-1.6c1.3-1,2.1-2.6,2.1-4.3s-.8-3.2-2-4.3h0ZM12.4,
-            10.3c-.9.9-2.2,1.4-3.7,1.4s-3.1-.4-4-.8V2.8c1-.7,2.7-1.1,
-            4-1.1s2.9.6,3.8,1.6c.9.9,1.4,2.2,1.4,3.6s-.5,2.5-1.4,3.5h0Z'
-        />
-    </svg>
-);
+import { Pixiv } from '@/icons';
+import { MaiLink } from '../mai-link';
+import { MaiSNSLinkButton } from './mai-sns-link-button';
 
 /**
- * pixivリンクのコンポーネント
+ * pixiv link component
  * 
  * @param props 
  * @returns 
@@ -33,48 +16,53 @@ const Pixiv = () => (
  * import { MaiPixivLink } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <p>
- *              <MaiPixivLink pixivID="example"/>
- *          </p>
- *      );
+ *    return (
+ *      <p>
+ *        <MaiPixivLink pixivID="example"/>
+ *      </p>
+ *    );
  * };
  */
-const MaiPixivLink = forwardRef<HTMLButtonElement, MaiPixivLink.Props>((props, ref) => {
-    const {
-        children, 
-        href,
-        pixivID,
-        ...btnProps
-    } = props;
+const MaiPixivLink: React.FC<MaiPixivLink.Props> = (props) => {
+  const {
+    children,
+    className,
+    classNames, 
+    href,
+    pixivID,
+    ...linkProps
+  } = props;
 
-    const _href = href ?? `https://www.pixiv.net/${ pixivID? `users/${ pixivID }`: '' }`;
-    
-    return (
-        <MaiSNSLinkPresenter
-        href={ _href }
-        ref={ ref }
-        sns='pixiv'
-        withChildren={ typeof children !== 'undefined' }
-        { ...btnProps }>
-            <Pixiv />
+  return (
+    <MaiSNSLinkButton
+      href={href || `https://www.pixiv.net/${pixivID? `users/${pixivID}`: '' }`}
+      className={classNames?.base || className}
+      {...linkProps}
+    >
+      <Pixiv classNames={classNames?.icon}/>
 
-            { children && (
-                <span>{ children }</span>
-            )}
-        </MaiSNSLinkPresenter>
-    );
-});
+      {children && <span>{children}</span>}
+    </MaiSNSLinkButton>
+  );
+};
 
 namespace MaiPixivLink {
-    export type Props = ButtonProps & {
-        /**
-         * pixivのID
-         */
-        pixivID?: string;
-    };
+  export type Props = MaiLink.Props & ButtonProps & { 
+    /**
+     * pixiv user ID
+     */
+    pixivID?: string;
+
+    classNames?: Partial<{
+      base: string;
+      icon: Partial<{
+        base:  string;
+        pixiv: string;
+      }>;
+    }>;
+  };
 };
 
 export {
-    MaiPixivLink
+  MaiPixivLink
 };

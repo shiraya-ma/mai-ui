@@ -1,0 +1,597 @@
+
+<link rel="stylesheet" href="/tailwind.css"/>
+<link rel="stylesheet" href="/mai-colors.css"/>
+
+<div className='flex flex-row h-10 justify-center'>
+  <img src='/MaiUI_LogoType.svg'/>
+</div>
+
+# Guides
+
+Welcome to the Mai UI Guides!
+
+Mai UI is a customizable React component library built on top of Tailwind CSS and HeroUI, designed to help you build modern, accessible UIs quickly. This guide will walk you through the requirements, installation, and configuration steps to get started with Mai UI in your project.
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Dependencies](#dependencies)
+  - [DevDependencies](#devdependencies)
+  - [Optional](#optional)
+- [Configuration](#configuration)
+  - [1. Initialize Tailwind CSS](#1-initialize-tailwind-css)
+  - [2. Configure Tailwind](#2-configure-tailwind)
+  - [3. Setup Provider](#3-setup-provider)
+    - [React Router DOM](#react-router-dom)
+    - [Next.js](#nextjs)
+      - [Pages Router](#pages-router)
+      - [App Router](#app-router)
+- [Customizations](#customizations)
+  - [Colors](#colors)
+    - [Mai Colors](#mai-colors)
+    - [How to configure colors](#how-to-configure-colors)
+    - [Apply to HeroUI's semantic colors](#apply-to-herouis-semantic-colors)
+  - [Fonts](#fonts)
+    - [Mai Fonts](#mai-fonts)
+    - [How to add fonts](#how-to-add-fonts)
+---
+
+## Requirements
+
+- [React 18+](https://react.dev/)
+- [Tailwind CSS 3.4+](https://v3.tailwindcss.com)
+- [Framer Motion 11+](https://www.framer.com/motion/)
+- [HeroUI v2.6+](https://www.heroui.com)
+
+---
+
+## Installation
+
+### Dependencies
+
+```bash
+npm install @heroui/react framer-motion @shiraya-ma/mai-ui
+```
+
+### DevDependencies
+
+```bash
+npm install -D tailwindcss@^3 autoprefixer postcss
+```
+
+### Optional
+
+To customize the MaiMarkdown theme, install:
+
+```bash
+npm install react-syntax-highlighter
+npm install -D @types/react-syntax-highlighter
+```
+
+---
+
+## Configuration
+
+### 1. Initialize Tailwind CSS
+
+```bash
+npx tailwindcss init -p
+```
+
+### 2. Configure Tailwind
+
+Update your `tailwind.config.js`:
+
+```js
+'use strict';
+const { maiUIConfig } = require('@shiraya-ma/mai-ui/setup');
+
+module.exports = maiUIConfig();
+```
+
+> **Note:**  
+> `maiUIConfig` automatically includes the following content paths, so you don't need to add them manually:
+> - `./index.html`
+> - `./src/**/*.{js,ts,jsx,tsx,css,scss,sass}`
+> - `./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}`
+> - `./node_modules/@shiraya-ma/mai-ui/**/*.{js,ts,jsx,tsx}`
+
+---
+
+### 3. Setup Provider
+
+Wrap your app with `MaiUIProvider` at the root.
+
+```tsx
+// main.tsx
+'use strict';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+import App from './app';
+
+createRoot(document.querySelector('#root')).render(
+  <MaiUIProvider>
+    <App />
+  </MaiUIProvider>
+);
+```
+
+#### React Router DOM
+
+Wrap your routes with `MaiUIProvider` inside your router.
+
+```tsx
+// layout.tsx
+'use strict';
+import React, { PropsWithChildren } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+import 'tailwindcss/tailwind.css';
+import '@shiraya-ma/mai-ui/fonts.css';
+
+const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  const navigate = useNavigate();
+  return (
+    <MaiUIProvider navigate={navigate}>
+      {children}
+    </MaiUIProvider>
+  );
+};
+
+export default Layout;
+```
+
+```tsx
+// index.tsx
+'use strict';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './layout';
+import Home from './home';
+
+createRoot(document.querySelector('#root')).render(
+  <BrowserRouter>
+    <Layout>
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
+    </Layout>
+  </BrowserRouter>
+);
+```
+
+#### Next.js
+
+##### Pages Router
+
+```tsx
+// _app.tsx
+'use strict';
+import React, { PropsWithChildren } from 'react';
+import { useRouter } from 'next/router';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+
+const App: React.FC<PropsWithChildren> = ({ children }) => {
+  const router = useRouter();
+  const navigate = (path: string) => router.push(path);
+
+  return (
+    <MaiUIProvider navigate={navigate}>
+      {children}
+    </MaiUIProvider>
+  );
+};
+
+export default App;
+```
+
+##### App Router
+
+```tsx
+// layout.tsx
+'use client';
+import React, { PropsWithChildren } from 'react';
+import { useRouter } from 'next/navigation';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+
+const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  const router = useRouter();
+  const navigate = (path: string) => router.push(path);
+
+  return (
+    <html lang="en">
+      <body>
+        <MaiUIProvider navigate={navigate}>
+          {children}
+        </MaiUIProvider>
+      </body>
+    </html>
+  );
+};
+
+export default Layout;
+```
+
+## Customizations
+
+### Colors
+
+#### Mai Colors
+
+MaiUI extends Tailwind's default color palette with its own unique color sets, designed to provide a fresh and modern look for your UI components. These colors are available as CSS variables and Tailwind utility classes, making them easy to use throughout your project.
+
+Below are the available MaiUI color sets:
+
+<table>
+  <thead>
+    <tr>
+      <th>color</th>
+      <th>50</th>
+      <th>100</th>
+      <th>200</th>
+      <th>300</th>
+      <th>400</th>
+      <th>500</th>
+      <th>600</th>
+      <th>700</th>
+      <th>800</th>
+      <th>900</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowSpan="2">chocolate</th>
+        <td>`#fce6e4`</td>
+        <td>`#e1c4c5`</td>
+        <td>`#c3a0a2`</td>
+        <td>`#a67b7d`</td>
+        <td>`#916063`</td>
+        <td>`#7c454a`</td>
+        <td>`#6f3d42`</td>
+        <td>`#5f3238`</td>
+        <td>`#4f272f`</td>
+        <td>`#3e1a23`</td>
+    </tr>
+    <tr>
+      <td style={{backgroundColor : "var(--mai-chocolate-50)",  color: "transparent"}}>50</td>
+      <td style={{backgroundColor : "var(--mai-chocolate-100)", color: "transparent"}}>100</td>
+      <td style={{backgroundColor : "var(--mai-chocolate-200)", color: "transparent"}}>200</td>
+      <td style={{backgroundColor : "var(--mai-chocolate-300)", color: "transparent"}}>300</td>
+      <td style={{backgroundColor : "var(--mai-chocolate-400)", color: "transparent"}}>400</td>
+      <td style={{backgroundColor : "var(--mai-chocolate-500)", color: "transparent"}}>500</td>
+      <td style={{backgroundColor : "var(--mai-chocolate-600)", color: "transparent"}}>600</td>
+      <td style={{backgroundColor : "var(--mai-chocolate-700)", color: "transparent"}}>700</td>
+      <td style={{backgroundColor : "var(--mai-chocolate-800)", color: "transparent"}}>800</td>
+      <td style={{backgroundColor : "var(--mai-chocolate-900)", color: "transparent"}}>900</td>
+    </tr>
+    <tr>
+      <th rowSpan="2">cider</th>
+        <td>`#e2f1f5`</td>
+        <td>`#b8dbe5`</td>
+        <td>`#90c3d4`</td>
+        <td>`#6aadc6`</td>
+        <td>`#4b9ec1`</td>
+        <td>`#2d90bc`</td>
+        <td>`#2883a3`</td>
+        <td>`#1e729d`</td>
+        <td>`#16628a`</td>
+        <td>`#00446c`</td>
+    </tr>
+    <tr>
+      <td style={{backgroundColor : "var(--mai-cider-50)",  color: "transparent"}}>50</td>
+      <td style={{backgroundColor : "var(--mai-cider-100)", color: "transparent"}}>100</td>
+      <td style={{backgroundColor : "var(--mai-cider-200)", color: "transparent"}}>200</td>
+      <td style={{backgroundColor : "var(--mai-cider-300)", color: "transparent"}}>300</td>
+      <td style={{backgroundColor : "var(--mai-cider-400)", color: "transparent"}}>400</td>
+      <td style={{backgroundColor : "var(--mai-cider-500)", color: "transparent"}}>500</td>
+      <td style={{backgroundColor : "var(--mai-cider-600)", color: "transparent"}}>600</td>
+      <td style={{backgroundColor : "var(--mai-cider-700)", color: "transparent"}}>700</td>
+      <td style={{backgroundColor : "var(--mai-cider-800)", color: "transparent"}}>800</td>
+      <td style={{backgroundColor : "var(--mai-cider-900)", color: "transparent"}}>900</td>
+    </tr>
+    <tr>
+      <th rowSpan="2">citrus</th>
+        <td>`#fdf2e4`</td>
+        <td>`#fbdebc`</td>
+        <td>`#f9c892`</td>
+        <td>`#f6b36b`</td>
+        <td>`#f4a353`</td>
+        <td>`#f29441`</td>
+        <td>`#ed893e`</td>
+        <td>`#e67b3a`</td>
+        <td>`#de6d36`</td>
+        <td>`#d3562f`</td>
+    </tr>
+    <tr>
+      <td style={{backgroundColor : "var(--mai-citrus-50)",  color: "transparent"}}>50</td>
+      <td style={{backgroundColor : "var(--mai-citrus-100)", color: "transparent"}}>100</td>
+      <td style={{backgroundColor : "var(--mai-citrus-200)", color: "transparent"}}>200</td>
+      <td style={{backgroundColor : "var(--mai-citrus-300)", color: "transparent"}}>300</td>
+      <td style={{backgroundColor : "var(--mai-citrus-400)", color: "transparent"}}>400</td>
+      <td style={{backgroundColor : "var(--mai-citrus-500)", color: "transparent"}}>500</td>
+      <td style={{backgroundColor : "var(--mai-citrus-600)", color: "transparent"}}>600</td>
+      <td style={{backgroundColor : "var(--mai-citrus-700)", color: "transparent"}}>700</td>
+      <td style={{backgroundColor : "var(--mai-citrus-800)", color: "transparent"}}>800</td>
+      <td style={{backgroundColor : "var(--mai-citrus-900)", color: "transparent"}}>900</td>
+    </tr>
+    <tr>
+      <th rowSpan="2">mint</th>
+        <td>`#ddefed`</td>
+        <td>`#aad8d2`</td>
+        <td>`#73bfb5`</td>
+        <td>`#3aa698`</td>
+        <td>`#009383`</td>
+        <td>`#00816f`</td>
+        <td>`#007563`</td>
+        <td>`#006655`</td>
+        <td>`#005647`</td>
+        <td>`#003b2c`</td>
+    </tr>
+    <tr>
+      <td style={{backgroundColor : "var(--mai-mint-50)",  color: "transparent"}}>50</td>
+      <td style={{backgroundColor : "var(--mai-mint-100)", color: "transparent"}}>100</td>
+      <td style={{backgroundColor : "var(--mai-mint-200)", color: "transparent"}}>200</td>
+      <td style={{backgroundColor : "var(--mai-mint-300)", color: "transparent"}}>300</td>
+      <td style={{backgroundColor : "var(--mai-mint-400)", color: "transparent"}}>400</td>
+      <td style={{backgroundColor : "var(--mai-mint-500)", color: "transparent"}}>500</td>
+      <td style={{backgroundColor : "var(--mai-mint-600)", color: "transparent"}}>600</td>
+      <td style={{backgroundColor : "var(--mai-mint-700)", color: "transparent"}}>700</td>
+      <td style={{backgroundColor : "var(--mai-mint-800)", color: "transparent"}}>800</td>
+      <td style={{backgroundColor : "var(--mai-mint-900)", color: "transparent"}}>900</td>
+    </tr>
+    <tr>
+      <th rowSpan="2">strawberry</th>
+        <td>`#fbeaee`</td>
+        <td>`#f7cad3`</td>
+        <td>`#e3949d`</td>
+        <td>`#d66b77`</td>
+        <td>`#e04759`</td>
+        <td>`#e52f42`</td>
+        <td>`#d62640`</td>
+        <td>`#c41c39`</td>
+        <td>`#b81232`</td>
+        <td>`#a90026`</td>
+    </tr>
+    <tr>
+      <td style={{backgroundColor : "var(--mai-strawberry-50)",  color: "transparent"}}>50</td>
+      <td style={{backgroundColor : "var(--mai-strawberry-100)", color: "transparent"}}>100</td>
+      <td style={{backgroundColor : "var(--mai-strawberry-200)", color: "transparent"}}>200</td>
+      <td style={{backgroundColor : "var(--mai-strawberry-300)", color: "transparent"}}>300</td>
+      <td style={{backgroundColor : "var(--mai-strawberry-400)", color: "transparent"}}>400</td>
+      <td style={{backgroundColor : "var(--mai-strawberry-500)", color: "transparent"}}>500</td>
+      <td style={{backgroundColor : "var(--mai-strawberry-600)", color: "transparent"}}>600</td>
+      <td style={{backgroundColor : "var(--mai-strawberry-700)", color: "transparent"}}>700</td>
+      <td style={{backgroundColor : "var(--mai-strawberry-800)", color: "transparent"}}>800</td>
+      <td style={{backgroundColor : "var(--mai-strawberry-900)", color: "transparent"}}>900</td>
+    </tr>
+  </tbody>
+</table>
+
+MaiUI colors correspond to HeroUI colors as follows:
+
+<table>
+  <thead>
+    <tr>
+      <th/>
+      <th>HeroUI</th>
+      <th>MaiUI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th style={{backgroundColor: "var(--mai-mint-400)", color: "transparent"}}>color</th>
+      <td>`primary`</td>
+      <td>`mint`</td>
+    </tr>
+    <tr>
+      <th style={{backgroundColor: "var(--mai-chocolate-400)", color: "transparent"}}>color</th>
+      <td>`secondary`</td>
+      <td>`chocolate`</td>
+    </tr>
+    <tr>
+      <th style={{backgroundColor: "var(--mai-cider-400)", color: "transparent"}}>color</th>
+      <td>`success`</td>
+      <td>`cider`</td>
+    </tr>
+    <tr>
+      <th style={{backgroundColor: "var(--mai-strawberry-400)", color: "transparent"}}>color</th>
+      <td>`danger`</td>
+      <td>`strawberry`</td>
+    </tr>
+    <tr>
+      <th style={{backgroundColor: "var(--mai-citrus-400)", color: "transparent"}}>color</th>
+      <td>`warning`</td>
+      <td>`citrus`</td>
+    </tr>
+  </tbody>
+</table>
+
+#### How to configure colors
+
+To add a color set, edit tailwind.config.js as follows:
+
+```js
+// tailwind.config.js
+'use strict';
+const { maiUIConfig } = require('@shiraya-ma/mai-ui/setup');
+
+const yourcolor = {
+  50: '#fff',
+  100: '#cffafe',
+  200: '#a5f3fc',
+  300: '#67e8f9',
+  400: '#22d3ee',
+  500: '#06b6d4',
+  600: '#0891b2',
+  700: '#0e7490',
+  800: '#155e75',
+  900: '#164e63',
+};
+
+module.exports = maiUIConfig({
+  content: [],
+  theme: {
+    extends: {
+      colors: {
+        yourcolor,
+      }
+    },
+  }
+});
+```
+
+[See more...](https://tailwindcss.com/docs/customizing-colors#color-object-syntax)
+
+#### Apply to HeroUI`s semantic colors
+
+To override the HeroUI color set, further edit tailwind.config.js as follows:
+
+```js
+// tailwind.config.js
+'use strict';
+const { maiUIConfig } = require('@shiraya-ma/mai-ui/setup');
+
+const yourcolor = {
+  50: '#fff',
+  100: '#cffafe',
+  200: '#a5f3fc',
+  300: '#67e8f9',
+  400: '#22d3ee',
+  500: '#06b6d4',
+  600: '#0891b2',
+  700: '#0e7490',
+  800: '#155e75',
+  900: '#164e63',
+};
+
+const primary = {
+  50:  yourcolor[50],
+  100: yourcolor[100],
+  200: yourcolor[200],
+  300: yourcolor[300],
+  400: yourcolor[400],
+  500: yourcolor[500],
+  600: yourcolor[600],
+  700: yourcolor[700],
+  800: yourcolor[800],
+  900: yourcolor[900],
+  DEFAULT: yourcolor[300],
+  foreground: '#fff'
+};
+
+module.exports = maiUIConfig({
+  content: [],
+  theme: {
+    extends: {
+      colors: {
+        yourcolor,
+        primary,
+      }
+    },
+  }
+}, {
+  themes: {
+    dark: {
+      colors: {
+        primary,
+      }
+    },
+    light: {
+      colors: {
+        primary,
+      }
+    }
+  }
+});
+```
+
+### Fonts
+
+#### Mai Fonts
+
+MaiUI has added the following fonts to Tailwind's font sets.
+
+<table>
+<thead>
+  <tr>
+    <th>Tailwind variable name</th>
+    <th>Font name</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <th>font-heading</th>
+    <td>Sawarabi Gothic</td>
+  </tr>
+  <tr>
+    <th>font-main</th>
+    <td>Sawarabi Mincho</td>
+  </tr>
+  <tr>
+    <th>font-dode</th>
+    <td>JetBrains Mono</td>
+  </tr>
+</tbody>
+</table> 
+
+#### How to add fonts
+
+To add fonts, edit tailwind.config.js as follows:
+
+```js
+// tailwind.config.js
+'use strict';
+const { maiUIConfig } = require('@shiraya-ma/mai-ui/setup');
+
+module.exports = maiUIConfig({
+    content: [],
+    theme: {
+        fontFamily: {
+            robot: [ 'Robot Flex', 'sans-serif' ]
+        }
+    }
+});
+
+```
+
+Create css to import the specified font.
+
+```css
+/* fonts.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+```
+
+Import the created css
+
+```tsx
+// layout.tsx
+'use strict';
+import React, { PropsWithChildren }  from 'react';
+import { useNavigate } from 'react-router';
+import { MaiUIProvider } from '@shiraya-ma/mai-ui';
+import 'tailwindcss/tailwind.css';
+
+// If you want to use the following default fonts in MaiUI, import this css.
+// - Sawarabi Gothic
+// - Sawarabi Mincho
+// - JetBrains Mono
+// If there are some that you do not use, import the ones you use in your fonts.css.
+import '@shiraya-ma/mai-ui/fonts.css';
+
+import './fonts.css';
+
+const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+  const navigate = useNavigate();
+
+  return (
+    <MaiUIProvider navigate={ navigate }>
+      { children }
+    </MaiUIProvider>
+  );
+};
+
+export default Layout;
+```

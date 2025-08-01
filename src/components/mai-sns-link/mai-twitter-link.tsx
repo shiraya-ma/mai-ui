@@ -1,15 +1,15 @@
-// MaiTwitterLink
 'use strict';
-import { forwardRef } from 'react';
-import { type ButtonProps } from '@nextui-org/react';
-import { Twitter, TwitterX } from 'react-bootstrap-icons';
+import React from 'react';
+import { type ButtonProps } from '@heroui/button';
 
-import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
+import { Twitter, TwitterX } from '@/icons';
+import { MaiLink } from '../mai-link';
+import { MaiSNSLinkButton } from './mai-sns-link-button';
 
 /**
- * Twitterリンクのコンポーネント
+ * Twitter link component
  * 
- * props.isXをtrueにするとXのアイコンに変更可能
+ * If props.isX is true, the icon will be changed to X.
  * 
  * @param props 
  * @returns 
@@ -18,60 +18,66 @@ import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
  * import { MaiTwitterLink } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <p>
- *              <MaiTwitterLink twitterID="elonmusk"/>
- *              <br/>
- *              <MaiTwitterLink twitterID="elonmusk" isX/>
- *          </p>
- *      );
+ *    return (
+ *      <p>
+ *        <MaiTwitterLink twitterID="elonmusk"/>
+ *        <br/>
+ *        <MaiTwitterLink twitterID="elonmusk" isX/>
+ *      </p>
+ *    );
  * };
  */
-const MaiTwitterLink = forwardRef<HTMLButtonElement, MaiTwitterLink.Props>((props, ref) => {
-    const {
-        children, 
-        href,
-        isX, 
-        twitterID, 
-        ...btnProps
-    } = props;
+const MaiTwitterLink: React.FC<MaiTwitterLink.Props> = (props) => {
+  const {
+    children,
+    className,
+    classNames,
+    href,
+    isX,
+    twitterID,
+    ...linkProps
+  } = props;
 
-    const _href = href ?? `https://twitter.com/${ twitterID?.replace(/@/g, '') ?? 'elonmusk' }`;
-    
-    return (
-        <MaiSNSLinkPresenter
-        href={ _href }
-        ref={ ref }
-        sns='Twitter'
-        withChildren={ typeof children !== 'undefined' }
-        { ...btnProps }>
-            { isX? (<TwitterX />): (<Twitter />) }
+  return (
+    <MaiSNSLinkButton
+      href={href || `https://twitter.com/${twitterID || 'elonmusk'}`}
+      className={classNames?.base || className}
+      {...linkProps}
+    >
+      { isX? (<TwitterX classNames={classNames?.icon}/>): (<Twitter classNames={classNames?.icon}/>)}
 
-            { children && (
-                <span>{ children }</span>
-            )}
-        </MaiSNSLinkPresenter>
-    );
-});
+      {children && <span>{children}</span>}
+    </MaiSNSLinkButton>
+  );
+};
+MaiTwitterLink.displayName = 'MaiTwitterLink';
 
 namespace MaiTwitterLink {
-    export type Props = ButtonProps & {
-        /**
-         * TwitterのID
-         * 
-         * \@マークはあってもなくてもいい
-         * 
-         * @default 'elonmusk'
-         */
-        twitterID?: string;
+  export type Props = MaiLink.Props & ButtonProps & {
+    /**
+     * Whether to use the X icon
+     */
+    isX?: boolean;
 
-        /**
-         * Xのアイコンを使用するか
-         */
-        isX?: boolean;
-    };
+    /**
+     * Twitter ID
+     * 
+     * The @ mark can be included or omitted
+     * 
+     * @default 'elonmusk'
+     */
+    twitterID?: string;
+
+    classNames?: Partial<{
+      base: string;
+      icon: Partial<{
+        base   : string;
+        twitter: string;
+      }>;
+    }>;
+  };
 };
 
 export {
-    MaiTwitterLink
+  MaiTwitterLink
 };

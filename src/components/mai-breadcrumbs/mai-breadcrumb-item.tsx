@@ -1,31 +1,19 @@
-// MaiBreadcrumbItem
 'use strict';
-import { BreadcrumbItem } from '@nextui-org/react';
+import React from 'react';
+import { BreadcrumbItem, type BreadcrumbItemProps } from '@heroui/breadcrumbs';
 
 /**
- * パンくずリストのコンポーネント
+ * Breadcrumb list item component
  * 
- * 中身はBreadcrumbItemそのもの（import文削減用)
- * 
- * @param props 
- * @returns 
- * @example
- * 'use strict'
- * import { BreadcrumbItem } from '@nextui-org/react';
- * import { MaiBreadcrumbs, MaiBreadcrumbItem } from '@shiraya-ma/mai-ui';
- * 
- * function App () {
- *      return (
- *          <MaiBreadcrumbs>
- *              <MaiBreadcrumbItem href="/foo">foo</MaiBreadcrumbItem>
- * 
- *              <BreadcrumbItem href="/bar">bar</BreadcrumbItem>
- *          </MaiBreadcrumbs>
- *      );
- * };
+ * Essentially the same as BreadcrumbItem (for import reduction)
  */
-const MaiBreadcrumbItem = BreadcrumbItem;
+const MaiBreadcrumbItem: React.FC<MaiBreadcrumbItem.Props> = BreadcrumbItem;
+MaiBreadcrumbItem.displayName = 'MaiBreadcrumbItem';
+
+namespace MaiBreadcrumbItem {
+  export type Props = BreadcrumbItemProps;
+};
 
 export {
-    MaiBreadcrumbItem
-}
+  MaiBreadcrumbItem,
+};

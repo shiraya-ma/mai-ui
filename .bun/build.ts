@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 import Bun, { $, type BuildConfig } from 'bun';
 import { resolve } from 'path';

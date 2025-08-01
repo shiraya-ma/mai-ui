@@ -1,15 +1,11 @@
-// useTheme
 'use client';
 import { useContext } from "react";
 
-import { ThemeContext, ThemeUpdaterContext } from "./theme-context";
+import { ThemeContext } from "./internal";
 
 export function useTheme () {
-    const theme = useContext(ThemeContext);
-    const updateTheme = useContext(ThemeUpdaterContext);
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error("useTheme must be used within a ThemeContextProvider");
 
-    return {
-        theme,
-        updateTheme
-    };
+  return context;
 };

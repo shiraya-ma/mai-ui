@@ -1,68 +1,109 @@
-// MaiUIProvider
 'use client';
 import React from 'react';
-import { NextUIProvider, type NextUIProviderProps } from '@nextui-org/react';
+import { HeroUIProvider, type HeroUIProviderProps } from '@heroui/system';
 
-import { ContentSecurityPolicyProvider } from '../../features/csp';
-import { ExternalLinkModal, ExternalLinkProvider } from '../../features/external-link';
-import { PreferThemeObserver, ThemeContextProvider } from '../../features/theme';
-import { NavigateContextProvider } from '../../features/navigate';
+import {
+  type MaiHeadingsStyleContextProps, MaiHeadingsStyleProvider,
+  type MaiCodeBlockStyle, MaiCodeBlockStyleProvider,
+} from '@/components';
+import { type FallbackImageProps, FallbackImageProvider } from '@/features/fallback-image';
+import { type OGPFetcherFunction ,OGPFetcherProvider } from '@/features/ogp-fetcher';
+import { PreferThemeObserver, ThemeContextProvider } from '@/features/theme';
 
 /**
- * MaiUIでテーマなどのコンテキストを提供するプロバイダーコンポーネント
+ * Provider component that supplies context such as themes in MaiUI.
  * 
- * ReactRouterDOMやNext.jsなどでルーティングの最適化を行う場合、  
- * propsにナビゲーション関数を渡す。  
- * (MaiLinkクリック時に呼び出される)
+ * When optimizing routing with ReactRouterDOM or Next.js,  
+ * pass a navigation function as a prop.  
+ * (Called when MaiLink is clicked)
  * 
  * @example
- * import React, { PropsWithChildren }  from 'react';
+ * import React, { PropsWithChildren } from 'react';
  * import { useNavigate } from 'react-router-dom';
  * import { MaiUIProvider } from '@shiraya-ma/mai-ui';
  * 
  * export const App: React.FC<PropsWithChildren> = (props) => {
- *      const { children } = props;
+ *    const { children } = props;
  * 
- *      const navigate = useNavigate();
+ *    const navigate = useNavigate();
  * 
- *      return (
- *          <MaiUIProvider navigate={ navigate }>
- *              { children }
- *          </MaiUIProvider>
- *      );
+ *    return (
+ *      <MaiUIProvider navigate={ navigate }>
+ *        { children }
+ *      </MaiUIProvider>
+ *    );
  * };
  * 
  * @param props 
  * @returns 
  */
 const MaiUIProvider: React.FC<MaiUIProvider.Props> = (props) => {
-    const { children, navigate, ...nextUIProviderProps } = props;
-    
-    return (
-        <ContentSecurityPolicyProvider>
-            <ThemeContextProvider>
-                <ExternalLinkProvider>
-                    <NavigateContextProvider navigate={ navigate }>
-                        <NextUIProvider
-                        navigate={ navigate }
-                        { ...nextUIProviderProps }>
-                            { children }
-
-                            <ExternalLinkModal />
-
-                            <PreferThemeObserver />
-                        </NextUIProvider>
-                    </NavigateContextProvider>
-                </ExternalLinkProvider>
-            </ThemeContextProvider>
-        </ContentSecurityPolicyProvider>
-    );
+  const {
+    children,
+    codeBlockStyle,
+    disabledTheme,
+    fallbackImage,
+    headingStyle,
+    navigate,
+    ogpFetcher,
+    ...heroUIProviderProps
+  } = props;
+  
+  return (
+    <FallbackImageProvider fallbackImageProps={fallbackImage}>
+      <OGPFetcherProvider fetcher={ogpFetcher}>
+        <ThemeContextProvider disabledTheme={disabledTheme}>
+          <HeroUIProvider navigate={navigate} {...heroUIProviderProps}>
+            <MaiHeadingsStyleProvider context={headingStyle}>
+              <MaiCodeBlockStyleProvider style={codeBlockStyle}>
+                {children}
+                
+                {!disabledTheme && (<PreferThemeObserver />)}
+              </MaiCodeBlockStyleProvider>
+            </MaiHeadingsStyleProvider>
+          </HeroUIProvider>
+        </ThemeContextProvider>
+      </OGPFetcherProvider>
+    </FallbackImageProvider>
+  );
 };
 
+MaiUIProvider.displayName = 'MaiUIProvider';
+
 namespace MaiUIProvider {
-    export type Props = NextUIProviderProps & {}
+  /**
+   * Props for the MaiUIProvider component.
+   * 
+   * Inherits all properties from {@link HeroUIProviderProps}.
+   */
+  export type Props = HeroUIProviderProps & Partial<{
+    /**
+     * If true, disables the theme functionality for the provider
+     */
+    disabledTheme: boolean;
+
+    /**
+     * Custom styles or configuration for codeblock within the provider
+     */
+    codeBlockStyle: MaiCodeBlockStyle;
+
+    /**
+     * Configuration for the fallback image to use when an image fails to load
+     */
+    fallbackImage: FallbackImageProps;
+
+    /**
+     * Custom styles or configuration for heading elements within the provider
+     */
+    headingStyle: MaiHeadingsStyleContextProps;
+
+    /**
+     * Function to fetch Open Graph Protocol (OGP) data for URLs
+     */
+    ogpFetcher: OGPFetcherFunction;
+  }>;
 };
 
 export {
-    MaiUIProvider
+  MaiUIProvider
 };

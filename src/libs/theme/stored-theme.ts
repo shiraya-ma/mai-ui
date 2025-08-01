@@ -1,5 +1,5 @@
 'use client';
-import { MaiUI } from "../../types/mai-ui";
+import { type MaiUI } from "../../types/mai-ui";
 
 const KEY = 'theme';
 

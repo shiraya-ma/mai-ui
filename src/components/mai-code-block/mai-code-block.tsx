@@ -1,19 +1,22 @@
-// MaiCodeBlock
 'use client';
-import React, { CSSProperties } from 'react';
+import React from 'react';
+import { cn } from '@heroui/theme';
 import SyntaxHighlighter, { Prism } from 'react-syntax-highlighter';
 
-import { classNames } from '../../libs';
-
-import { useMaiCodeBlock } from './hooks';
+import {
+  type MaiCodeBlockClassNames, 
+  type MaiCodeBlockProps,
+  type MaiCodeBlockStyle,
+  useMaiCodeBlock,
+} from './_internal';
 
 /**
- * SyntaxHighlighterをラップしたコンポーネント
- * 
- * ファイル名、言語を指定できる
- * 
- * 使用するスタイルは'react-syntax-highlighter'からimportする  
- * デフォルトはNight Owl
+ * Wrapped SyntaxHighlighter component.
+ *
+ * A component that wraps SyntaxHighlighter.
+ * You can specify the filename and language.
+ * The style to use is imported from 'react-syntax-highlighter'.
+ * The default is Night Owl.
  * 
  * @expamle
  * ```
@@ -24,9 +27,9 @@ import { useMaiCodeBlock } from './hooks';
  * 
  * export default function App () {
  *  return (
- *      <MaiCodeBlock filename='App.js' language='javascript' style={ solarizedDark }>
- *          {`any code here`}
- *      </MaiCodeBlock>
+ *    <MaiCodeBlock filename='App.js' language='javascript' style={ solarizedDark }>
+ *      {`any code here`}
+ *    </MaiCodeBlock>
  *  );
  * };
  * ``` 
@@ -35,69 +38,79 @@ import { useMaiCodeBlock } from './hooks';
  * @returns 
  */
 const MaiCodeBlock: React.FC<MaiCodeBlock.Props> = (props) => {
-    const {
-        children,
-        className,
-        filename,
-        isPrism,
-        language,
-        style
-    } = useMaiCodeBlock(props); 
-    
-    return (
-        <div
-        className={classNames(
-            '[&>pre]:rounded-lg [&>pre]:overflow-x-auto',
-            'dark:[&>pre]:border dark:[&>pre]:border-white/10',
-            '[&>pre]:data-[with-filename=true]:rounded-tl-none',
-            className
-        )}
-        data-with-filename={ filename !== undefined }>
-            { filename && (
-                <div className='w-fit rounded-t-md bg-mint-300 text-white px-2'>
-                    { filename }
-                </div>
-            )}
+  const {
+    children,
+    className,
+    classNames,
+    filename,
+    isPrism,
+    dataTestID,
+    ...codeBlockProps
+  } = useMaiCodeBlock(props);
 
-            { isPrism? (
-                <>
-                    <Prism
-                    language={ language }
-                    style={ style }
-                    className='!mt-0 !mb-4 [&_*]:font-code'
-                    >
-                        { children }
-                    </Prism>
-                </>
-            ): (
-                <>
-                    <SyntaxHighlighter
-                    language={ language }
-                    style={ style }
-                    className='!mt-0 !mb-4 [&_*]:font-code'
-                    >
-                        { children }
-                    </SyntaxHighlighter>
-                </>
-            ) }     
+  const preClassName = cn(
+    classNames?.pre,
+    '!mt-0 rounded-lg ',
+    '!overflow-x-auto'
+  );
+
+  return (
+    <div
+      className={cn(
+        '[&_*]:font-code [&>pre]:data-[with-filename=true]:rounded-tl-none',
+        className? className: classNames?.base,
+      )}
+      data-slot='base'
+      data-with-filename={filename !== undefined}
+      data-testid={dataTestID}
+    >
+      { filename && (
+        <div
+          className={cn(
+            'w-fit rounded-t-md bg-primary-300 text-primary-foreground px-2',
+            classNames?.filename,
+          )}
+          data-slot='filename'
+        >
+          { filename }
         </div>
-    );
+      )}
+      {
+        !isPrism? (
+          <SyntaxHighlighter
+            children={children || ''}
+            className={preClassName}
+            codeTagProps={{
+              className: classNames?.code,
+            }}
+            data-style='hljs'
+            {...codeBlockProps}
+          />
+        ): (
+          <Prism
+            children={children || ''}
+            className={preClassName}
+            codeTagProps={{
+              className: classNames?.code,
+            }}
+            data-style='prism'
+            {...codeBlockProps}
+          />
+        )
+      }
+    </div>
+  );
 };
+MaiCodeBlock.displayName = 'MaiCodeBlock';
 
 namespace MaiCodeBlock {
-    export type Props = {
-        children: string;
-        className?: string;
-        filename?: string;
-        language?: string;
-        style?: Style;
-    };
+  export type Props = MaiCodeBlockProps;
 
-    export type Style = {
-        [key: string]: CSSProperties;
-    };
+  export type ClassNames = MaiCodeBlockClassNames
+
+  export type Style = MaiCodeBlockStyle;
 };
 
 export {
-    MaiCodeBlock
+  MaiCodeBlock
 };

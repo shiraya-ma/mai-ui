@@ -1,13 +1,13 @@
-// MaiInstagramLink
 'use strict';
-import { forwardRef } from 'react';
-import { type ButtonProps } from '@nextui-org/react';
-import { Instagram } from 'react-bootstrap-icons';
+import React from 'react';
+import { type ButtonProps } from '@heroui/button';
 
-import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
+import { Instagram } from '@/icons';
+import { MaiLink } from '../mai-link';
+import { MaiSNSLinkButton } from './mai-sns-link-button';
 
 /**
- * Instagramリンクのコンポーネント
+ * Instagram link component
  * 
  * @param props 
  * @returns 
@@ -16,48 +16,53 @@ import { MaiSNSLinkPresenter } from './mai-sns-link-presenter';
  * import { MaiInstagramLink } from '@shiraya-ma/mai-ui';
  * 
  * function App () {
- *      return (
- *          <p>
- *              <MaiInstagramLink instagramID="example"/>
- *          </p>
- *      );
+ *    return (
+ *      <p>
+ *        <MaiInstagramLink instagramID="example"/>
+ *      </p>
+ *    );
  * };
  */
-const MaiInstagramLink = forwardRef<HTMLButtonElement, MaiInstagramLink.Props>((props, ref) => {
-    const {
-        children, 
-        href,
-        instagramID,
-        ...btnProps
-    } = props;
+const MaiInstagramLink: React.FC<MaiInstagramLink.Props> = (props) => {
+  const {
+    children,
+    className,
+    classNames,
+    href,
+    instagramID,
+    ...linkProps
+  } = props;
 
-    const _href = href ?? `https://www.instagram.com/${ instagramID ?? '' }`;
-    
-    return (
-        <MaiSNSLinkPresenter
-        href={ _href }
-        ref={ ref }
-        sns='Instagram'
-        withChildren={ typeof children !== 'undefined' }
-        { ...btnProps }>
-            <Instagram />
+  return (
+    <MaiSNSLinkButton
+      href={href ?? `https://www.instagram.com/${ instagramID || '' }`}
+      className={classNames?.base || className}
+      {...linkProps}
+    >
+      <Instagram classNames={classNames?.icon}/>
 
-            { children && (
-                <span>{ children }</span>
-            )}
-        </MaiSNSLinkPresenter>
-    );
-});
+      {children && <span>{children}</span>}
+    </MaiSNSLinkButton>
+  );
+};
 
 namespace MaiInstagramLink {
-    export type Props = ButtonProps & {
-        /**
-         * InstagramのID
-         */
-        instagramID?: string;
-    };
+  export type Props = MaiLink.Props & ButtonProps &{
+    /**
+     * Instagram ID
+     */
+    instagramID?: string;
+
+    classNames?: Partial<{
+      base: string;
+      icon: Partial<{
+        base     : string;
+        instagram: string;
+      }>;
+    }>;
+  };
 };
 
 export {
-    MaiInstagramLink
+  MaiInstagramLink
 };
