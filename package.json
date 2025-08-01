@@ -35,7 +35,7 @@
     "test": "bun test",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o docs",
-    "license-check": "license-checker --production --summary --out=LICENSES.md"
+    "license-checker": "bun .bun/license-checker.ts"
   },
   "keywords": [
     "components"
