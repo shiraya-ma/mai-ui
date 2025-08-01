@@ -155,7 +155,7 @@ const MaiUI = {
   Headings: MaiHeadings,
   HeadingsStyleProvider: MaiHeadingsStyleProvider,
   Modal: MaiModal,
-  ModalBody: MaiModal,
+  ModalBody: MaiModalBody,
   ModalContent: MaiModalContent,
   ModalFooter: MaiModalFooter,
   ModalHeader: MaiModalHeader,
