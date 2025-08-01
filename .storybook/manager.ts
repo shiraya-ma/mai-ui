@@ -47,7 +47,6 @@ if (typeof document !== 'undefined') {
     const setFaviconUrl = (link: HTMLLinkElement, url: string) => {
       if (link.getAttribute('href') !== url) {
         link.setAttribute('href', url);
-        console.warn(link.getAttribute('href'));
       }
     };
 
