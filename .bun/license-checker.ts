@@ -51,6 +51,16 @@ function genIndex (name: string): string {
   return `  - [${name}](#user-content-${encodeURIComponent(link)})`;
 };
 
+function genLicenses (keys: string[]): string[] {
+  const depsData: Deps.Data[] = keys.map(getDependenciesData);
+
+  const rows: string[] = depsData
+    .map(processDependencies)
+    .reduce((rows, lRows) => ([...rows, ...lRows]), [] as string[]);
+
+  return rows;
+};
+
 function getDependenciesData (name: string): Deps.Data {
   const moduleDir = resolve(nodeModulesDir, name);
   const packageJsonPath = resolve(moduleDir, 'package.json');
@@ -60,16 +70,18 @@ function getDependenciesData (name: string): Deps.Data {
     .map((f) => resolve(moduleDir, f))
     .find((p) => existsSync(p));
 
-  const version = packageData.version || UNKNOWN;
+  const licenseName = name as Deps.DataName;
 
-  const licenseType = packageData.license || packageData.licenses?.[0]?.type || UNKNOWN;
+  const version = (packageData.version || UNKNOWN) as Deps.DataVersion;
 
-  const licenseContent = licensePath && existsSync(licensePath)
+  const licenseType = (packageData.license || packageData.licenses?.[0]?.type || UNKNOWN) as Deps.DataLicenseType;
+
+  const licenseContent = (licensePath && existsSync(licensePath)
     ? readFileSync(licensePath, 'utf8')
-    : undefined;
+    : undefined) as Deps.DataLicenseContent | undefined;
 
   const data: Deps.Data = {
-    name,
+    name: licenseName,
     version,
     licenseType,
     licenseContent,
@@ -78,32 +90,41 @@ function getDependenciesData (name: string): Deps.Data {
   return data;
 };
 
-function processDependencies (resultRows: string[]) {
-  return (deps: Deps.Modules) => {
-    const {
-      name,
-      version,
-      licenseType,
-      licenseContent,
-    } = deps;
+function processDependencies (deps: Deps.Data): string[] {
+  const {
+    name,
+    version,
+    licenseType,
+    licenseContent,
+  } = deps;
 
-    resultRows.push(`### ${name}`, '');
+  const titleRow = `### ${name}`;
 
-    const versionBadge = version === UNKNOWN
-      ? `<img src="https://img.shields.io/badge/version-unknown-lightgrey" alt="version unknown">`
-      : `<img src="https://img.shields.io/badge/version-${version}-blue" alt="version ${version}">`;
+  const versionBadge = version === UNKNOWN
+    ? `<img src="https://img.shields.io/badge/version-unknown-lightgrey" alt="version unknown">`
+    : `<img src="https://img.shields.io/badge/version-${version}-blue" alt="version ${version}">`;
 
-    const licenseBadge = licenseType === UNKNOWN
-      ? `<img src="https://img.shields.io/badge/license-unknown-lightgrey" alt="license unknown">`
-      : `<img src="https://img.shields.io/badge/license-${fixLicenseTypeForURL(licenseType)}-blue" alt="license ${licenseType}">`;
+  const licenseBadge = licenseType === UNKNOWN
+    ? `<img src="https://img.shields.io/badge/license-unknown-lightgrey" alt="license unknown">`
+    : `<img src="https://img.shields.io/badge/license-${fixLicenseTypeForURL(licenseType)}-blue" alt="license ${licenseType}">`;
 
-    resultRows.push(`<div>${versionBadge} ${licenseBadge}</div>`, '');
-    
+  const rows = [
+    titleRow,
+    `<div style="display: flex;">${versionBadge} ${licenseBadge}</div>`,
+    '',
+  ];
 
-    if (licenseContent) {
-      resultRows.push('#### License Content', '', '```', licenseContent, '```', '');
-    }
-  };
+  if (!licenseContent) return rows;
+
+  return [
+    ...rows,
+    '#### License Content',
+    '',
+    '```',
+    licenseContent,
+    '```',
+    '',
+  ];
 };
 
 function fixLicenseTypeForURL (licenseType: string): string {
