@@ -42,7 +42,7 @@ const result = resultRows.join('\n');
 
 writeFileSync(outfile, result, 'utf8');
 
-function genIndex (name: string) {
+function genIndex (name: string): string {
   const link = name
     .toLowerCase()
     .replace(/(\s)/g, '-')
@@ -117,14 +117,19 @@ function fixLicenseTypeForURL (licenseType: string): string {
 };
 
 namespace Deps {
-  export type Modules = {
-    [name: string]: string;
-  };
+  export type Modules = Record<string, string>;
 
   export type Data = {
-    name: string;
-    version: string;
-    licenseType?: string;
-    licenseContent?: string;
+    name: DataName;
+    version: DataVersion;
+    licenseType: DataLicenseType;
+    licenseContent?: DataLicenseContent;
   };
+
+  export type DataName = Brand<string, 'Deps.DataName'>;
+  export type DataVersion = Brand<string, 'Deps.DataVersion'>;
+  export type DataLicenseType = Brand<string, 'Deps.DataLicenseType'>;
+  export type DataLicenseContent = Brand<string, 'Deps.DataLicenseContent'>;
 };
+
+type Brand<K, T> = K & { __brand: T };
