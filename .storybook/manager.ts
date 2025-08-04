@@ -7,12 +7,12 @@ import {
 } from './_internal';
 
 const isDev = process.env.NODE_ENV === 'development';
-const basePath = isDev ? '/' : '/mai-ui';
+const basePath = isDev ? '/' : '/mai-ui/';
 
 const baseTheme = {
   brandTitle: 'Mai UI',
   brandUrl: basePath,
-  brandImage: `${basePath}/MaiUI_LogoType.svg`,
+  brandImage: `${basePath}MaiUI_LogoType.svg`,
 };
 
 // custom theme (dark)
@@ -50,7 +50,7 @@ if (typeof document !== 'undefined') {
       }
     };
 
-    const faviconUrl = `${basePath}/MaiUI_Icon.svg`;
+    const faviconUrl = `${basePath}MaiUI_Icon.svg`;
 
     setFaviconUrl(link, faviconUrl);
 
