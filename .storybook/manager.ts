@@ -50,7 +50,7 @@ if (typeof document !== 'undefined') {
       }
     };
 
-    const faviconUrl = `${basePath}MaiUI_Icon.svg`;
+    const faviconUrl = `${basePath}/MaiUI_Icon.svg`.replace('//', '/');
 
     setFaviconUrl(link, faviconUrl);
 
