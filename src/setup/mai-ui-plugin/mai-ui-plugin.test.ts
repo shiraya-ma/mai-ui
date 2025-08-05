@@ -36,7 +36,7 @@ describe('maiui', () => {
     };
 
     const result = {
-      darkCSS : await processCSS(darkConfig, `${name} dark`),
+      darkCSS:  await processCSS(darkConfig, `${name} dark`),
       lightCSS: await processCSS(lightConfig, `${name} light`),
     };
 
