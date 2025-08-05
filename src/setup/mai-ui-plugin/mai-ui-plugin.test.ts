@@ -50,8 +50,8 @@ describe('maiui', () => {
   };
 
   const themeRegs = {
-    dark : new RegExp(/color-scheme: dark[^}]*\}/s),
-    light: new RegExp(/color-scheme: light[^}]*\}/s),
+    dark: /color-scheme: dark[^}]*\}/s,
+    light: /color-scheme: light[^}]*\}/s,
   };
 
   it('should handle empty custom configuration', async () => {
