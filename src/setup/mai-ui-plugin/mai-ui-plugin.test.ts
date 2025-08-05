@@ -2,24 +2,45 @@
 import { describe, expect, it } from 'bun:test';
 import postcss from "postcss";
 import tailwindcss from "tailwindcss";
-import { Config, PluginCreator } from 'tailwindcss/types/config';
 import autoprefixer from "autoprefixer";
+import deepmerge from 'deepmerge';
 import Color from 'color';
 import Mai from '@shiraya-ma/mai-colors';
 
-import { maiui } from './mai-ui-plugin';
+import { type HeroUIPluginConfig } from '@heroui/react'
+import { maiui as maiuiPlugin } from './mai-ui-plugin';
 
 describe('maiui', () => {
-  const processCSS = async (maiui: { handler: PluginCreator, config?: Partial<Config> }, name: string) => {
-    const tailwindcssResult = tailwindcss({
-      content: [`tmp/path/to/your/file`],
-      plugins: [maiui],
-    });
-    const autoprefixerResult = autoprefixer();
-    const postcssResult = postcss([tailwindcssResult, autoprefixerResult,]);
-    const processer = await postcssResult.process(`/* ${name} */\n@tailwind components;\n@tailwind utilities;`, { from: undefined });
-    const css = processer.css;
-    return css;
+  const maiui = async (maiuiConfig: HeroUIPluginConfig, name: string) => {
+    const darkConfig  = deepmerge<HeroUIPluginConfig>(maiuiConfig, { defaultTheme: 'dark' });
+    const lightConfig = deepmerge<HeroUIPluginConfig>(maiuiConfig, { defaultTheme: 'light' });
+
+    const processCSS = async (config: HeroUIPluginConfig, name: string) => {
+      const inputCSS = [
+        `/* ${name} */`,
+        `@tailwind base;`,
+        `@tailwind components;`,
+        `@tailwind utilities;`,
+      ].join('\n');
+
+      const tailwindcssResult = tailwindcss({
+        content: [`./src/**.{js,ts,jsx,tsx}`],
+        plugins: [maiuiPlugin(config)],
+      });
+      const autoprefixerResult = autoprefixer();
+
+      const postcssResult = postcss([tailwindcssResult, autoprefixerResult,]);
+      const processer = await postcssResult.process(inputCSS, { from: undefined });
+      const css = processer.css;
+      return css;
+    };
+
+    const result = {
+      darkCSS : await processCSS(darkConfig, `${name} dark`),
+      lightCSS: await processCSS(lightConfig, `${name} light`),
+    };
+
+    return result;
   };
 
   const genRegExp = (color: string, hex: string) => {
@@ -28,11 +49,16 @@ describe('maiui', () => {
     return new RegExp(`--heroui-${color}: ${h} ${s}% ${l}%;`);
   };
 
-  it.todo('should handle empty custom configuration', async () => {
-    const css = await processCSS(maiui(), 'should handle empty custom configuration');
+  const themeRegs = {
+    dark : new RegExp(/color-scheme: dark[^}]*\}/s),
+    light: new RegExp(/color-scheme: light[^}]*\}/s),
+  };
 
+  it('should handle empty custom configuration', async () => {
+    const { darkCSS, lightCSS } = await maiui({}, 'should handle empty custom configuration');
+  
     // light theme
-    const light = css.match(/\.light,\[data-theme="light"\] \{[^}]*\}/s)![0];
+    const light = lightCSS.match(themeRegs.light)![0];
     expect(light).not.toBeUndefined();
     expect(light).toMatch(genRegExp('background', '#fff'));
     expect(light).toMatch(genRegExp('foreground', '#000'));
@@ -103,7 +129,7 @@ describe('maiui', () => {
     expect(light).toMatch(genRegExp('warning', Mai.colors.citrus[400]));
 
     // dark theme
-    const dark = css.match(/\.dark,\[data-theme="dark"\] \{[^}]*\}/s)![0];
+    const dark = darkCSS.match(themeRegs.dark)![0];
     expect(dark).not.toBeUndefined();
     expect(dark).toMatch(genRegExp('background', '#1F2937'));
     expect(dark).toMatch(genRegExp('foreground', '#fff'));
@@ -174,11 +200,14 @@ describe('maiui', () => {
     expect(dark).toMatch(genRegExp('warning', Mai.colors.citrus[400]));
   });
 
-  it.todo('should return a HeroUI configuration with default values when no config is provided', async () => {
-    const css = await processCSS(maiui({}), 'should return a HeroUI configuration with default values when no config is provided');
+  it('should return a HeroUI configuration with default values when no config is provided', async () => {
+    const {
+      darkCSS,
+      lightCSS
+    } = await maiui({}, 'should return a HeroUI configuration with default values when no config is provided');
 
     // light theme
-    const light = css.match(/\.light,\[data-theme="light"\] \{[^}]*\}/s)![0];
+    const light = lightCSS.match(themeRegs.light)![0];
     expect(light).not.toBeUndefined();
     expect(light).toMatch(genRegExp('background', '#fff'));
 
@@ -248,7 +277,7 @@ describe('maiui', () => {
     expect(light).toMatch(genRegExp('warning', Mai.colors.citrus[400]));
 
     // dark theme
-    const dark = css.match(/\.dark,\[data-theme="dark"\] \{[^}]*\}/s)![0];
+    const dark = darkCSS.match(themeRegs.dark)![0];
     expect(dark).not.toBeUndefined();
     expect(dark).toMatch(genRegExp('background', '#1F2937'));
 
@@ -318,8 +347,11 @@ describe('maiui', () => {
     expect(dark).toMatch(genRegExp('warning', Mai.colors.citrus[400]));
   });
 
-  it.todo('should merge custom configuration with default values', async () => {
-    const css = await processCSS(maiui({
+  it('should merge custom configuration with default values', async () => {
+    const {
+      darkCSS,
+      lightCSS,
+    } = await maiui({
       themes: {
         light: {
           colors: {
@@ -358,10 +390,10 @@ describe('maiui', () => {
           },
         },
       },
-    }), 'should merge custom configuration with default values');
+    }, 'should merge custom configuration with default values');
 
     // light theme
-    const light = css.match(/\.light,\[data-theme="light"\] \{[^}]*\}/s)![0];
+    const light = lightCSS.match(themeRegs.light)![0];
     expect(light).not.toBeUndefined();
     expect(light).toMatch(genRegExp('primary-50',  '#000'));
     expect(light).toMatch(genRegExp('primary-100', '#000'));
@@ -377,7 +409,7 @@ describe('maiui', () => {
     expect(light).toMatch(genRegExp('primary-foreground', '#fff'));
 
     // dark theme
-    const dark = css.match(/\.dark,\[data-theme="dark"\] \{[^}]*\}/s)![0];
+    const dark = darkCSS.match(themeRegs.dark)![0];
     expect(dark).not.toBeUndefined();
     expect(dark).toMatch(genRegExp('primary-50',  '#fff'));
     expect(dark).toMatch(genRegExp('primary-100', '#fff'));
