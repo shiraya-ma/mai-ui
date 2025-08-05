@@ -11,7 +11,7 @@ const ExtendedBreadcrumbs = extendVariants(Breadcrumbs, {
   variants: {
     variant: {
       glassy: {
-        base: 'w-fit border-1 bg-opacity-25 backdrop-blur-sm py-2 px-3',
+        list: 'w-fit border-1 bg-opacity-25 backdrop-blur-sm py-2 px-3',
       },
     },
   },
@@ -62,14 +62,14 @@ const MaiBreadcrumbs: React.FC<MaiBreadcrumbs.Props> = (props) => {
       radius={radius}
       data-radius={radius}
       classNames={{
-        base: cn(
+        list: cn(
           variant === 'glassy'?
-            color === 'primary'? 'bg-primary-400 border-primary-400': 
-            color === 'secondary'? 'bg-secondary-400 border-secondary-400':
-            color === 'success'? 'bg-success-400 border-success-400':
-            color === 'danger'? 'bg-danger-400 border-danger-400':
-            color === 'warning'? 'bg-warning-500 border-warning-400':
-            'bg-white border-white' // foreground or undefined
+            color === 'primary'? 'bg-primary-400/25 border-primary-400': 
+            color === 'secondary'? 'bg-secondary-400/25 border-secondary-400':
+            color === 'success'? 'bg-success-400/25 border-success-400':
+            color === 'danger'? 'bg-danger-400/25 border-danger-400':
+            color === 'warning'? 'bg-warning-500/25 border-warning-400':
+            'bg-white/25 border-white' // foreground or undefined
             : undefined,
           variant  === 'glassy'?
             radius === 'sm'? 'rounded-md':
