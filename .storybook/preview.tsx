@@ -4,6 +4,7 @@ import type { Decorator, Preview } from '@storybook/react';
 import { MaiUIProvider } from '../src';
 import { CustomDocsContainer } from './_internal';
 
+import '../public/fonts.css';
 import './bg.css';
 
 export const decorators: Decorator[] = [
