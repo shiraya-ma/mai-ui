@@ -27,8 +27,9 @@
       "import": "./dist/setup.mjs"
     },
     "./fonts.css": {
-      "require": "./fonts.css",
-      "import": "./fonts.css"
+      "types": "./public/fonts.d.ts",
+      "require": "./public/fonts.css",
+      "import": "./public/fonts.css"
     }
   },
   "scripts": {
