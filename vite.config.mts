@@ -71,6 +71,12 @@ export default defineConfig({
       insertTypesEntry: true,  // Automatically generate a types entry file
       outDir: 'dist',  // Output directory
       copyDtsFiles: true, // Copy other type files
+      exclude: [
+        'src/**/*.test.ts',
+        'src/**/*.test.tsx',
+        'src/**/*.stories.ts',
+        'src/**/*.stories.tsx',
+      ]
     })
   ],
   resolve: {

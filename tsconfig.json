@@ -1,39 +1,49 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "lib": ["dom", "esnext"],
-    "declaration": true,
-    "sourceMap": true,
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "stripInternal": true,
-    "strict": true,
-    "isolatedModules": true,
-    "noFallthroughCasesInSwitch": true,
-    "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
-    "baseUrl": "./",
-    "paths": {
+    /* ===== Build Target Settings ===== */
+    "target": "esnext",          // JavaScript version output
+    "module": "esnext",          // Module system to use
+    "lib": ["dom", "esnext"],    // Standard library type definitions to include
+
+    /* ===== Output Settings ===== */
+    "outDir": "./dist",          // Output directory
+    "declaration": true,         // Generate type declaration files
+    "sourceMap": true,           // Generate source maps
+    "stripInternal": true,       // Exclude APIs marked with @internal from declarations
+
+    /* ===== Module Resolution ===== */
+    "moduleResolution": "node",  // Use Node.js module resolution strategy
+    "baseUrl": "./",             // Base directory for module resolution
+    "paths": {                   // Path aliases
       "@/*": ["./src/*"]
     },
-    "outDir": "./dist",
+    "resolveJsonModule": true,           // Allow importing JSON files
+    "allowSyntheticDefaultImports": true, // Enable default import compatibility
+    "esModuleInterop": true,             // Enable interoperability with CommonJS
+
+    /* ===== Strict Type-Checking Options ===== */
+    "strict": true,               // Enable all strict type-checking options
+    "skipLibCheck": true,         // Skip type checking of declaration files
+    "isolatedModules": true,      // Treat each file as a separate module
+    "noFallthroughCasesInSwitch": true, // Prevent fallthrough in switch statements
+
+    /* ===== JSX Settings ===== */
+    "jsx": "react-jsx",           // Use new JSX transform from React 17+
+
+    /* ===== Compatibility Settings ===== */
+    "downlevelIteration": true,   // Provide full iteration support for ES5 targets
     "typeRoots": [
       "node_modules/@types",
       "src/types"
     ]
   },
+
+  /* ===== Files to Include and Exclude ===== */
   "include": ["src"],
   "exclude": [
-    "**/node_modules",
-    "**/dist",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
-    "src/**/*.stories.ts",
-    "src/**/*.stories.tsx"
+    "node_modules",
+    "dist"
   ]
 }
