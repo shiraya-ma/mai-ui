@@ -25,6 +25,10 @@
       "types": "./dist/setup.d.ts",
       "require": "./dist/setup.cjs",
       "import": "./dist/setup.mjs"
+    },
+    "./fonts.css": {
+      "require": "./fonts.css",
+      "import": "./fonts.css"
     }
   },
   "scripts": {
