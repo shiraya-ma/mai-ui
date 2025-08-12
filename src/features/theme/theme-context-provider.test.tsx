@@ -21,42 +21,41 @@ describe('ThemeContextProvider', () => {
   });
 
   it('should render children correctly', () => {
-    const { getByText } = render(
+    const { getByTestId } = render(
       <ThemeContextProvider>
-        <div>Test Child</div>
+        <div data-testid='testChildren'>Test Child</div>
       </ThemeContextProvider>
     );
 
-    expect(getByText('Test Child')).toBeInTheDocument();
+    expect(getByTestId('testChildren')).toHaveTextContent('Test Child');
   });
 
   it('should provide the context value', () => {
     const TestComponent = () => {
       const context = useContext(ThemeContext);
-      return <div>{context ? 'Context Provided' : 'No Context'}</div>;
+      return <div data-testid='testChildrenWithContext'>{context ? 'Context Provided' : 'No Context'}</div>;
     };
 
-    const { getByText } = render(
+    const { getByTestId } = render(
       <ThemeContextProvider>
         <TestComponent />
       </ThemeContextProvider>
     );
 
-    expect(getByText('Context Provided')).toBeInTheDocument();
+    expect(getByTestId('testChildrenWithContext')).toHaveTextContent('Context Provided');
   });
 
   it('should handle disabledTheme prop', () => {
     const TestComponent = () => {
       const context = useContext(ThemeContext);
-      return <div>{context?.theme ? 'Theme Disabled' : 'Theme Enabled'}</div>;
+      return <div data-testid='testChildrenDisabledTheme'>{context?.theme ? 'Theme Disabled' : 'Theme Enabled'}</div>;
     };
-
-    const { getByText } = render(
+    const { getByTestId } = render(
       <ThemeContextProvider disabledTheme={true}>
         <TestComponent />
       </ThemeContextProvider>
     );
 
-    expect(getByText('Theme Disabled')).toBeInTheDocument();
+    expect(getByTestId('testChildrenDisabledTheme')).toHaveTextContent('Theme Disabled');
   });
 });
