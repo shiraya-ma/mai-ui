@@ -1,6 +1,6 @@
 {
   "name": "@shiraya-ma/mai-ui",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Component library for React and Next.js",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
