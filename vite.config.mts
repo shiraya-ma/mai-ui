@@ -57,6 +57,7 @@ export default defineConfig({
         );
       },
       output: {
+        banner: "'use client';\n",
         exports: 'named',
         globals: {
           'react': 'React',
