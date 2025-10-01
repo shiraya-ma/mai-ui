@@ -3,6 +3,7 @@ import { resolve } from 'path';
 import { defineConfig }from 'vite';
 import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
+import preserveUseClientDirective from 'rollup-plugin-preserve-use-client';
 
 export default defineConfig({
   build: {
@@ -77,7 +78,8 @@ export default defineConfig({
         'src/**/*.stories.ts',
         'src/**/*.stories.tsx',
       ]
-    })
+    }),
+    preserveUseClientDirective(),
   ],
   resolve: {
     alias: {

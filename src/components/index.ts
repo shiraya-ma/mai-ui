@@ -1,4 +1,4 @@
-'use strict';
+'use client';
 
 export * from './mai-breadcrumbs';
 export * from './mai-button';
